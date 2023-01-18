@@ -1,0 +1,11 @@
+C:\Users\zac\AppData\Roaming\OuterWildsModManager\OWML\Mods\ZacBauermeister.OuterWildsRandomSpeedrun\default-config.json
+C:\Users\zac\AppData\Roaming\OuterWildsModManager\OWML\Mods\ZacBauermeister.OuterWildsRandomSpeedrun\manifest.json
+C:\Users\zac\AppData\Roaming\OuterWildsModManager\OWML\Mods\ZacBauermeister.OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun.dll
+C:\Users\zac\AppData\Roaming\OuterWildsModManager\OWML\Mods\ZacBauermeister.OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun.pdb
+C:\Users\zac\source\repos\OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun\obj\Debug\OuterWildsRandomSpeedrun.csproj.AssemblyReference.cache
+C:\Users\zac\source\repos\OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun\obj\Debug\OuterWildsRandomSpeedrun.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zac\source\repos\OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun\obj\Debug\OuterWildsRandomSpeedrun.AssemblyInfoInputs.cache
+C:\Users\zac\source\repos\OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun\obj\Debug\OuterWildsRandomSpeedrun.AssemblyInfo.cs
+C:\Users\zac\source\repos\OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun\obj\Debug\OuterWildsRandomSpeedrun.csproj.CoreCompileInputs.cache
+C:\Users\zac\source\repos\OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun\obj\Debug\OuterWildsRandomSpeedrun.dll
+C:\Users\zac\source\repos\OuterWildsRandomSpeedrun\OuterWildsRandomSpeedrun\obj\Debug\OuterWildsRandomSpeedrun.pdb

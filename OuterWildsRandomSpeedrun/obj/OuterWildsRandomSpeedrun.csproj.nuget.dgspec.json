@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\zac\\source\\repos\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\zac\\source\\repos\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\zac\\source\\repos\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun.csproj",
+        "projectName": "OuterWildsRandomSpeedrun",
+        "projectPath": "C:\\Users\\zac\\source\\repos\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun.csproj",
+        "packagesPath": "C:\\Users\\zac\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\zac\\source\\repos\\OuterWildsRandomSpeedrun\\OuterWildsRandomSpeedrun\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\zac\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "targetAlias": "net48",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "targetAlias": "net48",
+          "dependencies": {
+            "OWML": {
+              "target": "Package",
+              "version": "[2.9.0, )"
+            },
+            "OuterWildsGameLibs": {
+              "target": "Package",
+              "version": "[1.1.13.393, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
