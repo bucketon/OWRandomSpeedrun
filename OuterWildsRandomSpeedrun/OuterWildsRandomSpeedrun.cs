@@ -72,6 +72,8 @@ namespace OuterWildsRandomSpeedrun
             var player = GameObject.FindGameObjectWithTag("Player");
             var playerController = player.GetComponent<PlayerSpacesuit>();
             playerController.SuitUp();
+            var oxygenController = player.GetComponent<PlayerResources>();
+            oxygenController.UpdateOxygen();
             var ship = GameObject.FindGameObjectWithTag("Ship");
             ship.SetActive(false);
         }
