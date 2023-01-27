@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Linq;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace OuterWildsRandomSpeedrun
 {
@@ -68,6 +69,9 @@ namespace OuterWildsRandomSpeedrun
         {
             ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
             _spawner.DebugWarp(_spawner.GetSpawnPoint(_spawnPoint));
+            var player = GameObject.FindGameObjectWithTag("Player");
+            var playerController = player.GetComponent<PlayerSpacesuit>();
+            playerController.SuitUp();
         }
 
         private void OnEvent(MonoBehaviour behaviour, Events ev)
@@ -82,16 +86,17 @@ namespace OuterWildsRandomSpeedrun
             {
                 if (_isStarted)
                 {
-                    HandleBasicWarp();
+                    _onceFlag = false;
                 }
             }
         }
 
         protected void GetSpawnPoints()
         {
-            if (_spawner == null)
+            _spawner = GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
+            if (_spawnPoints == null)
             {
-                _spawner = GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
+                ModHelper.Console.WriteLine($"initialize spawner.", MessageType.Info);
                 var spawnPointsField = typeof(PlayerSpawner)
                     .GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
                 var spawnPoints = spawnPointsField?.GetValue(_spawner) as SpawnPoint[];
@@ -104,10 +109,10 @@ namespace OuterWildsRandomSpeedrun
 
         protected SpawnLocation randomSpawnPoint()
         {
-            SpawnLocation[] validSpawnPoints = { 
+            List<SpawnLocation> validSpawnPoints = new List<SpawnLocation> { 
                 SpawnLocation.HourglassTwin_1,
                 SpawnLocation.HourglassTwin_2,
-                SpawnLocation.GasGiant,
+                //SpawnLocation.GasGiant,
                 SpawnLocation.BrittleHollow,
                 SpawnLocation.DarkBramble,
                 SpawnLocation.GasGiantMoon,
@@ -118,7 +123,7 @@ namespace OuterWildsRandomSpeedrun
                 SpawnLocation.TimberHearth_Alt,
             };
             var random = new System.Random((int)Time.time);
-            var randIndex = random.Next(0, validSpawnPoints.Length);
+            var randIndex = random.Next(validSpawnPoints.Count);
             ModHelper.Console.WriteLine($"Spawn point {validSpawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
             return validSpawnPoints[randIndex];
         }
