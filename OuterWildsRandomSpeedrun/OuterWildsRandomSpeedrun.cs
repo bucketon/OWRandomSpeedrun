@@ -72,6 +72,8 @@ namespace OuterWildsRandomSpeedrun
             var player = GameObject.FindGameObjectWithTag("Player");
             var playerController = player.GetComponent<PlayerSpacesuit>();
             playerController.SuitUp();
+            var ship = GameObject.FindGameObjectWithTag("Ship");
+            ship.SetActive(false);
         }
 
         private void OnEvent(MonoBehaviour behaviour, Events ev)
