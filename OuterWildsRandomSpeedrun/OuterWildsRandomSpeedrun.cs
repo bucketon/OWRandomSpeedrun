@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Linq;
 using System.Collections.Generic;
 using OWML.Common.Menus;
+using System;
 
 namespace OuterWildsRandomSpeedrun
 {
@@ -19,13 +20,16 @@ namespace OuterWildsRandomSpeedrun
 
         protected PlayerSpawner _spawner;
 
-        protected bool _isGameStarted;
-
-        protected bool _shouldWarp;
-
         protected SpawnLocation _spawnPoint;
 
         protected IModButton _speedrunButton; 
+
+        private long _startTimeMillis;
+        private ScreenPrompt _timerPrompt;
+        private bool _modEnabled = false;
+        private bool _shouldStartTimer = false;
+        private bool _shouldWarp;
+        private bool _isGameStarted;
 
         private void Awake()
         {
@@ -46,6 +50,8 @@ namespace OuterWildsRandomSpeedrun
                 ModHelper.Console.WriteLine("Loaded into solar system!", MessageType.Success);
             };
 
+            GlobalMessenger<int>.AddListener("StartOfTimeLoop", new Callback<int>(this.OnStartOfTimeLoop));
+
             ModHelper.HarmonyHelper.EmptyMethod<DebugInputManager>("Awake");
             ModHelper.Events.Subscribe<DebugInputManager>(Events.AfterStart);
             ModHelper.Events.Subscribe<DebugInputManager>(Events.AfterAwake);
@@ -62,26 +68,44 @@ namespace OuterWildsRandomSpeedrun
 
         private void Update()
         {
-            if (_isGameStarted && _shouldWarp)
-            {
+            if (!_isGameStarted || !_modEnabled) {
+                return;
+            }
+
+            if (_shouldStartTimer) {
+                _shouldStartTimer = false;
+                _startTimeMillis = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+            }
+
+            if (_shouldWarp) {
                 HandleBasicWarp();
-                ShowTimerText();
+            }
+            
+            var elapsed = TimeSpan.FromMilliseconds(DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - _startTimeMillis);
+            var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
+            _timerPrompt.SetText($"<color={OW_ORANGE_COLOR}>{elapsedStr}</color>");
+        }
+
+        private void OnStartOfTimeLoop(int loopCount) {
+            if (_modEnabled) {
+                _shouldWarp = true;
+                CreateTimer();
             }
         }
 
-        private void ShowTimerText()
+        private void CreateTimer()
         {
             var screenPromptListObj = GameObject.Find("ScreenPromptListBottomLeft");
             var screenPromptList = screenPromptListObj.GetComponent<ScreenPromptList>();
             
-            var screenPrompt = new ScreenPrompt("");
-            screenPrompt.SetText($"<color={OW_ORANGE_COLOR}>01:02.235</color>");
+            _timerPrompt = new ScreenPrompt("");
             
             var font = GetFontByName(OW_MENU_FONT_NAME);
-            var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(screenPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
+            var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(_timerPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
             var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
             screenPromptList.AddScreenPrompt(screenPromptElement);
         }
+
         private void HandleBasicWarp()
         {
             _shouldWarp = false;
@@ -112,11 +136,13 @@ namespace OuterWildsRandomSpeedrun
             }
             if (behaviour is TitleScreenManager && ev == Events.AfterStart) {
                 _isGameStarted = false;
+                _modEnabled = false;
             }
         }
 
         private void SpeedRunButton_OnClick() {
-            _shouldWarp = true;
+            _modEnabled = true;
+            _shouldStartTimer = true;
             GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
         }
 
