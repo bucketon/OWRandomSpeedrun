@@ -12,6 +12,8 @@ namespace OuterWildsRandomSpeedrun
     {
         private const string SPEEDRUN_BUTTON_TEXT = "NOMAI GRAND PRIX";
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
+        private const string OW_ORANGE_COLOR = "#F67E34";
+        private const string OW_MENU_FONT_NAME = "Adobe - SerifGothicStd-ExtraBold";
         protected SpawnPoint[] _spawnPoints;
         protected int _spawnPointIndex = 0;
 
@@ -36,7 +38,6 @@ namespace OuterWildsRandomSpeedrun
         {
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
-
 
             // Example of accessing game code.
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
@@ -64,9 +65,23 @@ namespace OuterWildsRandomSpeedrun
             if (_isGameStarted && _shouldWarp)
             {
                 HandleBasicWarp();
+                ShowTimerText();
             }
         }
 
+        private void ShowTimerText()
+        {
+            var screenPromptListObj = GameObject.Find("ScreenPromptListBottomLeft");
+            var screenPromptList = screenPromptListObj.GetComponent<ScreenPromptList>();
+            
+            var screenPrompt = new ScreenPrompt("");
+            screenPrompt.SetText($"<color={OW_ORANGE_COLOR}>01:02.235</color>");
+            
+            var font = GetFontByName(OW_MENU_FONT_NAME);
+            var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(screenPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
+            var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
+            screenPromptList.AddScreenPrompt(screenPromptElement);
+        }
         private void HandleBasicWarp()
         {
             _shouldWarp = false;
@@ -81,6 +96,11 @@ namespace OuterWildsRandomSpeedrun
             oxygenController.UpdateOxygen();
             var ship = GameObject.FindGameObjectWithTag("Ship");
             ship.SetActive(false);
+        }
+
+        private Font GetFontByName(string name) {
+            var fonts = Resources.FindObjectsOfTypeAll(typeof(Font)) as Font[];
+            return fonts.First(font => font.name == name);
         }
 
         private void OnEvent(MonoBehaviour behaviour, Events ev)
@@ -103,7 +123,7 @@ namespace OuterWildsRandomSpeedrun
         protected void SetSpawnPoint()
         {
             InitSpawnPoints();
-            _spawnPoint = getRandomSpawnPoint();
+            _spawnPoint = GetRandomSpawnPoint();
         }
 
         protected void InitSpawnPoints() {
@@ -124,7 +144,7 @@ namespace OuterWildsRandomSpeedrun
             _spawner = GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected SpawnLocation getRandomSpawnPoint()
+        protected SpawnLocation GetRandomSpawnPoint()
         {
             List<SpawnLocation> validSpawnPoints = new List<SpawnLocation> { 
                 SpawnLocation.HourglassTwin_1,
