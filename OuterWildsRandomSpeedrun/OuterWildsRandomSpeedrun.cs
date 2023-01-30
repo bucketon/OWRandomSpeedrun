@@ -109,6 +109,7 @@ namespace OuterWildsRandomSpeedrun
             {
                 ModHelper.Console.WriteLine("isStarted!", MessageType.Success);
                 _isGameStarted = true;
+                _shouldWarp = true;
             }
             if (behaviour is TitleScreenManager && ev == Events.AfterStart) {
                 _isGameStarted = false;
