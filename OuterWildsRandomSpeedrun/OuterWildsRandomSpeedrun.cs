@@ -111,6 +111,7 @@ namespace OuterWildsRandomSpeedrun
             _shouldWarp = false;
             InitSpawner();
             InitSpawnPoints();
+            InitMapMarker();
             ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
             _spawner.DebugWarp(_spawnPoint);
             var player = GameObject.FindGameObjectWithTag("Player");
@@ -144,12 +145,6 @@ namespace OuterWildsRandomSpeedrun
             _modEnabled = true;
             _shouldStartTimer = true;
             GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
-        }
-
-        protected void SetSpawnPoint()
-        {
-            InitSpawnPoints();
-            InitMapMarker();
         }
 
         protected void InitSpawnPoints() {
