@@ -20,7 +20,7 @@ namespace OuterWildsRandomSpeedrun
 
         protected PlayerSpawner _spawner;
 
-        protected SpawnLocation _spawnPoint;
+        protected SpawnPoint _spawnPoint;
 
         protected IModButton _speedrunButton; 
 
@@ -112,7 +112,7 @@ namespace OuterWildsRandomSpeedrun
             InitSpawner();
             SetSpawnPoint();
             ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
-            _spawner.DebugWarp(_spawner.GetSpawnPoint(_spawnPoint));
+            _spawner.DebugWarp(_spawnPoint);
             var player = GameObject.FindGameObjectWithTag("Player");
             var playerController = player.GetComponent<PlayerSpacesuit>();
             playerController.SuitUp();
@@ -150,12 +150,13 @@ namespace OuterWildsRandomSpeedrun
         {
             InitSpawnPoints();
             _spawnPoint = GetRandomSpawnPoint();
+            InitMapMarker();
         }
 
         protected void InitSpawnPoints() {
-            if (_spawnPoints != null) {
-                return;
-            }
+            //if (_spawnPoints != null) {
+            //    return;
+            //}
 
             var spawnPointsField = typeof(PlayerSpawner)
                 .GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -163,6 +164,23 @@ namespace OuterWildsRandomSpeedrun
             _spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
 
             ModHelper.Console.WriteLine($"Registered {spawnPoints.Length} spawn points", MessageType.Info);
+
+            var stringbuilder = "";
+            foreach (var point in _spawnPoints)
+            {
+                stringbuilder += point.name;
+                stringbuilder += ", ";
+            }
+            ModHelper.Console.WriteLine(stringbuilder, MessageType.Info);
+        }
+
+        protected void InitMapMarker() {
+            var entries = FindObjectsOfType<ShipLogEntryLocation>();
+            var entryLocation = entries.Where(entry => { return entry._entryID.Equals("BH_OBSERVATORY"); }).First();
+            var markerManager = Locator.GetMarkerManager();
+            var canvasMarker = markerManager.InstantiateNewMarker();
+            markerManager.RegisterMarker(canvasMarker, entryLocation.transform, "GOAL");
+            canvasMarker.SetVisibility(true);
         }
 
         protected void InitSpawner() {
@@ -170,9 +188,9 @@ namespace OuterWildsRandomSpeedrun
             _spawner = GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected SpawnLocation GetRandomSpawnPoint()
+        protected SpawnPoint GetRandomSpawnPoint()
         {
-            List<SpawnLocation> validSpawnPoints = new List<SpawnLocation> { 
+            /*List<SpawnLocation> validSpawnPoints = new List<SpawnLocation> { 
                 SpawnLocation.HourglassTwin_1,
                 SpawnLocation.HourglassTwin_2,
                 //SpawnLocation.GasGiant,
@@ -184,11 +202,12 @@ namespace OuterWildsRandomSpeedrun
                 SpawnLocation.SignalDish,
                 SpawnLocation.SunStation,
                 SpawnLocation.TimberHearth_Alt,
-            };
+            };*/
             var random = new System.Random((int)Time.time);
-            var randIndex = random.Next(validSpawnPoints.Count);
-            ModHelper.Console.WriteLine($"Spawn point {validSpawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
-            return validSpawnPoints[randIndex];
+            var randIndex = random.Next(_spawnPoints.Length);
+
+            ModHelper.Console.WriteLine($"Spawn point {_spawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
+            return _spawnPoints[randIndex];
         }
     }
 }
