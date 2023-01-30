@@ -110,7 +110,7 @@ namespace OuterWildsRandomSpeedrun
         {
             _shouldWarp = false;
             InitSpawner();
-            SetSpawnPoint();
+            InitSpawnPoints();
             ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
             _spawner.DebugWarp(_spawnPoint);
             var player = GameObject.FindGameObjectWithTag("Player");
@@ -149,19 +149,18 @@ namespace OuterWildsRandomSpeedrun
         protected void SetSpawnPoint()
         {
             InitSpawnPoints();
-            _spawnPoint = GetRandomSpawnPoint();
             InitMapMarker();
         }
 
         protected void InitSpawnPoints() {
-            //if (_spawnPoints != null) {
-            //    return;
-            //}
-
             var spawnPointsField = typeof(PlayerSpawner)
                 .GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
             var spawnPoints = spawnPointsField?.GetValue(_spawner) as SpawnPoint[];
             _spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
+
+            if (_spawnPoint == null) {
+                _spawnPoint = GetRandomSpawnPoint();
+            }
 
             ModHelper.Console.WriteLine($"Registered {spawnPoints.Length} spawn points", MessageType.Info);
 
@@ -196,7 +195,7 @@ namespace OuterWildsRandomSpeedrun
                 //SpawnLocation.GasGiant,
                 SpawnLocation.BrittleHollow,
                 SpawnLocation.DarkBramble,
-                SpawnLocation.GasGiantMoon,
+                //SpawnLocation.GasGiantMoon,
                 SpawnLocation.QuantumMoon,
                 SpawnLocation.LunarLookout,
                 SpawnLocation.SignalDish,
