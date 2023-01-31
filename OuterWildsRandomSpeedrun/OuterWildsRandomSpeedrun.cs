@@ -21,6 +21,9 @@ namespace OuterWildsRandomSpeedrun
         protected PlayerSpawner _spawner;
 
         protected SpawnPoint _spawnPoint;
+        protected SpawnPoint _goalPoint;
+        protected string _spawnPointName;
+        protected string _goalPointName;
 
         protected IModButton _speedrunButton; 
 
@@ -30,6 +33,8 @@ namespace OuterWildsRandomSpeedrun
         private bool _shouldStartTimer = false;
         private bool _shouldWarp;
         private bool _isGameStarted;
+        private bool _shouldGenerateSpawnPoints;
+        private System.Random _random;
 
         private void Awake()
         {
@@ -40,6 +45,9 @@ namespace OuterWildsRandomSpeedrun
 
         private void Start()
         {
+            _random = new System.Random((int)DateTime.Now.Ticks);
+            _shouldGenerateSpawnPoints = true;
+
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
 
@@ -153,9 +161,14 @@ namespace OuterWildsRandomSpeedrun
             var spawnPoints = spawnPointsField?.GetValue(_spawner) as SpawnPoint[];
             _spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
 
-            if (_spawnPoint == null) {
-                _spawnPoint = GetRandomSpawnPoint();
+            if (_shouldGenerateSpawnPoints) {
+                _spawnPointName = GetRandomSpawnPointName();
+                _goalPointName = GetRandomSpawnPointName();
+                _shouldGenerateSpawnPoints = false;
             }
+
+            _spawnPoint = GetSpawnPointByName(_spawnPointName);
+            _goalPoint = GetSpawnPointByName(_goalPointName);
 
             ModHelper.Console.WriteLine($"Registered {spawnPoints.Length} spawn points", MessageType.Info);
 
@@ -169,11 +182,13 @@ namespace OuterWildsRandomSpeedrun
         }
 
         protected void InitMapMarker() {
-            var entries = FindObjectsOfType<ShipLogEntryLocation>();
-            var entryLocation = entries.Where(entry => { return entry._entryID.Equals("BH_OBSERVATORY"); }).First();
             var markerManager = Locator.GetMarkerManager();
             var canvasMarker = markerManager.InstantiateNewMarker();
-            markerManager.RegisterMarker(canvasMarker, entryLocation.transform, "GOAL");
+            markerManager.RegisterMarker(canvasMarker, _goalPoint.transform, "GOAL");
+            canvasMarker._mainTextField.color = Color.yellow;
+            canvasMarker._marker.material.color = Color.yellow;
+            canvasMarker._offScreenIndicator._textField.color = Color.yellow;
+            canvasMarker._offScreenIndicator.GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
             canvasMarker.SetVisibility(true);
         }
 
@@ -182,26 +197,16 @@ namespace OuterWildsRandomSpeedrun
             _spawner = GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected SpawnPoint GetRandomSpawnPoint()
-        {
-            /*List<SpawnLocation> validSpawnPoints = new List<SpawnLocation> { 
-                SpawnLocation.HourglassTwin_1,
-                SpawnLocation.HourglassTwin_2,
-                //SpawnLocation.GasGiant,
-                SpawnLocation.BrittleHollow,
-                SpawnLocation.DarkBramble,
-                //SpawnLocation.GasGiantMoon,
-                SpawnLocation.QuantumMoon,
-                SpawnLocation.LunarLookout,
-                SpawnLocation.SignalDish,
-                SpawnLocation.SunStation,
-                SpawnLocation.TimberHearth_Alt,
-            };*/
-            var random = new System.Random((int)Time.time);
-            var randIndex = random.Next(_spawnPoints.Length);
+        protected string GetRandomSpawnPointName()
+        {   
+            var randIndex = _random.Next(_spawnPoints.Length);
 
             ModHelper.Console.WriteLine($"Spawn point {_spawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
-            return _spawnPoints[randIndex];
+            return _spawnPoints[randIndex].name;
+        }
+        protected SpawnPoint GetSpawnPointByName(string name)
+        {
+            return _spawnPoints.Where(point => { return point.name.Equals(name); }).First();
         }
     }
 }
