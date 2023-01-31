@@ -24,7 +24,7 @@ namespace OuterWildsRandomSpeedrun
 
         protected IModButton _speedrunButton; 
 
-        private long _startTimeMillis;
+        private DateTime _startTime;
         private ScreenPrompt _timerPrompt;
         private bool _modEnabled = false;
         private bool _shouldStartTimer = false;
@@ -74,14 +74,14 @@ namespace OuterWildsRandomSpeedrun
 
             if (_shouldStartTimer) {
                 _shouldStartTimer = false;
-                _startTimeMillis = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                _startTime = DateTime.Now;
             }
 
             if (_shouldWarp) {
                 HandleBasicWarp();
             }
-            
-            var elapsed = TimeSpan.FromMilliseconds(DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - _startTimeMillis);
+
+            var elapsed = DateTime.Now - _startTime;
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color={OW_ORANGE_COLOR}>{elapsedStr}</color>");
         }
