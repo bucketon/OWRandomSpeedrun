@@ -13,8 +13,8 @@ namespace OuterWildsRandomSpeedrun
     {
         private const string SPEEDRUN_BUTTON_TEXT = "NOMAI GRAND PRIX";
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
-        private const string OW_ORANGE_COLOR = "#F67E34";
         private const string OW_MENU_FONT_NAME = "Adobe - SerifGothicStd-ExtraBold";
+        private static Color OW_ORANGE_COLOR = new Color(0.968f, 0.498f, 0.207f);
         protected SpawnPoint[] _spawnPoints;
         protected int _spawnPointIndex = 0;
 
@@ -91,7 +91,7 @@ namespace OuterWildsRandomSpeedrun
 
             var elapsed = DateTime.Now - _startTime;
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
-            _timerPrompt.SetText($"<color={OW_ORANGE_COLOR}>{elapsedStr}</color>");
+            _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(OW_ORANGE_COLOR)}>{elapsedStr}</color>");
         }
 
         private void OnStartOfTimeLoop(int loopCount) {
@@ -107,7 +107,6 @@ namespace OuterWildsRandomSpeedrun
             var screenPromptList = screenPromptListObj.GetComponent<ScreenPromptList>();
             
             _timerPrompt = new ScreenPrompt("");
-            
             var font = GetFontByName(OW_MENU_FONT_NAME);
             var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(_timerPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
             var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
@@ -185,10 +184,10 @@ namespace OuterWildsRandomSpeedrun
             var markerManager = Locator.GetMarkerManager();
             var canvasMarker = markerManager.InstantiateNewMarker();
             markerManager.RegisterMarker(canvasMarker, _goalPoint.transform, "GOAL");
-            canvasMarker._mainTextField.color = Color.yellow;
-            canvasMarker._marker.material.color = Color.yellow;
-            canvasMarker._offScreenIndicator._textField.color = Color.yellow;
-            canvasMarker._offScreenIndicator.GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+            canvasMarker._mainTextField.color = OW_ORANGE_COLOR;
+            canvasMarker._marker.material.color = OW_ORANGE_COLOR;
+            canvasMarker._offScreenIndicator._textField.color = OW_ORANGE_COLOR;
+            canvasMarker._offScreenIndicator.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
             canvasMarker.SetVisibility(true);
         }
 
