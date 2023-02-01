@@ -1,4 +1,4 @@
-﻿using OWML.Common;
+using OWML.Common;
 using OWML.ModHelper;
 using UnityEngine;
 using System.Reflection;
