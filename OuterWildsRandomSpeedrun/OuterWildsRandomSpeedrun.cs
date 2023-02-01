@@ -1,9 +1,8 @@
-﻿using OWML.Common;
+using OWML.Common;
 using OWML.ModHelper;
 using UnityEngine;
 using System.Reflection;
 using System.Linq;
-using System.Collections.Generic;
 using OWML.Common.Menus;
 using System;
 
@@ -15,25 +14,30 @@ namespace OuterWildsRandomSpeedrun
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
         private const string OW_MENU_FONT_NAME = "Adobe - SerifGothicStd-ExtraBold";
         private static Color OW_ORANGE_COLOR = new Color(0.968f, 0.498f, 0.207f);
-        protected SpawnPoint[] _spawnPoints;
-        protected int _spawnPointIndex = 0;
 
-        protected PlayerSpawner _spawner;
-
-        protected SpawnPoint _spawnPoint;
-        protected SpawnPoint _goalPoint;
-        protected string _spawnPointName;
-        protected string _goalPointName;
-
-        protected IModButton _speedrunButton; 
-
+        private SpawnPoint _goalPoint;
+        private string _spawnPointName;
+        private string _goalPointName;
+        private IModButton _speedrunButton; 
         private DateTime _startTime;
         private ScreenPrompt _timerPrompt;
         private bool _modEnabled = false;
-        private bool _shouldStartTimer = false;
-        private bool _shouldWarp;
+
+        /// <summary>
+        /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
+        /// </summary>
+        private bool _justEnteredGame = false;
+
+        /// <summary>
+        /// Set to true when we have just began a time loop and have pending operations to complete, false otherwise.
+        /// </summary>
+        private bool _justStartedTimeLoop;
+
+        /// <summary>
+        /// Set to true when we are in the game (including death/meditation), and false if we are elsewhere (the title screen).
+        /// </summary>
         private bool _isGameStarted;
-        private bool _shouldGenerateSpawnPoints;
+        
         private System.Random _random;
 
         private void Awake()
@@ -45,13 +49,10 @@ namespace OuterWildsRandomSpeedrun
 
         private void Start()
         {
-            _random = new System.Random((int)DateTime.Now.Ticks);
-            _shouldGenerateSpawnPoints = true;
-
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
 
-            // Example of accessing game code.
+            _random = new System.Random((int)DateTime.Now.Ticks);
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
             {
                 if (loadScene != OWScene.SolarSystem) return;
@@ -80,13 +81,18 @@ namespace OuterWildsRandomSpeedrun
                 return;
             }
 
-            if (_shouldStartTimer) {
-                _shouldStartTimer = false;
+            if (_justEnteredGame) {
+                _justEnteredGame = false;
                 _startTime = DateTime.Now;
+                ResetSpawnNames();
             }
 
-            if (_shouldWarp) {
-                HandleBasicWarp();
+            if (_justStartedTimeLoop) {
+                _justStartedTimeLoop = false;
+                var spawner = GetSpawner();
+                var spawnPoints = GetSpawnPoints(spawner);
+                HandleBasicWarp(spawner, spawnPoints);
+                InitMapMarker();
             }
 
             var elapsed = DateTime.Now - _startTime;
@@ -96,9 +102,14 @@ namespace OuterWildsRandomSpeedrun
 
         private void OnStartOfTimeLoop(int loopCount) {
             if (_modEnabled) {
-                _shouldWarp = true;
+                _justStartedTimeLoop = true;
                 CreateTimer();
             }
+        }
+
+        private void ResetSpawnNames() {
+            _spawnPointName = null;
+            _goalPointName = null;
         }
 
         private void CreateTimer()
@@ -113,14 +124,17 @@ namespace OuterWildsRandomSpeedrun
             screenPromptList.AddScreenPrompt(screenPromptElement);
         }
 
-        private void HandleBasicWarp()
+        private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
         {
-            _shouldWarp = false;
-            InitSpawner();
-            InitSpawnPoints();
-            InitMapMarker();
-            ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
-            _spawner.DebugWarp(_spawnPoint);
+            if (_spawnPointName == null || _goalPointName == null) {
+                _spawnPointName = GetRandomSpawnPointName(spawnPoints);
+                _goalPointName = GetRandomSpawnPointName(spawnPoints);
+            }
+
+            var spawnPoint = GetSpawnPointByName(spawnPoints, _spawnPointName);
+            _goalPoint = GetSpawnPointByName(spawnPoints, _goalPointName);
+            ModHelper.Console.WriteLine($"Warp to {spawnPoint.ToString()}!", MessageType.Success);
+            spawner.DebugWarp(spawnPoint);
             var player = GameObject.FindGameObjectWithTag("Player");
             var playerController = player.GetComponent<PlayerSpacesuit>();
             playerController.SuitUp();
@@ -150,34 +164,27 @@ namespace OuterWildsRandomSpeedrun
 
         private void SpeedRunButton_OnClick() {
             _modEnabled = true;
-            _shouldStartTimer = true;
+            _justEnteredGame = true;
             GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
         }
 
-        protected void InitSpawnPoints() {
+        protected SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner) {
             var spawnPointsField = typeof(PlayerSpawner)
                 .GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
-            var spawnPoints = spawnPointsField?.GetValue(_spawner) as SpawnPoint[];
-            _spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
-
-            if (_shouldGenerateSpawnPoints) {
-                _spawnPointName = GetRandomSpawnPointName();
-                _goalPointName = GetRandomSpawnPointName();
-                _shouldGenerateSpawnPoints = false;
-            }
-
-            _spawnPoint = GetSpawnPointByName(_spawnPointName);
-            _goalPoint = GetSpawnPointByName(_goalPointName);
+            var spawnPoints = spawnPointsField?.GetValue(spawner) as SpawnPoint[];
+            spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
 
             ModHelper.Console.WriteLine($"Registered {spawnPoints.Length} spawn points", MessageType.Info);
 
             var stringbuilder = "";
-            foreach (var point in _spawnPoints)
+            foreach (var point in spawnPoints)
             {
                 stringbuilder += point.name;
                 stringbuilder += ", ";
             }
             ModHelper.Console.WriteLine(stringbuilder, MessageType.Info);
+
+            return spawnPoints;
         }
 
         protected void InitMapMarker() {
@@ -191,21 +198,21 @@ namespace OuterWildsRandomSpeedrun
             canvasMarker.SetVisibility(true);
         }
 
-        protected void InitSpawner() {
+        protected PlayerSpawner GetSpawner() {
             ModHelper.Console.WriteLine($"initialize spawner.", MessageType.Info);
-            _spawner = GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
+            return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected string GetRandomSpawnPointName()
+        protected string GetRandomSpawnPointName(SpawnPoint[] spawnPoints)
         {   
-            var randIndex = _random.Next(_spawnPoints.Length);
+            var randIndex = _random.Next(spawnPoints.Length);
 
-            ModHelper.Console.WriteLine($"Spawn point {_spawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
-            return _spawnPoints[randIndex].name;
+            ModHelper.Console.WriteLine($"Spawn point {spawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
+            return spawnPoints[randIndex].name;
         }
-        protected SpawnPoint GetSpawnPointByName(string name)
+        protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
-            return _spawnPoints.Where(point => { return point.name.Equals(name); }).First();
+            return spawnPoints.Where(point => { return point.name.Equals(name); }).First();
         }
     }
 }
