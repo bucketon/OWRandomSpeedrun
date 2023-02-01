@@ -187,7 +187,7 @@ namespace OuterWildsRandomSpeedrun
             canvasMarker._mainTextField.color = OW_ORANGE_COLOR;
             canvasMarker._marker.material.color = OW_ORANGE_COLOR;
             canvasMarker._offScreenIndicator._textField.color = OW_ORANGE_COLOR;
-            canvasMarker._offScreenIndicator.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
+            canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
             canvasMarker.SetVisibility(true);
         }
 
