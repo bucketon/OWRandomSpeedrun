@@ -1,9 +1,8 @@
-﻿using OWML.Common;
+using OWML.Common;
 using OWML.ModHelper;
 using UnityEngine;
 using System.Reflection;
 using System.Linq;
-using System.Collections.Generic;
 using OWML.Common.Menus;
 using System;
 
@@ -13,23 +12,33 @@ namespace OuterWildsRandomSpeedrun
     {
         private const string SPEEDRUN_BUTTON_TEXT = "NOMAI GRAND PRIX";
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
-        private const string OW_ORANGE_COLOR = "#F67E34";
         private const string OW_MENU_FONT_NAME = "Adobe - SerifGothicStd-ExtraBold";
-        protected SpawnPoint[] _spawnPoints;
-        protected int _spawnPointIndex = 0;
+        private static Color OW_ORANGE_COLOR = new Color(0.968f, 0.498f, 0.207f);
 
-        protected PlayerSpawner _spawner;
-
-        protected SpawnLocation _spawnPoint;
-
-        protected IModButton _speedrunButton; 
-
+        private SpawnPoint _goalPoint;
+        private string _spawnPointName;
+        private string _goalPointName;
+        private IModButton _speedrunButton; 
         private DateTime _startTime;
         private ScreenPrompt _timerPrompt;
         private bool _modEnabled = false;
-        private bool _shouldStartTimer = false;
-        private bool _shouldWarp;
+
+        /// <summary>
+        /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
+        /// </summary>
+        private bool _justEnteredGame = false;
+
+        /// <summary>
+        /// Set to true when we have just began a time loop and have pending operations to complete, false otherwise.
+        /// </summary>
+        private bool _justStartedTimeLoop;
+
+        /// <summary>
+        /// Set to true when we are in the game (including death/meditation), and false if we are elsewhere (the title screen).
+        /// </summary>
         private bool _isGameStarted;
+        
+        private System.Random _random;
 
         private void Awake()
         {
@@ -43,7 +52,7 @@ namespace OuterWildsRandomSpeedrun
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
 
-            // Example of accessing game code.
+            _random = new System.Random((int)DateTime.Now.Ticks);
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
             {
                 if (loadScene != OWScene.SolarSystem) return;
@@ -72,25 +81,35 @@ namespace OuterWildsRandomSpeedrun
                 return;
             }
 
-            if (_shouldStartTimer) {
-                _shouldStartTimer = false;
+            if (_justEnteredGame) {
+                _justEnteredGame = false;
                 _startTime = DateTime.Now;
+                ResetSpawnNames();
             }
 
-            if (_shouldWarp) {
-                HandleBasicWarp();
+            if (_justStartedTimeLoop) {
+                _justStartedTimeLoop = false;
+                var spawner = GetSpawner();
+                var spawnPoints = GetSpawnPoints(spawner);
+                HandleBasicWarp(spawner, spawnPoints);
+                InitMapMarker();
             }
 
             var elapsed = DateTime.Now - _startTime;
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
-            _timerPrompt.SetText($"<color={OW_ORANGE_COLOR}>{elapsedStr}</color>");
+            _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(OW_ORANGE_COLOR)}>{elapsedStr}</color>");
         }
 
         private void OnStartOfTimeLoop(int loopCount) {
             if (_modEnabled) {
-                _shouldWarp = true;
+                _justStartedTimeLoop = true;
                 CreateTimer();
             }
+        }
+
+        private void ResetSpawnNames() {
+            _spawnPointName = null;
+            _goalPointName = null;
         }
 
         private void CreateTimer()
@@ -99,20 +118,23 @@ namespace OuterWildsRandomSpeedrun
             var screenPromptList = screenPromptListObj.GetComponent<ScreenPromptList>();
             
             _timerPrompt = new ScreenPrompt("");
-            
             var font = GetFontByName(OW_MENU_FONT_NAME);
             var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(_timerPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
             var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
             screenPromptList.AddScreenPrompt(screenPromptElement);
         }
 
-        private void HandleBasicWarp()
+        private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
         {
-            _shouldWarp = false;
-            InitSpawner();
-            InitSpawnPoints();
-            ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
-            _spawner.DebugWarp(_spawner.GetSpawnPoint(_spawnPoint));
+            if (_spawnPointName == null || _goalPointName == null) {
+                _spawnPointName = GetRandomSpawnPointName(spawnPoints);
+                _goalPointName = GetRandomSpawnPointName(spawnPoints);
+            }
+
+            var spawnPoint = GetSpawnPointByName(spawnPoints, _spawnPointName);
+            _goalPoint = GetSpawnPointByName(spawnPoints, _goalPointName);
+            ModHelper.Console.WriteLine($"Warp to {spawnPoint.ToString()}!", MessageType.Success);
+            spawner.DebugWarp(spawnPoint);
             var player = GameObject.FindGameObjectWithTag("Player");
             var playerController = player.GetComponent<PlayerSpacesuit>();
             playerController.SuitUp();
@@ -142,49 +164,55 @@ namespace OuterWildsRandomSpeedrun
 
         private void SpeedRunButton_OnClick() {
             _modEnabled = true;
-            _shouldStartTimer = true;
+            _justEnteredGame = true;
             GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
         }
 
-        protected void InitSpawnPoints() {
-            if (_spawnPoints != null) {
-                return;
-            }
-
+        protected SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner) {
             var spawnPointsField = typeof(PlayerSpawner)
                 .GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
-            var spawnPoints = spawnPointsField?.GetValue(_spawner) as SpawnPoint[];
-            _spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
-
-            _spawnPoint = GetRandomSpawnPoint();
+            var spawnPoints = spawnPointsField?.GetValue(spawner) as SpawnPoint[];
+            spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
 
             ModHelper.Console.WriteLine($"Registered {spawnPoints.Length} spawn points", MessageType.Info);
+
+            var stringbuilder = "";
+            foreach (var point in spawnPoints)
+            {
+                stringbuilder += point.name;
+                stringbuilder += ", ";
+            }
+            ModHelper.Console.WriteLine(stringbuilder, MessageType.Info);
+
+            return spawnPoints;
         }
 
-        protected void InitSpawner() {
+        protected void InitMapMarker() {
+            var markerManager = Locator.GetMarkerManager();
+            var canvasMarker = markerManager.InstantiateNewMarker();
+            markerManager.RegisterMarker(canvasMarker, _goalPoint.transform, "GOAL");
+            canvasMarker._mainTextField.color = OW_ORANGE_COLOR;
+            canvasMarker._marker.material.color = OW_ORANGE_COLOR;
+            canvasMarker._offScreenIndicator._textField.color = OW_ORANGE_COLOR;
+            canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
+            canvasMarker.SetVisibility(true);
+        }
+
+        protected PlayerSpawner GetSpawner() {
             ModHelper.Console.WriteLine($"initialize spawner.", MessageType.Info);
-            _spawner = GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
+            return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected SpawnLocation GetRandomSpawnPoint()
+        protected string GetRandomSpawnPointName(SpawnPoint[] spawnPoints)
+        {   
+            var randIndex = _random.Next(spawnPoints.Length);
+
+            ModHelper.Console.WriteLine($"Spawn point {spawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
+            return spawnPoints[randIndex].name;
+        }
+        protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
-            List<SpawnLocation> validSpawnPoints = new List<SpawnLocation> { 
-                SpawnLocation.HourglassTwin_1,
-                SpawnLocation.HourglassTwin_2,
-                //SpawnLocation.GasGiant,
-                SpawnLocation.BrittleHollow,
-                SpawnLocation.DarkBramble,
-                //SpawnLocation.GasGiantMoon,
-                SpawnLocation.QuantumMoon,
-                SpawnLocation.LunarLookout,
-                SpawnLocation.SignalDish,
-                SpawnLocation.SunStation,
-                SpawnLocation.TimberHearth_Alt,
-            };
-            var random = new System.Random((int)Time.time);
-            var randIndex = random.Next(validSpawnPoints.Count);
-            ModHelper.Console.WriteLine($"Spawn point {validSpawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
-            return validSpawnPoints[randIndex];
+            return spawnPoints.Where(point => { return point.name.Equals(name); }).First();
         }
     }
 }
