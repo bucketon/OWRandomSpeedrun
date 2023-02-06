@@ -22,6 +22,8 @@ namespace OuterWildsRandomSpeedrun
         private DateTime _startTime;
         private ScreenPrompt _timerPrompt;
         private bool _modEnabled = false;
+        private Mesh marshmallowMesh;
+        private Material marshmallowMaterial;
 
         /// <summary>
         /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
@@ -85,6 +87,8 @@ namespace OuterWildsRandomSpeedrun
                 _justEnteredGame = false;
                 _startTime = DateTime.Now;
                 ResetSpawnNames();
+                _spawnPointName = "Spawn_TH";
+                _goalPointName = "Spawn_TH_IMP";
             }
 
             if (_justStartedTimeLoop) {
@@ -93,6 +97,7 @@ namespace OuterWildsRandomSpeedrun
                 var spawnPoints = GetSpawnPoints(spawner);
                 HandleBasicWarp(spawner, spawnPoints);
                 InitMapMarker();
+                SpawnGoal(_goalPoint.transform);
             }
 
             var elapsed = DateTime.Now - _startTime;
@@ -213,6 +218,35 @@ namespace OuterWildsRandomSpeedrun
         protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
             return spawnPoints.Where(point => { return point.name.Equals(name); }).First();
+        }
+
+        protected void SpawnGoal(Transform parent)
+        {
+            var go = new GameObject("GoalPoint");
+            var collider = go.AddComponent<SphereCollider>();
+            collider.isTrigger = true;
+
+            var mesh = new GameObject("CollectibleMarshmellow_Mesh");
+            if (marshmallowMesh == null)
+                marshmallowMesh = GameObject.Find("Player_Body/RoastingSystem/Stick_Root/Stick_Pivot/Stick_Tip/Mallow_Root/Props_HEA_Marshmallow").GetComponent<MeshFilter>().mesh;
+            if (marshmallowMaterial == null)
+                marshmallowMaterial = GameObject.Find("Player_Body/RoastingSystem/Stick_Root/Stick_Pivot/Stick_Tip/Mallow_Root/Props_HEA_Marshmallow").GetComponent<MeshRenderer>().material;
+
+            mesh.AddComponent<MeshFilter>().mesh = marshmallowMesh;
+            mesh.AddComponent<MeshRenderer>().material = marshmallowMaterial;
+            mesh.transform.parent = go.transform;
+            mesh.transform.localScale = Vector3.one * 10f;
+            mesh.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+
+            Marshmallow marshmallow = go.AddComponent<Marshmallow>();
+            marshmallow.OnCollected += () =>
+            {
+                ModHelper.Console.WriteLine($"VICTORY!!!!", MessageType.Info);
+                //stop the clock
+            };
+
+            go.transform.parent = parent;
+            go.transform.localPosition = new Vector3(parent.position.x, parent.position.y, parent.position.z);
         }
     }
 }
