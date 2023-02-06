@@ -142,6 +142,8 @@ namespace OuterWildsRandomSpeedrun
             oxygenController.UpdateOxygen();
             var ship = GameObject.FindGameObjectWithTag("Ship");
             ship.SetActive(false);
+            var villageMusicController = FindObjectOfType<VillageMusicVolume>();
+            villageMusicController.OnEffectVolumeExit(spawner.gameObject);
         }
 
         private Font GetFontByName(string name) {
