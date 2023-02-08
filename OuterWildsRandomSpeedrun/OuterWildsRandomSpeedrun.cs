@@ -20,10 +20,12 @@ namespace OuterWildsRandomSpeedrun
         private string _goalPointName;
         private IModButton _speedrunButton; 
         private DateTime _startTime;
+        private DateTime _endTime;
         private ScreenPrompt _timerPrompt;
         private bool _modEnabled = false;
         private Mesh marshmallowMesh;
         private Material marshmallowMaterial;
+        private CanvasMarker canvasMarker;
 
         /// <summary>
         /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
@@ -100,7 +102,8 @@ namespace OuterWildsRandomSpeedrun
                 SpawnGoal(_goalPoint.transform);
             }
 
-            var elapsed = DateTime.Now - _startTime;
+            var elapsed = _endTime == DateTime.MinValue ? DateTime.Now - _startTime : _endTime - _startTime;
+            
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(OW_ORANGE_COLOR)}>{elapsedStr}</color>");
         }
@@ -194,7 +197,7 @@ namespace OuterWildsRandomSpeedrun
 
         protected void InitMapMarker() {
             var markerManager = Locator.GetMarkerManager();
-            var canvasMarker = markerManager.InstantiateNewMarker();
+            canvasMarker = markerManager.InstantiateNewMarker();
             markerManager.RegisterMarker(canvasMarker, _goalPoint.transform, "GOAL");
             canvasMarker._mainTextField.color = OW_ORANGE_COLOR;
             canvasMarker._marker.material.color = OW_ORANGE_COLOR;
@@ -242,11 +245,13 @@ namespace OuterWildsRandomSpeedrun
             marshmallow.OnCollected += () =>
             {
                 ModHelper.Console.WriteLine($"VICTORY!!!!", MessageType.Info);
-                //stop the clock
+                _endTime = DateTime.Now;
+                marshmallow.gameObject.SetActive(false);
+                canvasMarker.gameObject.SetActive(false);
             };
 
             go.transform.parent = parent;
-            go.transform.localPosition = new Vector3(parent.position.x, parent.position.y, parent.position.z);
+            go.transform.localPosition = new Vector3(0, 0, 0);
         }
     }
 }
