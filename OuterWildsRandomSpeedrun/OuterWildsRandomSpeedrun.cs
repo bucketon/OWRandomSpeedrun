@@ -182,6 +182,12 @@ namespace OuterWildsRandomSpeedrun
 
         private void SpeedRunButton_OnClick()
         {
+            if (TimeLoop._timeLoopEnabled)
+            {
+                ModHelper.Menus.PopupManager.CreateMessagePopup("Finish the tutorial first!");
+                return;
+            }
+
             _modEnabled = true;
             _justEnteredGame = true;
             GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
