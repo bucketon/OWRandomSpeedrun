@@ -10,7 +10,9 @@ namespace OuterWildsRandomSpeedrun
         public void OnTriggerEnter(Collider collider)
         {
             if (collider == Locator.GetPlayerCollider())
+            {
                 Collect();
+            }   
         }
 
         public void Collect()

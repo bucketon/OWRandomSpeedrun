@@ -20,12 +20,12 @@ namespace OuterWildsRandomSpeedrun
         private string _goalPointName;
         private IModButton _speedrunButton; 
         private DateTime _startTime;
-        private DateTime _endTime;
+        private DateTime _endTime = DateTime.MinValue;
         private ScreenPrompt _timerPrompt;
         private bool _modEnabled = false;
-        private Mesh marshmallowMesh;
-        private Material marshmallowMaterial;
-        private CanvasMarker canvasMarker;
+        private Mesh _marshmallowMesh;
+        private Material _marshmallowMaterial;
+        private CanvasMarker _canvasMarker;
 
         /// <summary>
         /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
@@ -89,8 +89,6 @@ namespace OuterWildsRandomSpeedrun
                 _justEnteredGame = false;
                 _startTime = DateTime.Now;
                 ResetSpawnNames();
-                _spawnPointName = "Spawn_TH";
-                _goalPointName = "Spawn_TH_IMP";
             }
 
             if (_justStartedTimeLoop) {
@@ -197,13 +195,13 @@ namespace OuterWildsRandomSpeedrun
 
         protected void InitMapMarker() {
             var markerManager = Locator.GetMarkerManager();
-            canvasMarker = markerManager.InstantiateNewMarker();
-            markerManager.RegisterMarker(canvasMarker, _goalPoint.transform, "GOAL");
-            canvasMarker._mainTextField.color = OW_ORANGE_COLOR;
-            canvasMarker._marker.material.color = OW_ORANGE_COLOR;
-            canvasMarker._offScreenIndicator._textField.color = OW_ORANGE_COLOR;
-            canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
-            canvasMarker.SetVisibility(true);
+            _canvasMarker = markerManager.InstantiateNewMarker();
+            markerManager.RegisterMarker(_canvasMarker, _goalPoint.transform, "GOAL");
+            _canvasMarker._mainTextField.color = OW_ORANGE_COLOR;
+            _canvasMarker._marker.material.color = OW_ORANGE_COLOR;
+            _canvasMarker._offScreenIndicator._textField.color = OW_ORANGE_COLOR;
+            _canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
+            _canvasMarker.SetVisibility(true);
         }
 
         protected PlayerSpawner GetSpawner() {
@@ -230,13 +228,14 @@ namespace OuterWildsRandomSpeedrun
             collider.isTrigger = true;
 
             var mesh = new GameObject("CollectibleMarshmellow_Mesh");
-            if (marshmallowMesh == null)
-                marshmallowMesh = GameObject.Find("Player_Body/RoastingSystem/Stick_Root/Stick_Pivot/Stick_Tip/Mallow_Root/Props_HEA_Marshmallow").GetComponent<MeshFilter>().mesh;
-            if (marshmallowMaterial == null)
-                marshmallowMaterial = GameObject.Find("Player_Body/RoastingSystem/Stick_Root/Stick_Pivot/Stick_Tip/Mallow_Root/Props_HEA_Marshmallow").GetComponent<MeshRenderer>().material;
+            var marshmallowGameObject = GameObject.Find("Player_Body/RoastingSystem/Stick_Root/Stick_Pivot/Stick_Tip/Mallow_Root/Props_HEA_Marshmallow");
+            if (_marshmallowMesh == null)
+                _marshmallowMesh = marshmallowGameObject.GetComponent<MeshFilter>().mesh;
+            if (_marshmallowMaterial == null)
+                _marshmallowMaterial = marshmallowGameObject.GetComponent<MeshRenderer>().material;
 
-            mesh.AddComponent<MeshFilter>().mesh = marshmallowMesh;
-            mesh.AddComponent<MeshRenderer>().material = marshmallowMaterial;
+            mesh.AddComponent<MeshFilter>().mesh = _marshmallowMesh;
+            mesh.AddComponent<MeshRenderer>().material = _marshmallowMaterial;
             mesh.transform.parent = go.transform;
             mesh.transform.localScale = Vector3.one * 10f;
             mesh.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
@@ -247,7 +246,7 @@ namespace OuterWildsRandomSpeedrun
                 ModHelper.Console.WriteLine($"VICTORY!!!!", MessageType.Info);
                 _endTime = DateTime.Now;
                 marshmallow.gameObject.SetActive(false);
-                canvasMarker.gameObject.SetActive(false);
+                _canvasMarker.gameObject.SetActive(false);
             };
 
             go.transform.parent = parent;
