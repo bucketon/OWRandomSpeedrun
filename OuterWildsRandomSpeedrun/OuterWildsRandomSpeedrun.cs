@@ -197,9 +197,7 @@ namespace OuterWildsRandomSpeedrun
         
         private void ResetRunButton_OnClick()
         {
-            _modEnabled = true;
             _justEnteredGame = true;
-            ResetSpawnNames();
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
             ModHelper.Menus.PauseMenu.Close();
         }
