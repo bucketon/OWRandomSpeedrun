@@ -14,11 +14,13 @@ namespace OuterWildsRandomSpeedrun
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
         private const string OW_MENU_FONT_NAME = "Adobe - SerifGothicStd-ExtraBold";
         private static Color OW_ORANGE_COLOR = new Color(0.968f, 0.498f, 0.207f);
+        private const string RESET_RUN_BUTTON_TEXT = "RESET SPAWN AND GOAL";
 
         private SpawnPoint _goalPoint;
         private string _spawnPointName;
         private string _goalPointName;
         private IModButton _speedrunButton;
+        private IModButton _resetRunButton;
         private DateTime _startTime;
         private DateTime _endTime = DateTime.MinValue;
         private ScreenPrompt _timerPrompt;
@@ -77,6 +79,12 @@ namespace OuterWildsRandomSpeedrun
             {
                 _speedrunButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate(SPEEDRUN_BUTTON_TEXT);
                 _speedrunButton.OnClick += SpeedRunButton_OnClick;
+            };
+
+            ModHelper.Menus.PauseMenu.OnInit += () =>
+            {
+                _resetRunButton = ModHelper.Menus.PauseMenu.QuitButton.Duplicate(RESET_RUN_BUTTON_TEXT);
+                _resetRunButton.OnClick += ResetRunButton_OnClick;
             };
         }
 
@@ -191,6 +199,13 @@ namespace OuterWildsRandomSpeedrun
             _modEnabled = true;
             _justEnteredGame = true;
             GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
+        }
+        
+        private void ResetRunButton_OnClick()
+        {
+            _justEnteredGame = true;
+            Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
+            ModHelper.Menus.PauseMenu.Close();
         }
 
         protected SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner)
