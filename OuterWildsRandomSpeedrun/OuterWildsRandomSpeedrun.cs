@@ -165,7 +165,8 @@ namespace OuterWildsRandomSpeedrun
             var ship = GameObject.FindGameObjectWithTag("Ship");
             ship.SetActive(false);
             var villageMusicController = FindObjectOfType<VillageMusicVolume>();
-            villageMusicController.OnEffectVolumeExit(spawner.gameObject);
+            ModHelper.Console.WriteLine($"villageMusicController {(villageMusicController == null ? "is" : "isn\'t")} null", MessageType.Success);
+            villageMusicController.Deactivate();
         }
 
         private Font GetFontByName(string name)
@@ -190,7 +191,7 @@ namespace OuterWildsRandomSpeedrun
 
         private void SpeedRunButton_OnClick()
         {
-            if (TimeLoop._timeLoopEnabled)
+            if (FindObjectOfType<TitleScreenManager>()._profileManager.currentProfileGameSave.loopCount <= 1)
             {
                 ModHelper.Menus.PopupManager.CreateMessagePopup("Finish the tutorial first!");
                 return;
