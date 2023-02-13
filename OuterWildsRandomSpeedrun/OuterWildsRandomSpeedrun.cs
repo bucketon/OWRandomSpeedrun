@@ -16,6 +16,7 @@ namespace OuterWildsRandomSpeedrun
         private static Color OW_ORANGE_COLOR = new Color(0.968f, 0.498f, 0.207f);
         private const string RESET_RUN_BUTTON_TEXT = "RESET SPAWN AND GOAL";
 
+        private SpawnPoint _spawnPoint;
         private SpawnPoint _goalPoint;
         private string _spawnPointName;
         private string _goalPointName;
@@ -74,6 +75,7 @@ namespace OuterWildsRandomSpeedrun
             ModHelper.Events.Subscribe<RingWorldController>(Events.AfterStart);
             ModHelper.Events.Subscribe<TitleScreenManager>(Events.AfterStart);
             ModHelper.Events.Event += OnEvent;
+            GlobalMessenger.AddListener("WakeUp", new Callback(this.OnWakeUp));
 
             ModHelper.Menus.MainMenu.OnInit += () =>
             {
@@ -118,6 +120,11 @@ namespace OuterWildsRandomSpeedrun
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(OW_ORANGE_COLOR)}>{elapsedStr}</color>");
         }
 
+        private void OnWakeUp()
+        {
+            Locator.GetPlayerBody().SetVelocity(_spawnPoint.GetPointVelocity());
+        }
+
         private void OnStartOfTimeLoop(int loopCount)
         {
             if (_modEnabled)
@@ -153,10 +160,10 @@ namespace OuterWildsRandomSpeedrun
                 _goalPointName = GetRandomSpawnPointName();
             }
 
-            var spawnPoint = GetSpawnPointByName(spawnPoints, _spawnPointName);
+            _spawnPoint = GetSpawnPointByName(spawnPoints, _spawnPointName);
             _goalPoint = GetSpawnPointByName(spawnPoints, _goalPointName);
-            ModHelper.Console.WriteLine($"Warp to {spawnPoint.ToString()}!", MessageType.Success);
-            spawner.DebugWarp(spawnPoint);
+            ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
+            spawner.DebugWarp(_spawnPoint);
             var player = GameObject.FindGameObjectWithTag("Player");
             var playerController = player.GetComponent<PlayerSpacesuit>();
             playerController.SuitUp();
