@@ -23,8 +23,17 @@
     <None Include="manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="..\UnityProject\Assets\AssetBundles\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <LinkBase>assets\</LinkBase>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="OuterWildsRandomSpeedrun.csproj.user" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SpawnPointSelector">
+      <HintPath>..\UnityProject\Library\ScriptAssemblies\SpawnPointSelectorAssembly.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
