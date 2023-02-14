@@ -239,6 +239,16 @@ namespace OuterWildsRandomSpeedrun
             _canvasMarker._offScreenIndicator._textField.color = OW_ORANGE_COLOR;
             _canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
             _canvasMarker.SetVisibility(true);
+
+            var mapMarkerManager = Locator.GetMapController().GetMarkerManager();
+            var mapMarker = mapMarkerManager.InstantiateNewMarker(true);
+            mapMarkerManager.RegisterMarker(mapMarker, _goalPoint.transform, UITextType.None);
+            mapMarker.SetLabel("GOAL");
+            var materialInstance = Instantiate(mapMarker._textField.material);
+            materialInstance.color = OW_ORANGE_COLOR;
+            mapMarker._textField.material = materialInstance;
+            mapMarker.SetColor(OW_ORANGE_COLOR);
+            mapMarker.SetVisibility(true);
         }
 
         protected PlayerSpawner GetSpawner()
