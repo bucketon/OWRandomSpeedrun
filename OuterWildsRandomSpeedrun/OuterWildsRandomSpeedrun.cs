@@ -32,10 +32,12 @@ namespace OuterWildsRandomSpeedrun
         private Material _marshmallowMaterial;
         private CanvasMarker _canvasMarker;
 
-        /// <summary>
-        /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
-        /// </summary>
-        private bool _justEnteredGame = false;
+    private SpawnPointSelectorManager _manager;
+
+    /// <summary>
+    /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
+    /// </summary>
+    private bool _justEnteredGame = false;
 
         /// <summary>
         /// Set to true when we have just began a time loop and have pending operations to complete, false otherwise.
@@ -223,12 +225,11 @@ namespace OuterWildsRandomSpeedrun
         {
             if (_spawnPointSelectorManager == null)
             {
-                _spawnPointSelectorManager = new GameObject("SpawnPointSelectorManager");
-                var manager = _spawnPointSelectorManager.AddComponent<SpawnPointSelectorManager>();
-                manager.ModHelper = ModHelper;
+                _manager = SpawnPointSelectorManager.Instance;
+                _manager.ModHelper = ModHelper;
             }
 
-            _spawnPointSelectorManager.GetComponent<SpawnPointSelectorManager>().DisplayMenu();
+            _manager.DisplayMenu();
         }
 
         protected SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner)

@@ -12,10 +12,28 @@ namespace OuterWildsRandomSpeedrun
     public IModHelper ModHelper { get; set; }
 
     public static SpawnPointSelectorManager Instance {
-      get => _instance;
+      get
+      {
+        if (_instance == null)
+        {
+          _goInstance = new GameObject("SpawnPointSelectorManager");
+          _instance = _goInstance.AddComponent<SpawnPointSelectorManager>();
+        }
+        return _instance;
+      }
     }
 
     private bool _menuDisplayed = false;
+
+    /// <summary>
+    /// The GameObject that hosts the SpawnPointSelectorManager singleton
+    /// </summary>
+    private static GameObject _goInstance;
+
+    /// <summary>
+    /// Singleton instance of SpawnPointSelectorManager
+    /// </summary>
+    private static SpawnPointSelectorManager _instance;
 
     /// <summary>
     /// The top-level script associated with the spawn selector UI
@@ -41,14 +59,7 @@ namespace OuterWildsRandomSpeedrun
     /// The "To" menu, represented as a script associated with our prefab
     /// </summary>
     private SpawnPointList _toList;
-
-    private static SpawnPointSelectorManager _instance;
-
-    public void Awake()
-    {
-      _instance = this;
-    }
-
+    
     public void DisplayMenu()
     {
       _menuDisplayed = true;
@@ -58,12 +69,12 @@ namespace OuterWildsRandomSpeedrun
 
       _selector.gameObject.SetActive(true);
       
-      var action = (InputLibrary.menuLeft as InputCommands).Action as BasicInputAction;
-      action.Action.performed += OnLeftRightPressed;
-      action = (InputLibrary.menuRight as InputCommands).Action as BasicInputAction;
-      action.Action.performed += OnLeftRightPressed;
-      action = (InputLibrary.enter as InputCommands).Action as BasicInputAction;
-      action.Action.performed += OnConfirmPressed;
+      var inputAction = (InputLibrary.menuLeft as InputCommands).Action as BasicInputAction;
+      inputAction.Action.performed += OnLeftRightPressed;
+      inputAction = (InputLibrary.menuRight as InputCommands).Action as BasicInputAction;
+      inputAction.Action.performed += OnLeftRightPressed;
+      inputAction = (InputLibrary.enter as InputCommands).Action as BasicInputAction;
+      inputAction.Action.performed += OnConfirmPressed;
     }
 
     private void InitializeMenus()
@@ -117,12 +128,12 @@ namespace OuterWildsRandomSpeedrun
 
       _selector.gameObject.SetActive(false);
 
-      var action = (InputLibrary.menuLeft as InputCommands).Action as BasicInputAction;
-      action.Action.performed -= OnLeftRightPressed;
-      action = (InputLibrary.menuRight as InputCommands).Action as BasicInputAction;
-      action.Action.performed -= OnLeftRightPressed;
-      action = (InputLibrary.enter as InputCommands).Action as BasicInputAction;
-      action.Action.performed -= OnConfirmPressed;
+      var inputAction = (InputLibrary.menuLeft as InputCommands).Action as BasicInputAction;
+      inputAction.Action.performed -= OnLeftRightPressed;
+      inputAction = (InputLibrary.menuRight as InputCommands).Action as BasicInputAction;
+      inputAction.Action.performed -= OnLeftRightPressed;
+      inputAction = (InputLibrary.enter as InputCommands).Action as BasicInputAction;
+      inputAction.Action.performed -= OnConfirmPressed;
 
       Destroy(_fromMenu);
       Destroy(_toMenu);
