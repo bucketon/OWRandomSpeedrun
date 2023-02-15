@@ -1,3 +1,12 @@
 {
-  "enabled": true
+  "enabled": true,
+  "settings": {
+      "ShipSpawns": {
+          "type": "toggle",
+          "value": false,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Does the ship spawn on Timber Hearth"
+        }
+    }
 }

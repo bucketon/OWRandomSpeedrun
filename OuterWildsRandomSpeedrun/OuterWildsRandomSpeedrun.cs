@@ -175,8 +175,11 @@ namespace OuterWildsRandomSpeedrun
             playerController.SuitUp();
             var oxygenController = player.GetComponent<PlayerResources>();
             oxygenController.UpdateOxygen();
-            var ship = GameObject.FindGameObjectWithTag("Ship");
-            ship.SetActive(false);
+            if (!ModHelper.Config.GetSettingsValue<bool>("ShipSpawns"))
+            {
+                var ship = GameObject.FindGameObjectWithTag("Ship");
+                ship.SetActive(false);
+            }
             var villageMusicController = FindObjectOfType<VillageMusicVolume>();
             ModHelper.Console.WriteLine($"villageMusicController {(villageMusicController == null ? "is" : "isn\'t")} null", MessageType.Success);
             villageMusicController.Deactivate();
