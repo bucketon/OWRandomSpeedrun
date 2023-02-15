@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: dc95cd0fc522a704ba356f13088e10ee
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: ITC Serif Gothic Std
+  fontNames:
+  - ITC Serif Gothic Std
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: spawnpointselector
+  assetBundleVariant: 

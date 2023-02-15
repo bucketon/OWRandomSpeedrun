@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 603575042
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: spawnpointselector
+      Dependencies: {}

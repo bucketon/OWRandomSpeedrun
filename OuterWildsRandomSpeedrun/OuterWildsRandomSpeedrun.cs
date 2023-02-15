@@ -1,10 +1,11 @@
-﻿using OWML.Common;
+using OWML.Common;
 using OWML.ModHelper;
 using UnityEngine;
 using System.Reflection;
 using System.Linq;
 using OWML.Common.Menus;
 using System;
+using HarmonyLib;
 
 namespace OuterWildsRandomSpeedrun
 {
@@ -22,18 +23,22 @@ namespace OuterWildsRandomSpeedrun
         private string _goalPointName;
         private IModButton _speedrunButton;
         private IModButton _resetRunButton;
+        private IModButton _pingusButton;
         private DateTime _startTime;
         private DateTime _endTime = DateTime.MinValue;
         private ScreenPrompt _timerPrompt;
+        
         private bool _modEnabled = false;
         private Mesh _marshmallowMesh;
         private Material _marshmallowMaterial;
         private CanvasMarker _canvasMarker;
 
-        /// <summary>
-        /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
-        /// </summary>
-        private bool _justEnteredGame = false;
+    private SpawnPointSelectorManager _manager;
+
+    /// <summary>
+    /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
+    /// </summary>
+    private bool _justEnteredGame = false;
 
         /// <summary>
         /// Set to true when we have just began a time loop and have pending operations to complete, false otherwise.
@@ -47,11 +52,15 @@ namespace OuterWildsRandomSpeedrun
 
         private System.Random _random;
 
+        private GameObject _spawnPointSelectorManager;
+
         private void Awake()
         {
             // You won't be able to access OWML's mod helper in Awake.
             // So you probably don't want to do anything here.
             // Use Start() instead.
+
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
         }
 
         private void Start()
@@ -81,6 +90,9 @@ namespace OuterWildsRandomSpeedrun
             {
                 _speedrunButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate(SPEEDRUN_BUTTON_TEXT);
                 _speedrunButton.OnClick += SpeedRunButton_OnClick;
+
+                _pingusButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate("PINGUS MODE");
+                _pingusButton.OnClick += PingusModeButton_OnClick;
             };
 
             ModHelper.Menus.PauseMenu.OnInit += () =>
@@ -216,6 +228,17 @@ namespace OuterWildsRandomSpeedrun
             ModHelper.Menus.PauseMenu.Close();
         }
 
+        private void PingusModeButton_OnClick()
+        {
+            if (_spawnPointSelectorManager == null)
+            {
+                _manager = SpawnPointSelectorManager.Instance;
+                _manager.ModHelper = ModHelper;
+            }
+
+            _manager.DisplayMenu();
+        }
+
         protected SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner)
         {
             var spawnPointsField = typeof(PlayerSpawner)
@@ -271,6 +294,7 @@ namespace OuterWildsRandomSpeedrun
             ModHelper.Console.WriteLine($"Spawn point {SpawnPointNames.SPAWN_POINT_NAMES[randIndex]} set, from index {randIndex}", MessageType.Info);
             return SpawnPointNames.SPAWN_POINT_NAMES[randIndex];
         }
+
         protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
             return spawnPoints.Where(point => { return point.name.Equals(name); }).First();
