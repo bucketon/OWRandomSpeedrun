@@ -3,7 +3,7 @@ using SpawnPointSelector;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.EventSystems;
 
 namespace OuterWildsRandomSpeedrun
 {
@@ -22,8 +22,6 @@ namespace OuterWildsRandomSpeedrun
         return _instance;
       }
     }
-
-    private bool _menuDisplayed = false;
 
     /// <summary>
     /// The GameObject that hosts the SpawnPointSelectorManager singleton
@@ -62,19 +60,12 @@ namespace OuterWildsRandomSpeedrun
     
     public void DisplayMenu()
     {
-      _menuDisplayed = true;
-
       InitializeSelector();
       InitializeMenus();
 
+      _fromMenu.EnableMenu(true);
+      _toMenu.EnableMenu(false);
       _selector.gameObject.SetActive(true);
-      
-      var inputAction = (InputLibrary.menuLeft as InputCommands).Action as BasicInputAction;
-      inputAction.Action.performed += OnLeftRightPressed;
-      inputAction = (InputLibrary.menuRight as InputCommands).Action as BasicInputAction;
-      inputAction.Action.performed += OnLeftRightPressed;
-      inputAction = (InputLibrary.enter as InputCommands).Action as BasicInputAction;
-      inputAction.Action.performed += OnConfirmPressed;
     }
 
     private void InitializeMenus()
@@ -115,31 +106,14 @@ namespace OuterWildsRandomSpeedrun
 
       InitializeMenu(_fromMenu, _fromList);
       InitializeMenu(_toMenu, _toList);
-
-      _fromMenu.EnableMenu(true);
-      _toMenu.EnableMenu(false);
     }
 
     public void DisableMenu()
     {
-      _menuDisplayed = false;
       _fromMenu.EnableMenu(false);
       _toMenu.EnableMenu(false);
 
       _selector.gameObject.SetActive(false);
-
-      var inputAction = (InputLibrary.menuLeft as InputCommands).Action as BasicInputAction;
-      inputAction.Action.performed -= OnLeftRightPressed;
-      inputAction = (InputLibrary.menuRight as InputCommands).Action as BasicInputAction;
-      inputAction.Action.performed -= OnLeftRightPressed;
-      inputAction = (InputLibrary.enter as InputCommands).Action as BasicInputAction;
-      inputAction.Action.performed -= OnConfirmPressed;
-
-      Destroy(_fromMenu);
-      Destroy(_toMenu);
-
-      _fromMenu = null;
-      _toMenu = null;
     }
 
     private void InitializeSelector()
@@ -192,7 +166,7 @@ namespace OuterWildsRandomSpeedrun
         options.Add(menuOption);
     }
 
-    private void OnLeftRightPressed (CallbackContext context) {
+    public void OnLeftRightPressed (AxisEventData eventData) {
       var disableMenu = _fromMenu.IsMenuEnabled() ? _fromMenu : _toMenu;
       var enableMenu = disableMenu == _fromMenu ? _toMenu : _fromMenu;
 
@@ -200,11 +174,16 @@ namespace OuterWildsRandomSpeedrun
       enableMenu.EnableMenu(true);
     }
 
-    private void OnConfirmPressed(CallbackContext context)
+    public void OnConfirmPressed(BaseEventData eventData)
     {
       var from = _fromMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
       var to = _toMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
       ModHelper.Console.WriteLine($"Oh my, we've been confirmed with {from} and {to}");
+      DisableMenu();
+    }
+
+    public void OnCancelPressed(BaseEventData eventData)
+    {
       DisableMenu();
     }
   }
