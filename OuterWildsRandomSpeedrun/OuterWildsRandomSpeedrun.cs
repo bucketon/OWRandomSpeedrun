@@ -11,11 +11,7 @@ namespace OuterWildsRandomSpeedrun
 {
     public class OuterWildsRandomSpeedrun : ModBehaviour
     {
-        private const string SPEEDRUN_BUTTON_TEXT = "NOMAI GRAND PRIX";
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
-        private const string OW_MENU_FONT_NAME = "Adobe - SerifGothicStd-ExtraBold";
-        private static Color OW_ORANGE_COLOR = new Color(0.968f, 0.498f, 0.207f);
-        private const string RESET_RUN_BUTTON_TEXT = "RESET SPAWN AND GOAL";
 
         private SpawnPoint _spawnPoint;
         private SpawnPoint _goalPoint;
@@ -33,12 +29,12 @@ namespace OuterWildsRandomSpeedrun
         private Material _marshmallowMaterial;
         private CanvasMarker _canvasMarker;
 
-    private SpawnPointSelectorManager _manager;
+        private SpawnPointSelectorManager _manager;
 
-    /// <summary>
-    /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
-    /// </summary>
-    private bool _justEnteredGame = false;
+        /// <summary>
+        /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
+        /// </summary>
+        private bool _justEnteredGame = false;
 
         /// <summary>
         /// Set to true when we have just began a time loop and have pending operations to complete, false otherwise.
@@ -51,8 +47,6 @@ namespace OuterWildsRandomSpeedrun
         private bool _isGameStarted;
 
         private System.Random _random;
-
-        private GameObject _spawnPointSelectorManager;
 
         private void Awake()
         {
@@ -88,7 +82,7 @@ namespace OuterWildsRandomSpeedrun
 
             ModHelper.Menus.MainMenu.OnInit += () =>
             {
-                _speedrunButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate(SPEEDRUN_BUTTON_TEXT);
+                _speedrunButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate(Constants.SPEEDRUN_BUTTON_TEXT);
                 _speedrunButton.OnClick += SpeedRunButton_OnClick;
 
                 _pingusButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate("PINGUS MODE");
@@ -97,7 +91,7 @@ namespace OuterWildsRandomSpeedrun
 
             ModHelper.Menus.PauseMenu.OnInit += () =>
             {
-                _resetRunButton = ModHelper.Menus.PauseMenu.QuitButton.Duplicate(RESET_RUN_BUTTON_TEXT);
+                _resetRunButton = ModHelper.Menus.PauseMenu.QuitButton.Duplicate(Constants.RESET_RUN_BUTTON_TEXT);
                 _resetRunButton.OnClick += ResetRunButton_OnClick;
             };
         }
@@ -129,7 +123,7 @@ namespace OuterWildsRandomSpeedrun
             var elapsed = _endTime == DateTime.MinValue ? DateTime.Now - _startTime : _endTime - _startTime;
             
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
-            _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(OW_ORANGE_COLOR)}>{elapsedStr}</color>");
+            _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
         }
 
         private void OnWakeUp()
@@ -158,7 +152,7 @@ namespace OuterWildsRandomSpeedrun
             var screenPromptList = screenPromptListObj.GetComponent<ScreenPromptList>();
 
             _timerPrompt = new ScreenPrompt("");
-            var font = GetFontByName(OW_MENU_FONT_NAME);
+            var font = GetFontByName(Constants.OW_MENU_FONT_NAME);
             var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(_timerPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
             var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
             screenPromptList.AddScreenPrompt(screenPromptElement);
@@ -230,12 +224,8 @@ namespace OuterWildsRandomSpeedrun
 
         private void PingusModeButton_OnClick()
         {
-            if (_spawnPointSelectorManager == null)
-            {
-                _manager = SpawnPointSelectorManager.Instance;
-                _manager.ModHelper = ModHelper;
-            }
-
+            _manager = SpawnPointSelectorManager.Instance;
+            _manager.ModHelper = ModHelper;
             _manager.DisplayMenu();
         }
 
@@ -264,10 +254,10 @@ namespace OuterWildsRandomSpeedrun
             var markerManager = Locator.GetMarkerManager();
             _canvasMarker = markerManager.InstantiateNewMarker();
             markerManager.RegisterMarker(_canvasMarker, _goalPoint.transform, "GOAL");
-            _canvasMarker._mainTextField.color = OW_ORANGE_COLOR;
-            _canvasMarker._marker.material.color = OW_ORANGE_COLOR;
-            _canvasMarker._offScreenIndicator._textField.color = OW_ORANGE_COLOR;
-            _canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = OW_ORANGE_COLOR;
+            _canvasMarker._mainTextField.color = Constants.OW_ORANGE_COLOR;
+            _canvasMarker._marker.material.color = Constants.OW_ORANGE_COLOR;
+            _canvasMarker._offScreenIndicator._textField.color = Constants.OW_ORANGE_COLOR;
+            _canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker.SetVisibility(true);
 
             var mapMarkerManager = Locator.GetMapController().GetMarkerManager();

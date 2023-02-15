@@ -3,22 +3,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using OWML.Common;
-using OWML.ModHelper;
 
 namespace OuterWildsRandomSpeedrun
 {
-  public class SpawnPointMenuOption : MenuOption
+  public class SpawnPointMenuOption : MenuOption, ISubmitHandler, ICancelHandler, IMoveHandler
   {
     public IModHelper ModHelper;
-    private static Color OW_ORANGE_COLOR = new Color(0.968f, 0.498f, 0.207f);
-    private static Color OW_SELECTED_COLOR = new Color(0.9882f, 0.8627f, 0.7686f);
     public override void OnSelect(BaseEventData eventData)
     {
 
       var listItem = this.gameObject.GetComponent<SpawnPointListItem>();
       listItem.LeftArrow.SetActive(true);
       listItem.RightArrow.SetActive(true);
-      listItem.Text.color = OW_SELECTED_COLOR;
+      listItem.Text.color = Constants.OW_SELECTED_COLOR;
   
       var list = listItem.transform.parent.parent.GetComponentInParent<SpawnPointList>();
       list.SetContentPosition(eventData.selectedObject);
@@ -41,7 +38,25 @@ namespace OuterWildsRandomSpeedrun
       var listItem = this.gameObject.GetComponent<SpawnPointListItem>();
       listItem.LeftArrow.SetActive(false);
       listItem.RightArrow.SetActive(false);
-      listItem.Text.color = OW_ORANGE_COLOR;
+      listItem.Text.color = Constants.OW_ORANGE_COLOR;
     }
+
+    public void OnSubmit(BaseEventData eventData)
+    {
+      SpawnPointSelectorManager.Instance.OnConfirmPressed(eventData);
+    }
+
+    public void OnCancel(BaseEventData eventData)
+    {
+      SpawnPointSelectorManager.Instance.OnCancelPressed(eventData);
+    }
+
+    public void OnMove(AxisEventData eventData)
+    {
+      if (eventData.moveDir == MoveDirection.Left || eventData.moveDir == MoveDirection.Right)
+      {
+        SpawnPointSelectorManager.Instance.OnLeftRightPressed(eventData);
+      }
+  }
   }
 }

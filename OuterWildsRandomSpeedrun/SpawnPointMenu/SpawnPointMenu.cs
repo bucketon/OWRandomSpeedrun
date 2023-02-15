@@ -19,11 +19,5 @@ namespace OuterWildsRandomSpeedrun
       gameObject.GetComponent<SpawnPointList>().SetCollapsed(!shouldEnable);
       _menuActivationRoot.gameObject.SetActive(true);
     }
-
-    public override void OnCancelEvent(GameObject selectedObj, BaseEventData eventData)
-    {
-      base.OnCancelEvent(selectedObj, eventData);
-      SpawnPointSelectorManager.Instance.DisableMenu();
-    }
   }
 }
