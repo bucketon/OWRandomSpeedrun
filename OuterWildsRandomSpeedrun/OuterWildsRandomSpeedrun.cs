@@ -265,9 +265,9 @@ namespace OuterWildsRandomSpeedrun
             mapMarkerManager.RegisterMarker(mapMarker, _goalPoint.transform, UITextType.None);
             mapMarker.SetLabel("GOAL");
             var materialInstance = Instantiate(mapMarker._textField.material);
-            materialInstance.color = OW_ORANGE_COLOR;
+            materialInstance.color = Constants.OW_ORANGE_COLOR;
             mapMarker._textField.material = materialInstance;
-            mapMarker.SetColor(OW_ORANGE_COLOR);
+            mapMarker.SetColor(Constants.OW_ORANGE_COLOR);
             mapMarker.SetVisibility(true);
         }
 
