@@ -27,6 +27,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <LinkBase>assets\</LinkBase>
     </None>
+
+    <!-- Copy TSV into the top-level output dir -->
+    <None Include="SpawnNames.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="OuterWildsRandomSpeedrun.csproj.user" />
