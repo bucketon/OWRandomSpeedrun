@@ -14,11 +14,17 @@ random shipless speedrun generator for Outer Wilds
 1. To verify that it compiled correctly, open an Explorer window and navigate to `%APPDATA%\OuterWildsModManager\OWML\Mods\ZacBauermeister.OuterWildsRandomSpeedrun`. If you see OuterWildsRandomSpeedrun.dll in the directory, it compiled successfully.
 
 ## IDE setup for Unity in Windows
-1. Install **Unity 2019.4.39** from the [Unity Download Archive](https://unity.com/releases/editor/archive). You must install this specific version!
+1. Install **Unity 2019.4.39** from the [Unity Download Archive](https://unity.com/releases/editor/archive). **You must install this specific version!** Select the Unity Hub from the "Downloads (Win)" dropdown.
+    1. When running the installer, make sure to deselect "Microsoft Visual Studio Community 2019".
+    1. This may take a while! You may proceed to the next step while the installer is running.
 1. Install the [.NET Framework 4.7.1 Developer Pack](https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net471-developer-pack-offline-installer).
-1. Open the UnityProject folder in Unity. Unity will set up the necessary dependencies which may take a few minutes.
+1. Once both installations are complete, open Unity. It may tell you that you don't have a license and that you need to install Unity Hub. If so, follow the instructions to install Unity Hub.
+    1. Once Unity Hub is installed, it will attempt to install the editor. Instead, select "Locate existing installation" and choose the Unity executable under `Program Files\Unity 2019.4.39f1\Editor`.
+1. Select "Add project from disk" from the Open button's dropdown menu and select the UnityProject folder within this repository. This will add if to the list of projects.
+1. Select the project from UnityHub's list. This will set up the necessary dependencies which may take a few minutes.
+1. When the project opens, you may be prompted to update Unity. Don't! Deselect "Check for Updates" and select "Skip new version."
 1. Modify Unity's settings to make VS Code the default editor (this is important!).
-    1. Click Edit > Preferences
+    1. Click Edit > Preferences...
     1. On the left, click External Tools
     1. In the External Tools menu, change **External Script Editor** to **Visual Studio Code**. Exit the menu.
 1. Modify the Omnisharp VS Code plugin to use a .NET version that is compatible with Unity:
