@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SpawnPointSelector
 {
@@ -8,12 +6,14 @@ namespace SpawnPointSelector
   {
     public SpawnPointList FromSpawnPointList {
       get => _fromSpawnPointList;
-      set => _fromSpawnPointList = value;
     }
 
     public SpawnPointList ToSpawnPointList {
       get => _toSpawnPointList;
-      set => _toSpawnPointList = value;
+    }
+
+    public SpawnPointTooltip Tooltip {
+      get => _tooltip;
     }
 
     [SerializeField]
@@ -21,5 +21,8 @@ namespace SpawnPointSelector
 
     [SerializeField]
     private SpawnPointList _toSpawnPointList;
+
+    [SerializeField]
+    private SpawnPointTooltip _tooltip;
   }
 }

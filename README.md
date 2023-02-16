@@ -44,4 +44,5 @@ random shipless speedrun generator for Outer Wilds
 1. Edit the script as you desire within VS Code and save it. **Don't attempt to compile the code within VS Code**.
 1. Return to the Unity Editor. The editor will freeze for a moment while it compiles the code. Look at the footer of the Unity Editor for any red text indicating a compile error. (There may be orange warnings, too.) Upon successful compilation, Unity will produce an updated SpawnPointSelectorAssembly.dll in the UnityProject/Library/ScriptAssemblies folder.
 1. Open the main project in VS Code (like you would for a change not related to the Unity project).
+1. If you need to make changes to the main project that depends on your Unity script pages, you need to restart VS Code for your main workspace. Press **Ctrl-Shift-P**, then type and select **Reload Window**.
 1. Select Terminal > Run Build Task. This will copy the updated DLL file to the mod folder under %APPDATA%.

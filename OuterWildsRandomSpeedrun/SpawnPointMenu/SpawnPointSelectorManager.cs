@@ -57,7 +57,7 @@ namespace OuterWildsRandomSpeedrun
     /// The "To" menu, represented as a script associated with our prefab
     /// </summary>
     private SpawnPointList _toList;
-    
+
     public void DisplayMenu()
     {
       InitializeSelector();
@@ -65,7 +65,51 @@ namespace OuterWildsRandomSpeedrun
 
       _fromMenu.EnableMenu(true);
       _toMenu.EnableMenu(false);
+
+      UpdateTooltipIcons();
+      UpdateTooltipText();
+
       _selector.gameObject.SetActive(true);
+
+      OWInput.inputManagerInstance.OnUpdateInputDevice += this.OnUpdateInputDevice;
+    }
+
+    public void DisableMenu()
+    {
+      _fromMenu.EnableMenu(false);
+      _toMenu.EnableMenu(false);
+
+      _selector.gameObject.SetActive(false);
+
+      OWInput.inputManagerInstance.OnUpdateInputDevice -= this.OnUpdateInputDevice;
+    }
+
+    public void OnLeftRightPressed (AxisEventData eventData) {
+      SwapMenus();
+    }
+
+    public void OnConfirmPressed(BaseEventData eventData)
+    {
+      if (_fromMenu.IsMenuEnabled())
+      {
+        SwapMenus();
+        return;
+      }
+
+      var from = _fromMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
+      var to = _toMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
+      ModHelper.Console.WriteLine($"Oh my, we've been confirmed with {from} and {to}");
+      DisableMenu();
+    }
+
+    public void OnCancelPressed(BaseEventData eventData)
+    {
+      DisableMenu();
+    }
+
+    private void OnUpdateInputDevice()
+    {
+      UpdateTooltipIcons();
     }
 
     private void InitializeMenus()
@@ -107,15 +151,7 @@ namespace OuterWildsRandomSpeedrun
       InitializeMenu(_fromMenu, _fromList);
       InitializeMenu(_toMenu, _toList);
     }
-
-    public void DisableMenu()
-    {
-      _fromMenu.EnableMenu(false);
-      _toMenu.EnableMenu(false);
-
-      _selector.gameObject.SetActive(false);
-    }
-
+    
     private void InitializeSelector()
     {
       if (_selector != null)
@@ -138,8 +174,58 @@ namespace OuterWildsRandomSpeedrun
 
       spawnPointBundle.Unload(false);
     }
+    
+    private void SwapMenus()
+    {
+      var disableMenu = _fromMenu.IsMenuEnabled() ? _fromMenu : _toMenu;
+      var enableMenu = disableMenu == _fromMenu ? _toMenu : _fromMenu;
 
-    private void InitializeMenu(SpawnPointMenu menu, SpawnPointList list)
+      disableMenu.EnableMenu(false);
+      enableMenu.EnableMenu(true);
+      UpdateTooltipText();
+    }
+
+    private void UpdateTooltipIcons()
+    { 
+      var leftSprite = GetSpriteForInput(InputLibrary.menuLeft);
+      var rightSprite = GetSpriteForInput(InputLibrary.menuRight);
+      var confirmSprite = GetSpriteForInput(InputLibrary.menuConfirm);
+      var cancelSprite = GetSpriteForInput(InputLibrary.cancel);
+
+      _selector.Tooltip.RightImage.sprite = rightSprite;
+      _selector.Tooltip.ConfirmImage.sprite = confirmSprite;
+      _selector.Tooltip.CancelImage.sprite = cancelSprite;
+
+      if (OWInput.UsingGamepad()) {
+        _selector.Tooltip.LeftImage.enabled = false;
+        _selector.Tooltip.SeparatorText.enabled = false;
+      } else {
+        _selector.Tooltip.LeftImage.enabled = true;
+        _selector.Tooltip.LeftImage.sprite = leftSprite;
+        _selector.Tooltip.SeparatorText.enabled = true;
+      }
+      
+    }
+
+    private void UpdateTooltipText()
+    {
+      var text = "Next";
+      if (_toMenu.IsMenuEnabled())
+      {
+        text = "Start";
+      }
+      _selector.Tooltip.NextText.text = text;
+    }
+
+    private Sprite GetSpriteForInput(IInputCommands input)
+    {
+      var texture = input.GetUITextures(OWInput.UsingGamepad(), false)[0];
+      var rect = new Rect(0, 0, texture.width, texture.height);
+      var pivot = new Vector2(0.5f, 0.5f);
+      return Sprite.Create(texture, rect, pivot, texture.width);
+    }
+
+        private void InitializeMenu(SpawnPointMenu menu, SpawnPointList list)
     {
       // Don't reset the initially-selected item every time we activate the menu
       menu._setMenuNavigationOnActivate = false;
@@ -164,27 +250,6 @@ namespace OuterWildsRandomSpeedrun
         menuOption.Initialize();
         menuOption.ModHelper = ModHelper;
         options.Add(menuOption);
-    }
-
-    public void OnLeftRightPressed (AxisEventData eventData) {
-      var disableMenu = _fromMenu.IsMenuEnabled() ? _fromMenu : _toMenu;
-      var enableMenu = disableMenu == _fromMenu ? _toMenu : _fromMenu;
-
-      disableMenu.EnableMenu(false);
-      enableMenu.EnableMenu(true);
-    }
-
-    public void OnConfirmPressed(BaseEventData eventData)
-    {
-      var from = _fromMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
-      var to = _toMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
-      ModHelper.Console.WriteLine($"Oh my, we've been confirmed with {from} and {to}");
-      DisableMenu();
-    }
-
-    public void OnCancelPressed(BaseEventData eventData)
-    {
-      DisableMenu();
     }
   }
 }
