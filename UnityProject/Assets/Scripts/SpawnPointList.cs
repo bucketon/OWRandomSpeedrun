@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace SpawnPointSelector
@@ -38,6 +39,8 @@ namespace SpawnPointSelector
 
     private float _initialHeight;
 
+    private float _movementDuration = 0.1f;
+
     void Awake()
     {
       _initialHeight = this.GetComponent<RectTransform>().sizeDelta.y;
@@ -63,15 +66,38 @@ namespace SpawnPointSelector
       return listItem;
     }
 
+    public IEnumerator MoveContentToPosition(GameObject selectedObj)
+    {
+      var listContentTransform = ContentTransform.GetComponent<RectTransform>();
+      var targetPosition = new Vector2(listContentTransform.anchoredPosition.x, GetTargetContentPosition(selectedObj));
+      var startPosition = new Vector2(listContentTransform.anchoredPosition.x, listContentTransform.anchoredPosition.y);
+      var time = 0f;
+
+      while (time < _movementDuration)
+      {
+        ContentTransform.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, time / _movementDuration);
+        time += Time.deltaTime;
+        yield return null;
+      }
+
+      ContentTransform.anchoredPosition = targetPosition;
+    }
+
     public void SetContentPosition(GameObject selectedObj)
+    {
+      var listContentTransform = ContentTransform.GetComponent<RectTransform>();
+      var newPosition = GetTargetContentPosition(selectedObj);
+      listContentTransform.anchoredPosition = new Vector2(listContentTransform.anchoredPosition.x, newPosition);
+    }
+
+    private float GetTargetContentPosition(GameObject selectedObj)
     {
       var listTransform = GetComponent<RectTransform>();
       var listSpacing = ContentTransform.GetComponent<VerticalLayoutGroup>().spacing;
       var selectedObjHeight = selectedObj.GetComponent<RectTransform>().sizeDelta.y;
       var selectedObjIndex = selectedObj.transform.GetSiblingIndex();
       var listContentTransform = ContentTransform.GetComponent<RectTransform>();
-      var newPosition = selectedObjHeight / 2 + selectedObjIndex * (selectedObjHeight + listSpacing);
-      listContentTransform.anchoredPosition = new Vector2(listContentTransform.anchoredPosition.x, newPosition);
+      return selectedObjHeight / 2 + selectedObjIndex * (selectedObjHeight + listSpacing);
     }
 
     public void SetCollapsed(bool collapsed)
