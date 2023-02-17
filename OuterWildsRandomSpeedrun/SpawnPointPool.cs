@@ -55,5 +55,11 @@ namespace OuterWildsRandomSpeedrun
                 return lines.Select(line => line.Split(FIELD_SEPARATOR)).ToArray();
             }
         }
+
+        public SpawnPointConfig RandomSpawnPointConfig(Random random)
+        {
+            var randomIndex = random.Next(_spawnPointConfigs.Count);
+            return _spawnPointConfigs[randomIndex];
+        }
     }
 }

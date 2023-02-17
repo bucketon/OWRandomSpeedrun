@@ -276,14 +276,8 @@ namespace OuterWildsRandomSpeedrun
             return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected string GetRandomSpawnPointName()
-        {
-            var spawnPoints = _spawnPointPool.SpawnPointConfigs.Select(config => config.internalId).ToArray();
-            var randIndex = _random.Next(spawnPoints.Count());
-
-            ModHelper.Console.WriteLine($"Spawn point {spawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
-            return spawnPoints[randIndex];
-        }
+        protected string GetRandomSpawnPointName() =>
+            _spawnPointPool.RandomSpawnPointConfig(_random).internalId;
 
         protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
