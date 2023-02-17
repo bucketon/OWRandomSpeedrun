@@ -48,6 +48,8 @@ namespace OuterWildsRandomSpeedrun
 
         private System.Random _random;
 
+        private SpawnPointPool _spawnPointPool;
+
         private void Awake()
         {
             // You won't be able to access OWML's mod helper in Awake.
@@ -62,7 +64,9 @@ namespace OuterWildsRandomSpeedrun
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
 
+            _spawnPointPool = SpawnPointPool.FromTsv("SpawnPoints.tsv");
             _random = new System.Random((int)DateTime.Now.Ticks);
+
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
             {
                 if (loadScene != OWScene.SolarSystem) return;
@@ -274,8 +278,8 @@ namespace OuterWildsRandomSpeedrun
 
         protected string GetRandomSpawnPointName()
         {
-            var spawnPoints = SpawnPointPool.FromTsv;
-            var randIndex = _random.Next(spawnPoints.Count);
+            var spawnPoints = _spawnPointPool.SpawnPointConfigs.Select(config => config.internalId).ToArray();
+            var randIndex = _random.Next(spawnPoints.Count());
 
             ModHelper.Console.WriteLine($"Spawn point {spawnPoints[randIndex]} set, from index {randIndex}", MessageType.Info);
             return spawnPoints[randIndex];
