@@ -29,7 +29,7 @@
     </None>
 
     <!-- Copy TSV into the top-level output dir -->
-    <None Include="SpawnNames.tsv">
+    <None Include="SpawnPoints.tsv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
