@@ -9,6 +9,9 @@ namespace OuterWildsRandomSpeedrun
   public class SpawnPointMenuOption : MenuOption, ISubmitHandler, ICancelHandler, IMoveHandler
   {
     public IModHelper ModHelper;
+
+    private Coroutine _selectionCoroutine;
+
     public override void OnSelect(BaseEventData eventData)
     {
 
@@ -18,7 +21,13 @@ namespace OuterWildsRandomSpeedrun
       listItem.Text.color = Constants.OW_SELECTED_COLOR;
   
       var list = listItem.transform.parent.parent.GetComponentInParent<SpawnPointList>();
-      list.SetContentPosition(eventData.selectedObject);
+
+      if (_selectionCoroutine != null)
+      {
+        StopCoroutine(_selectionCoroutine);
+      }
+      _selectionCoroutine = StartCoroutine(list.MoveContentToPosition(eventData.selectedObject));
+      
       var menu = listItem.transform.parent.parent.GetComponentInParent<SpawnPointMenu>();
       menu.SetSelectOnActivate(GetComponent<Selectable>());
     }
