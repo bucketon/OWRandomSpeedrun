@@ -183,20 +183,5 @@ namespace SpawnPointSelector
       _listTransform.sizeDelta = new Vector2(_listTransform.sizeDelta.x, height);
       _listCanvasGroup.interactable = !collapsed;
     }
-
-    public IEnumerator UpdateContentSize(float height)
-    {
-      var startSize = _listTransform.sizeDelta;
-      var targetSize = new Vector2(_listTransform.sizeDelta.x, height);
-      var time = 0f;
-
-      while (time < _effectDuration)
-      {
-        _listTransform.sizeDelta = Vector2.Lerp(startSize, targetSize, time / _effectDuration);
-        time += Time.deltaTime;
-        yield return null;
-      }
-      _listTransform.sizeDelta = targetSize;
-    }
   }
 }
