@@ -13,12 +13,21 @@ namespace OuterWildsRandomSpeedrun
 
     public class SpawnPointPool
     {
+        private readonly static char[] LINE_SEPARATORS = new char[] { '\r', '\n' };
+        private readonly static char FIELD_SEPARATOR = '\t';
+
         public List<SpawnPointConfig> SpawnPointConfigs
         {
             get => _spawnPointConfigs;
         }
 
         private List<SpawnPointConfig> _spawnPointConfigs;
+
+        public SpawnPointConfig RandomSpawnPointConfig(Random random)
+        {
+            var randomIndex = random.Next(_spawnPointConfigs.Count);
+            return _spawnPointConfigs[randomIndex];
+        }
 
         private SpawnPointPool(List<SpawnPointConfig> configs)
         {
@@ -34,8 +43,7 @@ namespace OuterWildsRandomSpeedrun
         private static SpawnPointConfig BuildSpawnPointConfig(string[] line) =>
             new SpawnPointConfig { internalId = line[0], displayName = line[1] };
 
-        private readonly static char[] LINE_SEPARATORS = new char[] { '\r', '\n' };
-        private readonly static char FIELD_SEPARATOR = '\t';
+
         private static string[][] ParseTsv(string pathToTsv)
         {
             using (var reader = new StreamReader(pathToTsv))
@@ -47,12 +55,6 @@ namespace OuterWildsRandomSpeedrun
                     .Select(line => line.Split(FIELD_SEPARATOR))
                     .ToArray();
             }
-        }
-
-        public SpawnPointConfig RandomSpawnPointConfig(Random random)
-        {
-            var randomIndex = random.Next(_spawnPointConfigs.Count);
-            return _spawnPointConfigs[randomIndex];
         }
     }
 }
