@@ -16,8 +16,8 @@ namespace OuterWildsRandomSpeedrun
     {
       _menuActivationRoot = gameObject;
       base.EnableMenu(shouldEnable);
-      gameObject.GetComponent<SpawnPointList>().SetCollapsed(!shouldEnable);
       _menuActivationRoot.gameObject.SetActive(true);
+      gameObject.GetComponent<SpawnPointList>().SetCollapsed(!shouldEnable);
     }
   }
 }

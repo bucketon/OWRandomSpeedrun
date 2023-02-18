@@ -2774,7 +2774,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -5575,6 +5575,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 909551242623627810, guid: e5862608cd76bdb43823cb2645a0f687,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -423
       objectReference: {fileID: 0}
     - target: {fileID: 1142107331823844682, guid: e5862608cd76bdb43823cb2645a0f687,
         type: 3}
@@ -9625,11 +9630,6 @@ PrefabInstance:
     - target: {fileID: 8127350397662319495, guid: e5862608cd76bdb43823cb2645a0f687,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8127350397681195287, guid: e5862608cd76bdb43823cb2645a0f687,
-        type: 3}
-      propertyPath: m_ChildForceExpandHeight
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8127350397684550244, guid: e5862608cd76bdb43823cb2645a0f687,

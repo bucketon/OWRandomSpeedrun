@@ -11,10 +11,10 @@ namespace OuterWildsRandomSpeedrun
     public IModHelper ModHelper;
 
     private Coroutine _selectionCoroutine;
+    private Coroutine _alphaCoroutine;
 
     public override void OnSelect(BaseEventData eventData)
     {
-
       var listItem = this.gameObject.GetComponent<SpawnPointListItem>();
       listItem.LeftArrow.SetActive(true);
       listItem.RightArrow.SetActive(true);
@@ -26,8 +26,13 @@ namespace OuterWildsRandomSpeedrun
       {
         StopCoroutine(_selectionCoroutine);
       }
+      if (_alphaCoroutine != null)
+      {
+        StopCoroutine(_alphaCoroutine);
+      }
       _selectionCoroutine = StartCoroutine(list.MoveContentToPosition(eventData.selectedObject));
-      
+      _alphaCoroutine = StartCoroutine(list.UpdateItemAlphas(eventData.selectedObject.transform.GetSiblingIndex()));
+
       var menu = listItem.transform.parent.parent.GetComponentInParent<SpawnPointMenu>();
       menu.SetSelectOnActivate(GetComponent<Selectable>());
     }
