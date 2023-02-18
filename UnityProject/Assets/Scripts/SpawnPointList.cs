@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,19 +11,39 @@ namespace SpawnPointSelector
 
     public bool IsCollapsed { get; set; } = false;
 
-    public RectTransform ContentTransform {
+    public RectTransform ContentTransform
+    {
       get => _contentTransform;
       set => _contentTransform = value;
     }
 
-    public RectTransform ViewportTransform {
+    public RectTransform ViewportTransform
+    {
       get => _viewportTransform;
       set => _viewportTransform = value;
     }
 
-    public RectTransform ListTransform {
+    public RectTransform ListTransform
+    {
       get => _listTransform;
       set => _listTransform = value;
+    }
+
+    private float AlphaStep
+    {
+      get
+      {
+        if (_alphaStep == 0)
+        {
+          var itemHeight = ContentTransform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y;
+          var listSpacing = ContentTransform.GetComponent<VerticalLayoutGroup>().spacing;
+          var listHeight = ListTransform.sizeDelta.y;
+          var maxDisplayable = Mathf.Floor(Mathf.Abs((listHeight + listSpacing) / (itemHeight + listSpacing)));
+          _alphaStep = 1 / (maxDisplayable / 2f);  
+        }
+
+        return _alphaStep;
+      }
     }
 
     [SerializeField]
@@ -39,16 +60,13 @@ namespace SpawnPointSelector
 
     private float _initialHeight;
 
-    private float _movementDuration = 0.1f;
+    private float _effectDuration = 0.1f;
+
+    private float _alphaStep = 0f;
 
     void Awake()
     {
       _initialHeight = this.GetComponent<RectTransform>().sizeDelta.y;
-    }
-
-    void Update()
-    {
-
     }
 
     public void Initialize()
@@ -73,14 +91,61 @@ namespace SpawnPointSelector
       var startPosition = new Vector2(listContentTransform.anchoredPosition.x, listContentTransform.anchoredPosition.y);
       var time = 0f;
 
-      while (time < _movementDuration)
+      while (time < _effectDuration)
       {
-        ContentTransform.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, time / _movementDuration);
+        ContentTransform.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, 1 - Mathf.Pow(1 - time / _effectDuration, 3));
         time += Time.deltaTime;
         yield return null;
       }
 
       ContentTransform.anchoredPosition = targetPosition;
+    }
+
+    public IEnumerator UpdateItemAlphas(int selectedObjIndex)
+    {
+      var time = 0f;
+      var childCount = ContentTransform.childCount;
+      var startColors = new Color[childCount];
+      var targetColors = new Color[childCount];
+      var listItems = new SpawnPointListItem[childCount];
+
+      for (int i = 0; i < childCount; i++)
+      {
+        listItems[i] = ContentTransform.GetChild(i).GetComponent<SpawnPointListItem>();
+        startColors[i] = listItems[i].Text.color;
+        targetColors[i] = listItems[i].Text.color;
+        var distanceFromCenter = Math.Abs(selectedObjIndex - i);
+        var targetAlpha = distanceFromCenter == 0 ? 1 : Mathf.Max(0, Mathf.Min(1 - AlphaStep * distanceFromCenter, 1));
+        targetColors[i].a = targetAlpha;
+      }
+
+
+      while (time < _effectDuration)
+      {
+        for (int i = 0; i < childCount; i++)
+        {
+          listItems[i].Text.color = Color.Lerp(startColors[i], targetColors[i], time / _effectDuration);
+        }
+        time += Time.deltaTime;
+        yield return null;
+      }
+
+      for (int i = 0; i < childCount; i++)
+      {
+        listItems[i].Text.color = targetColors[i];
+      }
+    }
+
+    public void SetItemAlphas(int selectedObjIndex)
+    {
+      for (int i = 0; i < ContentTransform.childCount; i++)
+      {
+        var text = ContentTransform.GetChild(i).GetComponent<SpawnPointListItem>().Text;
+        var color = text.color;
+        var distanceFromCenter = Math.Abs(selectedObjIndex - i);
+        color.a = distanceFromCenter == 0 ? 1 : Mathf.Max(0, Mathf.Min(1 - AlphaStep * distanceFromCenter, 1));
+        text.color = color;
+      }
     }
 
     public void SetContentPosition(GameObject selectedObj)
@@ -102,7 +167,8 @@ namespace SpawnPointSelector
 
     public void SetCollapsed(bool collapsed)
     {
-      if (collapsed == IsCollapsed) {
+      if (collapsed == IsCollapsed)
+      {
         return;
       }
 
@@ -116,6 +182,21 @@ namespace SpawnPointSelector
 
       _listTransform.sizeDelta = new Vector2(_listTransform.sizeDelta.x, height);
       _listCanvasGroup.interactable = !collapsed;
+    }
+
+    public IEnumerator UpdateContentSize(float height)
+    {
+      var startSize = _listTransform.sizeDelta;
+      var targetSize = new Vector2(_listTransform.sizeDelta.x, height);
+      var time = 0f;
+
+      while (time < _effectDuration)
+      {
+        _listTransform.sizeDelta = Vector2.Lerp(startSize, targetSize, time / _effectDuration);
+        time += Time.deltaTime;
+        yield return null;
+      }
+      _listTransform.sizeDelta = targetSize;
     }
   }
 }
