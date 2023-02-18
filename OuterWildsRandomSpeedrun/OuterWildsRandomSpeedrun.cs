@@ -1,6 +1,7 @@
-using OWML.Common;
+﻿using OWML.Common;
 using OWML.ModHelper;
 using UnityEngine;
+using System.IO;
 using System.Reflection;
 using System.Linq;
 using OWML.Common.Menus;
@@ -23,7 +24,7 @@ namespace OuterWildsRandomSpeedrun
         private DateTime _startTime;
         private DateTime _endTime = DateTime.MinValue;
         private ScreenPrompt _timerPrompt;
-        
+
         private bool _modEnabled = false;
         private Mesh _marshmallowMesh;
         private Material _marshmallowMaterial;
@@ -48,6 +49,8 @@ namespace OuterWildsRandomSpeedrun
 
         private System.Random _random;
 
+        private SpawnPointPool _spawnPointPool;
+
         private void Awake()
         {
             // You won't be able to access OWML's mod helper in Awake.
@@ -62,7 +65,14 @@ namespace OuterWildsRandomSpeedrun
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
 
+            // Initialize spawn points from TSV
+            var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var pathToTsv = Path.Combine(parentDir, "SpawnPoints.tsv");
+            _spawnPointPool = SpawnPointPool.FromTsv(pathToTsv);
+            ModHelper.Console.WriteLine($"Loaded {_spawnPointPool.SpawnPointConfigs.Count} spawn points", MessageType.Debug);
+
             _random = new System.Random((int)DateTime.Now.Ticks);
+
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
             {
                 if (loadScene != OWScene.SolarSystem) return;
@@ -121,7 +131,7 @@ namespace OuterWildsRandomSpeedrun
             }
 
             var elapsed = _endTime == DateTime.MinValue ? DateTime.Now - _startTime : _endTime - _startTime;
-            
+
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
         }
@@ -217,7 +227,7 @@ namespace OuterWildsRandomSpeedrun
             _justEnteredGame = true;
             GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
         }
-        
+
         private void ResetRunButton_OnClick()
         {
             _justEnteredGame = true;
@@ -240,14 +250,6 @@ namespace OuterWildsRandomSpeedrun
             spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
 
             ModHelper.Console.WriteLine($"Registered {spawnPoints.Length} spawn points", MessageType.Info);
-
-            // var stringbuilder = "";
-            // foreach (var point in spawnPoints)
-            // {
-            //     stringbuilder += point.name;
-            //     stringbuilder += ", ";
-            // }
-            //ModHelper.Console.WriteLine(stringbuilder, MessageType.Info);
 
             return spawnPoints;
         }
@@ -280,13 +282,8 @@ namespace OuterWildsRandomSpeedrun
             return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected string GetRandomSpawnPointName()
-        {
-            var randIndex = _random.Next(SpawnPointNames.SPAWN_POINT_NAMES.Count);
-
-            ModHelper.Console.WriteLine($"Spawn point {SpawnPointNames.SPAWN_POINT_NAMES[randIndex]} set, from index {randIndex}", MessageType.Info);
-            return SpawnPointNames.SPAWN_POINT_NAMES[randIndex];
-        }
+        protected string GetRandomSpawnPointName() =>
+            _spawnPointPool.RandomSpawnPointConfig(_random).internalId;
 
         protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
