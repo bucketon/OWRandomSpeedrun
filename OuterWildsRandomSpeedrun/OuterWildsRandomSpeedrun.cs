@@ -1,6 +1,7 @@
 ﻿using OWML.Common;
 using OWML.ModHelper;
 using UnityEngine;
+using System.IO;
 using System.Reflection;
 using System.Linq;
 using OWML.Common.Menus;
@@ -64,7 +65,12 @@ namespace OuterWildsRandomSpeedrun
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
 
-            _spawnPointPool = SpawnPointPool.FromTsv("SpawnPoints.tsv");
+            // Initialize spawn points from TSV
+            var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var pathToTsv = Path.Combine(parentDir, "SpawnPoints.tsv");
+            _spawnPointPool = SpawnPointPool.FromTsv(pathToTsv);
+            ModHelper.Console.WriteLine($"Loaded {_spawnPointPool.SpawnPointConfigs.Count} spawn points", MessageType.Debug);
+
             _random = new System.Random((int)DateTime.Now.Ticks);
 
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>

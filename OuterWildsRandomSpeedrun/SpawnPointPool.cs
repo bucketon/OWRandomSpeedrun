@@ -44,15 +44,18 @@ namespace OuterWildsRandomSpeedrun
             return new SpawnPointConfig(internalId, displayName);
         }
 
-        const char FIELD_SEPARATOR = '\t';
+        private readonly static char[] LINE_SEPARATORS = new char[] { '\r', '\n' };
+        private readonly static char FIELD_SEPARATOR = '\t';
         private static string[][] ParseTsv(string pathToTsv)
         {
             using (var reader = new StreamReader(pathToTsv))
             {
-                // TODO: Discard header row
                 var contents = reader.ReadToEnd();
-                var lines = contents.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-                return lines.Select(line => line.Split(FIELD_SEPARATOR)).ToArray();
+                var lines = contents.Split(LINE_SEPARATORS, StringSplitOptions.RemoveEmptyEntries);
+                return lines
+                    .Skip(1) // Ignore the header row
+                    .Select(line => line.Split(FIELD_SEPARATOR))
+                    .ToArray();
             }
         }
 
