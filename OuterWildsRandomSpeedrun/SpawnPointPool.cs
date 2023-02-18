@@ -16,7 +16,7 @@ namespace OuterWildsRandomSpeedrun
         private readonly static char[] LINE_SEPARATORS = new char[] { '\r', '\n' };
         private readonly static char FIELD_SEPARATOR = '\t';
 
-        public List<SpawnPointConfig> SpawnPointConfigs
+        public IList<SpawnPointConfig> SpawnPointConfigs
         {
             get => _spawnPointConfigs;
         }
