@@ -10,17 +10,20 @@ namespace SpawnPointSelector
 
     public bool IsCollapsed { get; set; } = false;
 
-    public RectTransform ContentTransform {
+    public RectTransform ContentTransform
+    {
       get => _contentTransform;
       set => _contentTransform = value;
     }
 
-    public RectTransform ViewportTransform {
+    public RectTransform ViewportTransform
+    {
       get => _viewportTransform;
       set => _viewportTransform = value;
     }
 
-    public RectTransform ListTransform {
+    public RectTransform ListTransform
+    {
       get => _listTransform;
       set => _listTransform = value;
     }
@@ -39,16 +42,11 @@ namespace SpawnPointSelector
 
     private float _initialHeight;
 
-    private float _movementDuration = 0.1f;
+    private float _effectDuration = 0.1f;
 
     void Awake()
     {
       _initialHeight = this.GetComponent<RectTransform>().sizeDelta.y;
-    }
-
-    void Update()
-    {
-
     }
 
     public void Initialize()
@@ -73,9 +71,9 @@ namespace SpawnPointSelector
       var startPosition = new Vector2(listContentTransform.anchoredPosition.x, listContentTransform.anchoredPosition.y);
       var time = 0f;
 
-      while (time < _movementDuration)
+      while (time < _effectDuration)
       {
-        ContentTransform.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, time / _movementDuration);
+        ContentTransform.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, 1 - Mathf.Pow(1 - time / _effectDuration, 3));
         time += Time.deltaTime;
         yield return null;
       }
@@ -102,7 +100,8 @@ namespace SpawnPointSelector
 
     public void SetCollapsed(bool collapsed)
     {
-      if (collapsed == IsCollapsed) {
+      if (collapsed == IsCollapsed)
+      {
         return;
       }
 

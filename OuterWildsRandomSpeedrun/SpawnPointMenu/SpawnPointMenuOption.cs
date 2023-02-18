@@ -14,7 +14,6 @@ namespace OuterWildsRandomSpeedrun
 
     public override void OnSelect(BaseEventData eventData)
     {
-
       var listItem = this.gameObject.GetComponent<SpawnPointListItem>();
       listItem.LeftArrow.SetActive(true);
       listItem.RightArrow.SetActive(true);
@@ -26,8 +25,9 @@ namespace OuterWildsRandomSpeedrun
       {
         StopCoroutine(_selectionCoroutine);
       }
+
       _selectionCoroutine = StartCoroutine(list.MoveContentToPosition(eventData.selectedObject));
-      
+
       var menu = listItem.transform.parent.parent.GetComponentInParent<SpawnPointMenu>();
       menu.SetSelectOnActivate(GetComponent<Selectable>());
     }

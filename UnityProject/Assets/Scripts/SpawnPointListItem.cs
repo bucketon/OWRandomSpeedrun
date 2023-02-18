@@ -28,5 +28,31 @@ namespace SpawnPointSelector
 
     [SerializeField]
     private Text _text;
+
+    private float AlphaStep
+    {
+      get
+      {
+        if (_alphaStep == 0)
+        {
+          var listHeight = gameObject.transform.parent.GetComponent<RectTransform>().sizeDelta.y;
+          _alphaStep = 1.2f / (listHeight / 2f);
+        }
+
+        return _alphaStep;
+      }
+    }
+
+    private float _alphaStep = 0f;
+
+    public void Update()
+    {
+      var parentPos = gameObject.transform.parent.localPosition.y;
+      var thisPos = gameObject.transform.localPosition.y;
+      var distanceFromCenter = Mathf.Abs(parentPos + thisPos);
+      var targetColor = Text.color;
+      targetColor.a = Mathf.Clamp(1 - AlphaStep * distanceFromCenter, 0, 1);
+      Text.color = targetColor;
+    }
   }
 }

@@ -11,7 +11,8 @@ namespace OuterWildsRandomSpeedrun
   {
     public IModHelper ModHelper { get; set; }
 
-    public static SpawnPointSelectorManager Instance {
+    public static SpawnPointSelectorManager Instance
+    {
       get
       {
         if (_instance == null)
@@ -52,6 +53,10 @@ namespace OuterWildsRandomSpeedrun
     /// The "From" menu, represented as a script associated with our prefab
     /// </summary>
     private SpawnPointList _fromList;
+    
+    public SpawnPointList FromList {
+      get => _fromList;
+    }
 
     /// <summary>
     /// The "To" menu, represented as a script associated with our prefab
@@ -225,7 +230,7 @@ namespace OuterWildsRandomSpeedrun
       return Sprite.Create(texture, rect, pivot, texture.width);
     }
 
-        private void InitializeMenu(SpawnPointMenu menu, SpawnPointList list)
+    private void InitializeMenu(SpawnPointMenu menu, SpawnPointList list)
     {
       // Don't reset the initially-selected item every time we activate the menu
       menu._setMenuNavigationOnActivate = false;
