@@ -244,7 +244,6 @@ namespace OuterWildsRandomSpeedrun
       var middleOption = menu._menuOptions[(int) Math.Ceiling(optionCount / 2f) - 1];
       var selectable = middleOption._selectable;
       list.SetContentPosition(selectable.gameObject);
-      list.SetItemAlphas(middleOption.transform.GetSiblingIndex());
       menu.SetSelectOnActivate(selectable);
     }
 

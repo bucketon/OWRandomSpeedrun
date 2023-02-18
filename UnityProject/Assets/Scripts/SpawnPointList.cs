@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,23 +28,6 @@ namespace SpawnPointSelector
       set => _listTransform = value;
     }
 
-    private float AlphaStep
-    {
-      get
-      {
-        if (_alphaStep == 0)
-        {
-          var itemHeight = ContentTransform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y;
-          var listSpacing = ContentTransform.GetComponent<VerticalLayoutGroup>().spacing;
-          var listHeight = ListTransform.sizeDelta.y;
-          var maxDisplayable = Mathf.Floor(Mathf.Abs((listHeight + listSpacing) / (itemHeight + listSpacing)));
-          _alphaStep = 1 / (maxDisplayable / 2f);  
-        }
-
-        return _alphaStep;
-      }
-    }
-
     [SerializeField]
     private RectTransform _contentTransform;
 
@@ -61,8 +43,6 @@ namespace SpawnPointSelector
     private float _initialHeight;
 
     private float _effectDuration = 0.1f;
-
-    private float _alphaStep = 0f;
 
     void Awake()
     {
@@ -99,53 +79,6 @@ namespace SpawnPointSelector
       }
 
       ContentTransform.anchoredPosition = targetPosition;
-    }
-
-    public IEnumerator UpdateItemAlphas(int selectedObjIndex)
-    {
-      var time = 0f;
-      var childCount = ContentTransform.childCount;
-      var startColors = new Color[childCount];
-      var targetColors = new Color[childCount];
-      var listItems = new SpawnPointListItem[childCount];
-
-      for (int i = 0; i < childCount; i++)
-      {
-        listItems[i] = ContentTransform.GetChild(i).GetComponent<SpawnPointListItem>();
-        startColors[i] = listItems[i].Text.color;
-        targetColors[i] = listItems[i].Text.color;
-        var distanceFromCenter = Math.Abs(selectedObjIndex - i);
-        var targetAlpha = distanceFromCenter == 0 ? 1 : Mathf.Max(0, Mathf.Min(1 - AlphaStep * distanceFromCenter, 1));
-        targetColors[i].a = targetAlpha;
-      }
-
-
-      while (time < _effectDuration)
-      {
-        for (int i = 0; i < childCount; i++)
-        {
-          listItems[i].Text.color = Color.Lerp(startColors[i], targetColors[i], time / _effectDuration);
-        }
-        time += Time.deltaTime;
-        yield return null;
-      }
-
-      for (int i = 0; i < childCount; i++)
-      {
-        listItems[i].Text.color = targetColors[i];
-      }
-    }
-
-    public void SetItemAlphas(int selectedObjIndex)
-    {
-      for (int i = 0; i < ContentTransform.childCount; i++)
-      {
-        var text = ContentTransform.GetChild(i).GetComponent<SpawnPointListItem>().Text;
-        var color = text.color;
-        var distanceFromCenter = Math.Abs(selectedObjIndex - i);
-        color.a = distanceFromCenter == 0 ? 1 : Mathf.Max(0, Mathf.Min(1 - AlphaStep * distanceFromCenter, 1));
-        text.color = color;
-      }
     }
 
     public void SetContentPosition(GameObject selectedObj)
