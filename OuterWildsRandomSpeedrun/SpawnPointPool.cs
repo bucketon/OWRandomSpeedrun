@@ -9,12 +9,6 @@ namespace OuterWildsRandomSpeedrun
     {
         public string internalId;
         public string displayName;
-
-        public SpawnPointConfig(string internalId, string displayName)
-        {
-            this.internalId = internalId;
-            this.displayName = displayName;
-        }
     }
 
     public class SpawnPointPool
@@ -37,12 +31,8 @@ namespace OuterWildsRandomSpeedrun
             return new SpawnPointPool(configs);
         }
 
-        private static SpawnPointConfig BuildSpawnPointConfig(string[] line)
-        {
-            var internalId = line[0];
-            var displayName = line[1];
-            return new SpawnPointConfig(internalId, displayName);
-        }
+        private static SpawnPointConfig BuildSpawnPointConfig(string[] line) =>
+            new SpawnPointConfig { internalId = line[0], displayName = line[1] };
 
         private readonly static char[] LINE_SEPARATORS = new char[] { '\r', '\n' };
         private readonly static char FIELD_SEPARATOR = '\t';
