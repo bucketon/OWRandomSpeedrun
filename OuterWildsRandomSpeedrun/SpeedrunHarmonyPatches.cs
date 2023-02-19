@@ -42,14 +42,14 @@ public class SpeedrunHarmonyPatches {
   [HarmonyPatch(typeof(TitleScreenManager), nameof(TitleScreenManager.Start))]
   public static void TitleScreenManager_Start_Postfix()
   {
-    SpeedrunState.Instance.IsGameStarted = false;
-    SpeedrunState.Instance.ModEnabled = false;
+    SpeedrunState.IsGameStarted = false;
+    SpeedrunState.ModEnabled = false;
   }
 
   [HarmonyPostfix]
   [HarmonyPatch(typeof(DebugInputManager), nameof(DebugInputManager.Start))]
   public static void DebugInputManager_Start_Postfix()
   {
-    SpeedrunState.Instance.IsGameStarted = true;
+    SpeedrunState.IsGameStarted = true;
   }
 }
