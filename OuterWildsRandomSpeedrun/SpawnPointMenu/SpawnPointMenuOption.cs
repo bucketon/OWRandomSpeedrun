@@ -10,6 +10,8 @@ namespace OuterWildsRandomSpeedrun
   {
     public IModHelper ModHelper;
 
+    public SpawnPointConfig SpawnPoint { get; set; }
+    
     private Coroutine _selectionCoroutine;
 
     public override void OnSelect(BaseEventData eventData)

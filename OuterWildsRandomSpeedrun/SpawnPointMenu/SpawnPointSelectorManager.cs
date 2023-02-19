@@ -1,6 +1,7 @@
 using OWML.Common;
 using SpawnPointSelector;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
@@ -23,6 +24,20 @@ namespace OuterWildsRandomSpeedrun
         return _instance;
       }
     }
+
+    public List<SpawnPointConfig> SpawnPointConfigs
+    { 
+      set {
+        if (_spawnPointConfigs != null)
+        {
+          return;
+        }
+
+        _spawnPointConfigs = value;
+        _spawnPointConfigs.Sort((spawn1, spawn2) => spawn1.displayName.CompareTo(spawn2.displayName));
+      }
+    }
+    private List<SpawnPointConfig> _spawnPointConfigs;
 
     /// <summary>
     /// The GameObject that hosts the SpawnPointSelectorManager singleton
@@ -53,7 +68,7 @@ namespace OuterWildsRandomSpeedrun
     /// The "From" menu, represented as a script associated with our prefab
     /// </summary>
     private SpawnPointList _fromList;
-    
+
     public SpawnPointList FromList {
       get => _fromList;
     }
@@ -62,6 +77,8 @@ namespace OuterWildsRandomSpeedrun
     /// The "To" menu, represented as a script associated with our prefab
     /// </summary>
     private SpawnPointList _toList;
+
+    private SubmitActionLoadScene _submitAction;
 
     public void DisplayMenu()
     {
@@ -89,6 +106,19 @@ namespace OuterWildsRandomSpeedrun
       OWInput.inputManagerInstance.OnUpdateInputDevice -= this.OnUpdateInputDevice;
     }
 
+    public void ConfigureSubmitAction(TitleScreenStreaming titleStreaming, Text loadingText)
+    {
+      if (_submitAction != null)
+      {
+        return;
+      }
+      _submitAction = _goInstance.AddComponent<SubmitActionLoadScene>();
+      _submitAction.SetSceneToLoad(SubmitActionLoadScene.LoadableScenes.GAME);
+      _submitAction.EnableConfirm(false);
+      _submitAction._titleScreenStreaming = titleStreaming;
+      _submitAction._loadingText = loadingText;
+    }
+
     public void OnLeftRightPressed (AxisEventData eventData) {
       SwapMenus();
     }
@@ -101,10 +131,16 @@ namespace OuterWildsRandomSpeedrun
         return;
       }
 
-      var from = _fromMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
-      var to = _toMenu._lastSelected.GetComponent<SpawnPointListItem>().Text.text;
-      ModHelper.Console.WriteLine($"Oh my, we've been confirmed with {from} and {to}");
+      var from = _fromMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
+      var to = _toMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
+      SpeedrunState.INSTANCE.SpawnPointId = from.internalId;
+      SpeedrunState.INSTANCE.GoalPointId = to.internalId;
+      SpeedrunState.INSTANCE.GoalPointName = to.displayName;
+      SpeedrunState.INSTANCE.ModEnabled = true;
+      SpeedrunState.INSTANCE.JustEnteredGame = true;
+      ModHelper.Console.WriteLine($"Starting game with spawn points: {from.displayName} -> {to.displayName}");
       DisableMenu();
+      _submitAction.Submit();
     }
 
     public void OnCancelPressed(BaseEventData eventData)
@@ -129,25 +165,11 @@ namespace OuterWildsRandomSpeedrun
 
       var fromMenuOptions = new List<MenuOption>();
       var toMenuOptions = new List<MenuOption>();
-      var spawnNames = new string[] {
-        "Ash Twin",
-        "Brittle Hollow",
-        "Dark Bramble",
-        "Ember Twin",
-        "Giant's Deep",
-        "Feldspar's Camp",
-        "Sun Station",
-        "Timber Hearth",
-        "White Hole Station",
-        "Bingus Station",
-        "Pingus Station",
-        "Dingus Station"
-      };
 
-      foreach (string spawnName in spawnNames)
+      foreach (SpawnPointConfig spawnConfig in _spawnPointConfigs)
       {
-        addMenuItem(spawnName, _fromList, fromMenuOptions);
-        addMenuItem(spawnName, _toList, toMenuOptions);
+        addMenuItem(spawnConfig, _fromList, fromMenuOptions);
+        addMenuItem(spawnConfig, _toList, toMenuOptions);
       }
 
       _fromMenu._menuOptions = fromMenuOptions.ToArray();
@@ -247,11 +269,13 @@ namespace OuterWildsRandomSpeedrun
       menu.SetSelectOnActivate(selectable);
     }
 
-    private void addMenuItem(string spawnName, SpawnPointList list, List<MenuOption> options)
+    private void addMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)
     {
-        var listItem = list.AddItem(spawnName);
-        var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();
+        var listItem = list.AddItem(spawnConfig.displayName);
         listItem.gameObject.AddComponent<SelectableAudioPlayer>();
+
+        var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();
+        menuOption.SpawnPoint = spawnConfig;
         menuOption.Initialize();
         menuOption.ModHelper = ModHelper;
         options.Add(menuOption);
