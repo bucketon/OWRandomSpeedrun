@@ -138,6 +138,11 @@ namespace OuterWildsRandomSpeedrun
 
         private void OnWakeUp()
         {
+            if (_spawnPoint == null || Locator.GetPlayerBody() == null)
+            {
+                return;
+            }
+            
             Locator.GetPlayerBody().SetVelocity(_spawnPoint.GetPointVelocity());
         }
 
