@@ -7,6 +7,8 @@ using System.Linq;
 using OWML.Common.Menus;
 using System;
 using HarmonyLib;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace OuterWildsRandomSpeedrun
 {
@@ -16,36 +18,14 @@ namespace OuterWildsRandomSpeedrun
 
         private SpawnPoint _spawnPoint;
         private SpawnPoint _goalPoint;
-        private string _spawnPointName;
-        private string _goalPointName;
         private IModButton _speedrunButton;
         private IModButton _resetRunButton;
-        private IModButton _pingusButton;
-        private DateTime _startTime;
-        private DateTime _endTime = DateTime.MinValue;
         private ScreenPrompt _timerPrompt;
-
-        private bool _modEnabled = false;
         private Mesh _marshmallowMesh;
         private Material _marshmallowMaterial;
         private CanvasMarker _canvasMarker;
 
         private SpawnPointSelectorManager _manager;
-
-        /// <summary>
-        /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
-        /// </summary>
-        private bool _justEnteredGame = false;
-
-        /// <summary>
-        /// Set to true when we have just began a time loop and have pending operations to complete, false otherwise.
-        /// </summary>
-        private bool _justStartedTimeLoop;
-
-        /// <summary>
-        /// Set to true when we are in the game (including death/meditation), and false if we are elsewhere (the title screen).
-        /// </summary>
-        private bool _isGameStarted;
 
         private System.Random _random;
 
@@ -63,7 +43,7 @@ namespace OuterWildsRandomSpeedrun
         private void Start()
         {
             // Starting here, you'll have access to OWML's mod helper.
-            ModHelper.Console.WriteLine($"My mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
+            ModHelper.Console.WriteLine($"Mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
 
             // Initialize spawn points from TSV
             var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -73,30 +53,17 @@ namespace OuterWildsRandomSpeedrun
 
             _random = new System.Random((int)DateTime.Now.Ticks);
 
-            LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
-            {
-                if (loadScene != OWScene.SolarSystem) return;
-                ModHelper.Console.WriteLine("Loaded into solar system!", MessageType.Success);
-            };
-
             GlobalMessenger<int>.AddListener("StartOfTimeLoop", new Callback<int>(this.OnStartOfTimeLoop));
-
-            ModHelper.HarmonyHelper.EmptyMethod<DebugInputManager>("Awake");
-            ModHelper.Events.Subscribe<DebugInputManager>(Events.AfterStart);
-            ModHelper.Events.Subscribe<DebugInputManager>(Events.AfterAwake);
-            ModHelper.Events.Subscribe<PlayerAudioController>(Events.AfterStart);
-            ModHelper.Events.Subscribe<RingWorldController>(Events.AfterStart);
-            ModHelper.Events.Subscribe<TitleScreenManager>(Events.AfterStart);
-            ModHelper.Events.Event += OnEvent;
             GlobalMessenger.AddListener("WakeUp", new Callback(this.OnWakeUp));
+
+            // The mod breaks without this for reasons unknown
+            ModHelper.HarmonyHelper.EmptyMethod<DebugInputManager>("Awake");
+
 
             ModHelper.Menus.MainMenu.OnInit += () =>
             {
                 _speedrunButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate(Constants.SPEEDRUN_BUTTON_TEXT);
                 _speedrunButton.OnClick += SpeedRunButton_OnClick;
-
-                _pingusButton = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Duplicate("PINGUS MODE");
-                _pingusButton.OnClick += PingusModeButton_OnClick;
             };
 
             ModHelper.Menus.PauseMenu.OnInit += () =>
@@ -108,21 +75,20 @@ namespace OuterWildsRandomSpeedrun
 
         private void Update()
         {
-            if (!_isGameStarted || !_modEnabled)
+            if (!SpeedrunState.IsGameStarted || !SpeedrunState.ModEnabled)
             {
                 return;
             }
 
-            if (_justEnteredGame)
+            if (SpeedrunState.JustEnteredGame)
             {
-                _justEnteredGame = false;
-                _startTime = DateTime.Now;
-                ResetSpawnNames();
+                SpeedrunState.JustEnteredGame = false;
+                SpeedrunState.StartTime = DateTime.Now;
             }
 
-            if (_justStartedTimeLoop)
+            if (SpeedrunState.JustStartedTimeLoop)
             {
-                _justStartedTimeLoop = false;
+                SpeedrunState.JustStartedTimeLoop = false;
                 var spawner = GetSpawner();
                 var spawnPoints = GetSpawnPoints(spawner);
                 HandleBasicWarp(spawner, spawnPoints);
@@ -130,7 +96,7 @@ namespace OuterWildsRandomSpeedrun
                 SpawnGoal(_goalPoint.transform);
             }
 
-            var elapsed = _endTime == DateTime.MinValue ? DateTime.Now - _startTime : _endTime - _startTime;
+            var elapsed = SpeedrunState.EndTime == DateTime.MinValue ? DateTime.Now - SpeedrunState.StartTime : SpeedrunState.EndTime - SpeedrunState.StartTime;
 
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
@@ -143,17 +109,11 @@ namespace OuterWildsRandomSpeedrun
 
         private void OnStartOfTimeLoop(int loopCount)
         {
-            if (_modEnabled)
+            if (SpeedrunState.ModEnabled)
             {
-                _justStartedTimeLoop = true;
+                SpeedrunState.JustStartedTimeLoop = true;
                 CreateTimer();
             }
-        }
-
-        private void ResetSpawnNames()
-        {
-            _spawnPointName = null;
-            _goalPointName = null;
         }
 
         private void CreateTimer()
@@ -170,14 +130,8 @@ namespace OuterWildsRandomSpeedrun
 
         private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
         {
-            if (_spawnPointName == null || _goalPointName == null)
-            {
-                _spawnPointName = GetRandomSpawnPointName();
-                _goalPointName = GetRandomSpawnPointName();
-            }
-
-            _spawnPoint = GetSpawnPointByName(spawnPoints, _spawnPointName);
-            _goalPoint = GetSpawnPointByName(spawnPoints, _goalPointName);
+            _spawnPoint = GetSpawnPointByName(spawnPoints, SpeedrunState.SpawnPoint.internalId);
+            _goalPoint = GetSpawnPointByName(spawnPoints, SpeedrunState.GoalPoint.internalId);
             ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
             spawner.DebugWarp(_spawnPoint);
             var player = GameObject.FindGameObjectWithTag("Player");
@@ -201,20 +155,6 @@ namespace OuterWildsRandomSpeedrun
             return fonts.First(font => font.name == name);
         }
 
-        private void OnEvent(MonoBehaviour behaviour, Events ev)
-        {
-            if (behaviour is DebugInputManager && ev == Events.AfterStart)
-            {
-                ModHelper.Console.WriteLine("isStarted!", MessageType.Success);
-                _isGameStarted = true;
-            }
-            if (behaviour is TitleScreenManager && ev == Events.AfterStart)
-            {
-                _isGameStarted = false;
-                _modEnabled = false;
-            }
-        }
-
         private void SpeedRunButton_OnClick()
         {
             if (FindObjectOfType<TitleScreenManager>()._profileManager.currentProfileGameSave.loopCount <= 1)
@@ -223,23 +163,22 @@ namespace OuterWildsRandomSpeedrun
                 return;
             }
 
-            _modEnabled = true;
-            _justEnteredGame = true;
-            GameObject.Find(RESUME_BUTTON_NAME).GetComponent<SubmitActionLoadScene>().Submit();
+            _manager = SpawnPointSelectorManager.Instance;
+            _manager.SpawnPointConfigs = _spawnPointPool.SpawnPointConfigs as List<SpawnPointConfig>;
+            _manager.ModHelper = ModHelper;
+            var titleStreaming = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Button.GetComponent<SubmitActionLoadScene>()._titleScreenStreaming;
+            var loadingText = _speedrunButton.Button.GetComponentInChildren<Text>();
+            _manager.ConfigureSubmitAction(titleStreaming, loadingText);
+            _manager.DisplayMenu();
         }
 
         private void ResetRunButton_OnClick()
         {
-            _justEnteredGame = true;
+            SpeedrunState.SpawnPoint = GetRandomSpawnConfig();
+            SpeedrunState.GoalPoint = GetRandomSpawnConfig();
+            SpeedrunState.JustEnteredGame = true;
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
             ModHelper.Menus.PauseMenu.Close();
-        }
-
-        private void PingusModeButton_OnClick()
-        {
-            _manager = SpawnPointSelectorManager.Instance;
-            _manager.ModHelper = ModHelper;
-            _manager.DisplayMenu();
         }
 
         protected SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner)
@@ -256,9 +195,10 @@ namespace OuterWildsRandomSpeedrun
 
         protected void InitMapMarker()
         {
+            var labelText = $"GOAL: {SpeedrunState.GoalPoint.displayName.ToUpper()}";
             var markerManager = Locator.GetMarkerManager();
             _canvasMarker = markerManager.InstantiateNewMarker();
-            markerManager.RegisterMarker(_canvasMarker, _goalPoint.transform, "GOAL");
+            markerManager.RegisterMarker(_canvasMarker, _goalPoint.transform, labelText);
             _canvasMarker._mainTextField.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._marker.material.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._offScreenIndicator._textField.color = Constants.OW_ORANGE_COLOR;
@@ -268,7 +208,7 @@ namespace OuterWildsRandomSpeedrun
             var mapMarkerManager = Locator.GetMapController().GetMarkerManager();
             var mapMarker = mapMarkerManager.InstantiateNewMarker(true);
             mapMarkerManager.RegisterMarker(mapMarker, _goalPoint.transform, UITextType.None);
-            mapMarker.SetLabel("GOAL");
+            mapMarker.SetLabel(labelText);
             var materialInstance = Instantiate(mapMarker._textField.material);
             materialInstance.color = Constants.OW_ORANGE_COLOR;
             mapMarker._textField.material = materialInstance;
@@ -282,8 +222,8 @@ namespace OuterWildsRandomSpeedrun
             return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected string GetRandomSpawnPointName() =>
-            _spawnPointPool.RandomSpawnPointConfig(_random).internalId;
+        protected SpawnPointConfig GetRandomSpawnConfig() =>
+            _spawnPointPool.RandomSpawnPointConfig(_random);
 
         protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
@@ -313,7 +253,7 @@ namespace OuterWildsRandomSpeedrun
             marshmallow.OnCollected += () =>
             {
                 ModHelper.Console.WriteLine($"VICTORY!!!!", MessageType.Info);
-                _endTime = DateTime.Now;
+                SpeedrunState.EndTime = DateTime.Now;
                 marshmallow.gameObject.SetActive(false);
                 _canvasMarker.gameObject.SetActive(false);
             };
