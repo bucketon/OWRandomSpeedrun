@@ -180,6 +180,10 @@ namespace OuterWildsRandomSpeedrun
 
         private void ResetRunButton_OnClick()
         {
+            var goal = GetRandomSpawnConfig();
+            SpeedrunState.Instance.GoalPointId = goal.internalId;
+            SpeedrunState.Instance.GoalPointName = goal.displayName;
+            SpeedrunState.Instance.SpawnPointId = GetRandomSpawnConfig().internalId;
             SpeedrunState.Instance.JustEnteredGame = true;
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
             ModHelper.Menus.PauseMenu.Close();
@@ -226,8 +230,8 @@ namespace OuterWildsRandomSpeedrun
             return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected string GetRandomSpawnPointName() =>
-            _spawnPointPool.RandomSpawnPointConfig(_random).internalId;
+        protected SpawnPointConfig GetRandomSpawnConfig() =>
+            _spawnPointPool.RandomSpawnPointConfig(_random);
 
         protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
