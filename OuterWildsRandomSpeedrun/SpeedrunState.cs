@@ -4,7 +4,7 @@ namespace OuterWildsRandomSpeedrun
 {
   public struct SpeedrunState
   {
-    public static SpeedrunState INSTANCE = new SpeedrunState();
+    public static SpeedrunState Instance = new SpeedrunState();
 
     public string SpawnPointId;
     public string GoalPointId;

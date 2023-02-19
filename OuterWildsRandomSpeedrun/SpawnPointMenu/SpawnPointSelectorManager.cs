@@ -133,11 +133,11 @@ namespace OuterWildsRandomSpeedrun
 
       var from = _fromMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
       var to = _toMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
-      SpeedrunState.INSTANCE.SpawnPointId = from.internalId;
-      SpeedrunState.INSTANCE.GoalPointId = to.internalId;
-      SpeedrunState.INSTANCE.GoalPointName = to.displayName;
-      SpeedrunState.INSTANCE.ModEnabled = true;
-      SpeedrunState.INSTANCE.JustEnteredGame = true;
+      SpeedrunState.Instance.SpawnPointId = from.internalId;
+      SpeedrunState.Instance.GoalPointId = to.internalId;
+      SpeedrunState.Instance.GoalPointName = to.displayName;
+      SpeedrunState.Instance.ModEnabled = true;
+      SpeedrunState.Instance.JustEnteredGame = true;
       ModHelper.Console.WriteLine($"Starting game with spawn points: {from.displayName} -> {to.displayName}");
       DisableMenu();
       _submitAction.Submit();
