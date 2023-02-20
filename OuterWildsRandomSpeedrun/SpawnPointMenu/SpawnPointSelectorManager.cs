@@ -80,6 +80,16 @@ namespace OuterWildsRandomSpeedrun
 
     private SubmitActionLoadScene _submitAction;
 
+    private System.Random _random = new System.Random((int)DateTime.Now.Ticks);
+
+    public void Update()
+    {
+      if (_selector.gameObject.activeSelf && OWInput.IsNewlyPressed(InputLibrary.setDefaults, InputMode.All))
+      {
+        RandomizeSelections();
+      }
+    }
+
     public void DisplayMenu()
     {
       InitializeSelector();
@@ -119,7 +129,27 @@ namespace OuterWildsRandomSpeedrun
       _submitAction._loadingText = loadingText;
     }
 
-    public void OnLeftRightPressed (AxisEventData eventData) {
+    public void RandomizeSelections()
+    {
+      var selectedMenu = _fromMenu.IsMenuEnabled() ? _fromMenu : _toMenu;
+      var unselectedMenu = selectedMenu == _fromMenu ? _toMenu : _fromMenu;
+      var unselectedList = selectedMenu == _fromMenu ? _toList : _fromList;
+
+      var selectedMenuSelectable = GetRandomSelectable(selectedMenu);
+      var unselectedMenuSelectable = GetRandomSelectable(unselectedMenu);
+      selectedMenuSelectable.Select();
+      unselectedMenu.SetSelectOnActivate(unselectedMenuSelectable);
+      unselectedList.SetContentPosition(unselectedMenuSelectable.gameObject);
+    }
+
+    private Selectable GetRandomSelectable(SpawnPointMenu menu)
+    {
+      var randomIndex = _random.Next(_fromMenu._menuOptions.Length);
+      return menu._menuOptions[randomIndex]._selectable;
+    }
+
+    public void OnLeftRightPressed (AxisEventData eventData)
+    {
       SwapMenus();
     }
 
@@ -138,8 +168,8 @@ namespace OuterWildsRandomSpeedrun
       SpeedrunState.ModEnabled = true;
       SpeedrunState.JustEnteredGame = true;
       ModHelper.Console.WriteLine($"Starting game with spawn points: {from.displayName} -> {to.displayName}");
-      DisableMenu();
       _submitAction.Submit();
+      DisableMenu();
     }
 
     public void OnCancelPressed(BaseEventData eventData)
@@ -217,10 +247,12 @@ namespace OuterWildsRandomSpeedrun
       var rightSprite = GetSpriteForInput(InputLibrary.menuRight);
       var confirmSprite = GetSpriteForInput(InputLibrary.menuConfirm);
       var cancelSprite = GetSpriteForInput(InputLibrary.cancel);
+      var randomizeSprite = GetSpriteForInput(InputLibrary.setDefaults);
 
       _selector.Tooltip.RightImage.sprite = rightSprite;
       _selector.Tooltip.ConfirmImage.sprite = confirmSprite;
       _selector.Tooltip.CancelImage.sprite = cancelSprite;
+      _selector.Tooltip.RandomizeImage.sprite = randomizeSprite;
 
       if (OWInput.UsingGamepad()) {
         _selector.Tooltip.LeftImage.enabled = false;
@@ -261,9 +293,7 @@ namespace OuterWildsRandomSpeedrun
     }
 
     private void SetInitialSelection(SpawnPointMenu menu, SpawnPointList list){
-      var optionCount = menu._menuOptions.Length;
-      var middleOption = menu._menuOptions[(int) Math.Ceiling(optionCount / 2f) - 1];
-      var selectable = middleOption._selectable;
+      var selectable = GetRandomSelectable(menu);
       list.SetContentPosition(selectable.gameObject);
       menu.SetSelectOnActivate(selectable);
     }

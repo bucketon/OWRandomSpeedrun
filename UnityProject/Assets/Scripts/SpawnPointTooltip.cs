@@ -7,6 +7,7 @@ public class SpawnPointTooltip : MonoBehaviour
   public Image RightImage { get => _rightImage; }
   public Image ConfirmImage { get => _confirmImage; }
   public Image CancelImage { get => _cancelImage; }
+  public Image RandomizeImage { get => _randomizeImage; }
   public Text SeparatorText { get => _separatorText; }
   public Text NextText { get => _nextText; }
 
@@ -21,6 +22,9 @@ public class SpawnPointTooltip : MonoBehaviour
   
   [SerializeField]
   private Image _cancelImage;
+
+  [SerializeField]
+  private Image _randomizeImage;
 
   [SerializeField]
   private Text _separatorText;
