@@ -2,7 +2,7 @@ using System;
 
 namespace OuterWildsRandomSpeedrun
 {
-  public struct SpeedrunState
+  public class SpeedrunState
   {
     private static SpeedrunState Instance = new SpeedrunState();
 

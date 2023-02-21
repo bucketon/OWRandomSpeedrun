@@ -145,9 +145,10 @@ namespace OuterWildsRandomSpeedrun
                 ship.SetActive(false);
             }
 
-            var villageMusicController = FindObjectOfType<VillageMusicVolume>();
-            ModHelper.Console.WriteLine($"villageMusicController {(villageMusicController == null ? "is" : "isn\'t")} null", MessageType.Success);
-            villageMusicController.Deactivate();
+            if (!SpeedrunState.SpawnPoint.isThVillage) {
+                var villageMusicController = FindObjectOfType<VillageMusicVolume>();
+                villageMusicController.Deactivate();
+            }
         }
 
         private Font GetFontByName(string name)
