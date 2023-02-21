@@ -52,4 +52,15 @@ public class SpeedrunHarmonyPatches {
   {
     SpeedrunState.IsGameStarted = true;
   }
+
+  [HarmonyPrefix]
+  [HarmonyPatch(typeof(PlayerSpawner), nameof(PlayerSpawner.OnStartOfTimeLoop))]
+  public static void PlayerSpawner_OnStartOfTimeLoop_Prefix()
+  {
+    if (SpeedrunState.ModEnabled) {
+      // Do not call SpawnPlayer() here
+      return;
+    }
+  }
+
 }
