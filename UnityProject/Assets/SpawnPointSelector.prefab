@@ -1463,6 +1463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fromSpawnPointList: {fileID: 2166089195464203914}
   _toSpawnPointList: {fileID: 3929474598538573727}
+  _courseSelectText: {fileID: 7539367798869955954}
   _tooltip: {fileID: 3709026494243021799}
 --- !u!1 &8127350397319146711
 GameObject:
