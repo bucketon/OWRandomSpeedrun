@@ -37,6 +37,9 @@ namespace OuterWildsRandomSpeedrun
         _spawnPointConfigs.Sort((spawn1, spawn2) => spawn1.displayName.CompareTo(spawn2.displayName));
       }
     }
+
+    public TitleScreenStreaming TitleStreaming { get; set; }
+
     private List<SpawnPointConfig> _spawnPointConfigs;
 
     /// <summary>
@@ -94,6 +97,7 @@ namespace OuterWildsRandomSpeedrun
     {
       InitializeSelector();
       InitializeMenus();
+      InitializeSubmitAction();
 
       _fromMenu.EnableMenu(true);
       _toMenu.EnableMenu(false);
@@ -116,17 +120,28 @@ namespace OuterWildsRandomSpeedrun
       OWInput.inputManagerInstance.OnUpdateInputDevice -= this.OnUpdateInputDevice;
     }
 
-    public void ConfigureSubmitAction(TitleScreenStreaming titleStreaming, Text loadingText)
+    private void OnDestroy()
+    {
+      OWInput.inputManagerInstance.OnUpdateInputDevice -= this.OnUpdateInputDevice;
+    }
+
+    public void InitializeSubmitAction()
     {
       if (_submitAction != null)
       {
         return;
       }
+      if (_selector == null)
+      {
+        ModHelper.Console.WriteLine("SpawnPointSelector needs to be initialized before calling InitializeSubmitAction!", MessageType.Error);
+        return;
+      }
+
       _submitAction = _goInstance.AddComponent<SubmitActionLoadScene>();
       _submitAction.SetSceneToLoad(SubmitActionLoadScene.LoadableScenes.GAME);
       _submitAction.EnableConfirm(false);
-      _submitAction._titleScreenStreaming = titleStreaming;
-      _submitAction._loadingText = loadingText;
+      _submitAction._titleScreenStreaming = TitleStreaming;
+      _submitAction._loadingText = _selector.CourseSelectText;
     }
 
     public void RandomizeSelections()
@@ -169,7 +184,6 @@ namespace OuterWildsRandomSpeedrun
       SpeedrunState.JustEnteredGame = true;
       ModHelper.Console.WriteLine($"Starting game with spawn points: {from.displayName} -> {to.displayName}");
       _submitAction.Submit();
-      DisableMenu();
     }
 
     public void OnCancelPressed(BaseEventData eventData)

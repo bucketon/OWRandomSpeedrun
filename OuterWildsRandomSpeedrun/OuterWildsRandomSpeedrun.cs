@@ -172,8 +172,7 @@ namespace OuterWildsRandomSpeedrun
             _manager.SpawnPointConfigs = _spawnPointPool.SpawnPointConfigs as List<SpawnPointConfig>;
             _manager.ModHelper = ModHelper;
             var titleStreaming = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Button.GetComponent<SubmitActionLoadScene>()._titleScreenStreaming;
-            var loadingText = _speedrunButton.Button.GetComponentInChildren<Text>();
-            _manager.ConfigureSubmitAction(titleStreaming, loadingText);
+            _manager.TitleStreaming = titleStreaming;
             _manager.DisplayMenu();
         }
 
