@@ -7,7 +7,6 @@ using System.Linq;
 using OWML.Common.Menus;
 using System;
 using HarmonyLib;
-using UnityEngine.UI;
 using System.Collections.Generic;
 
 namespace OuterWildsRandomSpeedrun
@@ -54,7 +53,6 @@ namespace OuterWildsRandomSpeedrun
             _random = new System.Random((int)DateTime.Now.Ticks);
 
             GlobalMessenger<int>.AddListener("StartOfTimeLoop", new Callback<int>(this.OnStartOfTimeLoop));
-            GlobalMessenger.AddListener("WakeUp", new Callback(this.OnWakeUp));
 
             // The mod breaks without this for reasons unknown
             ModHelper.HarmonyHelper.EmptyMethod<DebugInputManager>("Awake");
@@ -89,27 +87,14 @@ namespace OuterWildsRandomSpeedrun
             if (SpeedrunState.JustStartedTimeLoop)
             {
                 SpeedrunState.JustStartedTimeLoop = false;
-                var spawner = GetSpawner();
-                var spawnPoints = GetSpawnPoints(spawner);
-                HandleBasicWarp(spawner, spawnPoints);
+                HandleNewLoopSetup();
                 InitMapMarker();
                 SpawnGoal(_goalPoint.transform);
             }
 
             var elapsed = SpeedrunState.EndTime == DateTime.MinValue ? DateTime.Now - SpeedrunState.StartTime : SpeedrunState.EndTime - SpeedrunState.StartTime;
-
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
-        }
-
-        private void OnWakeUp()
-        {
-            if (_spawnPoint == null || Locator.GetPlayerBody() == null)
-            {
-                return;
-            }
-            
-            Locator.GetPlayerBody().SetVelocity(_spawnPoint.GetPointVelocity());
         }
 
         private void OnStartOfTimeLoop(int loopCount)
@@ -118,6 +103,9 @@ namespace OuterWildsRandomSpeedrun
             {
                 SpeedrunState.JustStartedTimeLoop = true;
                 CreateTimer();
+                var spawner = GetSpawner();
+                var spawnPoints = GetSpawnPoints(spawner);
+                HandleBasicWarp(spawner, spawnPoints);
             }
         }
 
@@ -138,17 +126,25 @@ namespace OuterWildsRandomSpeedrun
             _spawnPoint = GetSpawnPointByName(spawnPoints, SpeedrunState.SpawnPoint.internalId);
             _goalPoint = GetSpawnPointByName(spawnPoints, SpeedrunState.GoalPoint.internalId);
             ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
-            spawner.DebugWarp(_spawnPoint);
+            spawner.SetInitialSpawnPoint(_spawnPoint);
+            Locator.GetPlayerBody().gameObject.AddComponent<MatchInitialMotion>();
+            spawner.SpawnPlayer();
+        }
+
+        private void HandleNewLoopSetup()
+        {
             var player = GameObject.FindGameObjectWithTag("Player");
             var playerController = player.GetComponent<PlayerSpacesuit>();
             playerController.SuitUp();
             var oxygenController = player.GetComponent<PlayerResources>();
             oxygenController.UpdateOxygen();
+
             if (!ModHelper.Config.GetSettingsValue<bool>("ShipSpawns"))
             {
                 var ship = GameObject.FindGameObjectWithTag("Ship");
                 ship.SetActive(false);
             }
+
             var villageMusicController = FindObjectOfType<VillageMusicVolume>();
             ModHelper.Console.WriteLine($"villageMusicController {(villageMusicController == null ? "is" : "isn\'t")} null", MessageType.Success);
             villageMusicController.Deactivate();
@@ -185,8 +181,9 @@ namespace OuterWildsRandomSpeedrun
             ModHelper.Menus.PauseMenu.Close();
         }
 
-        protected SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner)
+        private SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner)
         {
+            spawner.FindPlanetSpawns();
             var spawnPointsField = typeof(PlayerSpawner)
                 .GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
             var spawnPoints = spawnPointsField?.GetValue(spawner) as SpawnPoint[];
@@ -197,7 +194,7 @@ namespace OuterWildsRandomSpeedrun
             return spawnPoints;
         }
 
-        protected void InitMapMarker()
+        private void InitMapMarker()
         {
             var labelText = $"GOAL: {SpeedrunState.GoalPoint.displayName.ToUpper()}";
             var markerManager = Locator.GetMarkerManager();
@@ -220,21 +217,21 @@ namespace OuterWildsRandomSpeedrun
             mapMarker.SetVisibility(true);
         }
 
-        protected PlayerSpawner GetSpawner()
+        private PlayerSpawner GetSpawner()
         {
             ModHelper.Console.WriteLine($"initialize spawner.", MessageType.Info);
             return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
-        protected SpawnPointConfig GetRandomSpawnConfig() =>
+        private SpawnPointConfig GetRandomSpawnConfig() =>
             _spawnPointPool.RandomSpawnPointConfig(_random);
 
-        protected SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
+        private SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
             return spawnPoints.Where(point => { return point.name.Equals(name); }).First();
         }
 
-        protected void SpawnGoal(Transform parent)
+        private void SpawnGoal(Transform parent)
         {
             var go = new GameObject("GoalPoint");
             var collider = go.AddComponent<SphereCollider>();
