@@ -29,7 +29,7 @@ namespace OuterWildsRandomSpeedrun
         private System.Random _random;
 
         private SpawnPointPool _spawnPointPool;
-
+    
         private void Awake()
         {
             // You won't be able to access OWML's mod helper in Awake.
@@ -66,8 +66,11 @@ namespace OuterWildsRandomSpeedrun
 
             ModHelper.Menus.PauseMenu.OnInit += () =>
             {
-                _resetRunButton = ModHelper.Menus.PauseMenu.QuitButton.Duplicate(Constants.RESET_RUN_BUTTON_TEXT);
-                _resetRunButton.OnClick += ResetRunButton_OnClick;
+                if (SpeedrunState.ModEnabled)
+                {
+                    _resetRunButton = ModHelper.Menus.PauseMenu.QuitButton.Duplicate(Constants.RESET_RUN_BUTTON_TEXT);
+                    _resetRunButton.OnClick += ResetRunButton_OnClick;
+                }
             };
         }
 
@@ -78,23 +81,25 @@ namespace OuterWildsRandomSpeedrun
                 return;
             }
 
-            if (SpeedrunState.JustEnteredGame)
-            {
-                SpeedrunState.JustEnteredGame = false;
-                SpeedrunState.StartTime = DateTime.Now;
-            }
-
             if (SpeedrunState.JustStartedTimeLoop)
             {
                 SpeedrunState.JustStartedTimeLoop = false;
                 HandleNewLoopSetup();
                 InitMapMarker();
                 SpawnGoal(_goalPoint.transform);
+
+                if (SpeedrunState.JustEnteredGame)
+                {
+                    SpeedrunState.JustEnteredGame = false;
+                    SpeedrunState.StartTime = DateTime.Now;
+                    SpeedrunState.EndTime = DateTime.MinValue;
+                }
             }
 
             var elapsed = SpeedrunState.EndTime == DateTime.MinValue ? DateTime.Now - SpeedrunState.StartTime : SpeedrunState.EndTime - SpeedrunState.StartTime;
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
+            
         }
 
         private void OnStartOfTimeLoop(int loopCount)
@@ -176,6 +181,7 @@ namespace OuterWildsRandomSpeedrun
         {
             SpeedrunState.SpawnPoint = GetRandomSpawnConfig();
             SpeedrunState.GoalPoint = GetRandomSpawnConfig();
+
             SpeedrunState.JustEnteredGame = true;
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
             ModHelper.Menus.PauseMenu.Close();
@@ -233,6 +239,11 @@ namespace OuterWildsRandomSpeedrun
 
         private void SpawnGoal(Transform parent)
         {
+            if (SpeedrunState.EndTime != DateTime.MinValue)
+            {
+                return;
+            }
+
             var go = new GameObject("GoalPoint");
             var collider = go.AddComponent<SphereCollider>();
             collider.isTrigger = true;
