@@ -6,19 +6,19 @@ namespace OuterWildsRandomSpeedrun
   {
     private static SpeedrunState Instance = new SpeedrunState();
 
-    public static SpawnPointConfig SpawnPoint
+    public static SpawnPointConfig? SpawnPoint
     {
       get => Instance._spawnPoint;
       set => Instance._spawnPoint = value;
     }
-    private SpawnPointConfig _spawnPoint;
+    private SpawnPointConfig? _spawnPoint;
 
-    public static SpawnPointConfig GoalPoint
+    public static SpawnPointConfig? GoalPoint
     {
       get => Instance._goalPoint;
       set => Instance._goalPoint = value;
     }
-    private SpawnPointConfig _goalPoint;
+    private SpawnPointConfig? _goalPoint;
 
     public static DateTime StartTime
     {
