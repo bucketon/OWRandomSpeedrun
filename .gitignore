@@ -1,7 +1,7 @@
 
-OuterWildsRandomSpeedrun/obj/*
-.vs/OuterWildsRandomSpeedrun/v16/.suo
-.vs/OuterWildsRandomSpeedrun/DesignTimeBuild/*
+NomaiGrandPrix/obj/*
+.vs/NomaiGrandPrix/v16/.suo
+.vs/NomaiGrandPrix/DesignTimeBuild/*
 
 # ~~~ ONLY PLACE UNITY-RELATED IGNORES BELOW THIS LINE ~~~
 
@@ -81,13 +81,3 @@ UnityProject/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 # Temporary auto-generated Android Assets
 UnityProject/[Aa]ssets/[Ss]treamingAssets/aa.meta
 UnityProject/[Aa]ssets/[Ss]treamingAssets/aa/*
-
-#UnityProject/Library/*
-#UnityProject/Logs/*
-#UnityProject/Packages/*
-#UnityProject/.vscode/*
-#UnityProject/*.csproj
-#UnityProject/Temp/*
-#UnityProject/ProjectSettings/*
-#UnityProject/obj/*
-#UnityProject/UserSettings/*

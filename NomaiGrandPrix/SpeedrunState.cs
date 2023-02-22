@@ -1,6 +1,6 @@
 using System;
 
-namespace OuterWildsRandomSpeedrun
+namespace NomaiGrandPrix
 {
   public class SpeedrunState
   {

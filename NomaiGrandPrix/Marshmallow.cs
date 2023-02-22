@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace OuterWildsRandomSpeedrun
+namespace NomaiGrandPrix
 {
     public class Marshmallow : MonoBehaviour
     {
