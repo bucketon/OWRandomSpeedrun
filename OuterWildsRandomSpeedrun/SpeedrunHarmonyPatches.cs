@@ -58,7 +58,7 @@ public class SpeedrunHarmonyPatches {
   // trigger ones like Hotshot.
   [HarmonyPostfix]
   [HarmonyPatch(typeof(Achievements), nameof(Achievements.Earn))]
-  public static bool Achievements_Earn_Postfix(Achievements.Type type)
+  public static bool Achievements_Earn_Prefix(Achievements.Type type)
   {
     var modHelper = OuterWildsRandomSpeedrun.OuterWildsRandomSpeedrun.Instance.ModHelper;
     if (SpeedrunState.ModEnabled)
