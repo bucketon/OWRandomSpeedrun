@@ -257,6 +257,7 @@ namespace OuterWildsRandomSpeedrun
                 SpeedrunState.EndTime = DateTime.Now;
                 marshmallow.gameObject.SetActive(false);
                 _canvasMarker.gameObject.SetActive(false);
+                Locator.GetPlayerAudioController().PlayMarshmallowEat();
             };
 
             go.transform.parent = parent;
