@@ -121,7 +121,7 @@ namespace OuterWildsRandomSpeedrun
             var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(_timerPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
             var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
             screenPromptList.AddScreenPrompt(screenPromptElement);
-    }
+        }
 
         private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
         {
