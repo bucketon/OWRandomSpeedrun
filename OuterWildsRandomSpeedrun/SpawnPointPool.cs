@@ -7,17 +7,17 @@ namespace OuterWildsRandomSpeedrun
 {
     public enum Area
     {
-        none,
-        sun_station,
-        ash_twin,
-        ember_twin,
-        timber_hearth,
-        brittle_hollow,
-        giants_deep,
-        dark_bramble,
-        interloper,
-        stranger,
-        dream_zone,
+        None,
+        SunStation,
+        AshTwin,
+        EmberTwin,
+        TimberHearth,
+        BrittleHollow,
+        GiantsDeep,
+        DarkBramble,
+        Interloper,
+        Stranger,
+        DreamZone,
     }
     public struct SpawnPointConfig
     {
@@ -63,7 +63,7 @@ namespace OuterWildsRandomSpeedrun
             new SpawnPointConfig { 
                 internalId = line[0], 
                 displayName = line[1], 
-                area = line[2].Equals("") ? Area.none : (Area)Enum.Parse(typeof(Area), line[2]),
+                area = line[2].Equals("") ? Area.None : (Area)Enum.Parse(typeof(Area), line[2]),
                 isDreamZone = bool.Parse(line[3]),
                 shouldSpawn = bool.Parse(line[4]),
                 shouldGoal = bool.Parse(line[5]),

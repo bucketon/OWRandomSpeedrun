@@ -7,85 +7,85 @@ ShipSpawn_JellyDomain	Ship Jelly Domain		FALSE	TRUE	TRUE	FALSE
 ShipSpawn_QM	Ship Quantum Moon		FALSE	TRUE	TRUE	FALSE	
 ShipSpawn_TH	Ship Timber Hearth		FALSE	TRUE	TRUE	TRUE	
 ShipSpawnPoint_WhiteHole(1)	Ship WhiteHole		FALSE	TRUE	TRUE	FALSE	
-Spawn	Sun Station	sun_station	FALSE	TRUE	TRUE	FALSE	
-SPAWN_BlackholeForge	Blackhole Forge	brittle_hollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_BrambleIsland	Bramble Island	giants_deep	FALSE	TRUE	TRUE	FALSE	
-Spawn_ChertsCamp	Chert's Camp	ember_twin	FALSE	TRUE	TRUE	FALSE	
-Spawn_City	Sunless City	ember_twin	FALSE	TRUE	TRUE	FALSE	
-SPAWN_City	Hanging City Bridge	brittle_hollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_CO	Interloper	interloper	FALSE	TRUE	TRUE	FALSE	
-Spawn_CO_Core	Interloper Core	interloper	FALSE	TRUE	TRUE	FALSE	
-Spawn_CO_Interior	Interloper Interior	interloper	FALSE	TRUE	TRUE	FALSE	
-Spawn_ConstructionYard	Construction Yard	giants_deep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Core	Giant's Deep Core	giants_deep	FALSE	TRUE	TRUE	FALSE	
-SPAWN_Crossroad	Brittle Hollow Crossroads	brittle_hollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_DeepSpace	Space Above Giant's Deep	giants_deep	FALSE	TRUE	TRUE	FALSE	
-Spawn_DreamZone_1	DreamZone 1	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_1_Bridge	DreamZone 1 Bridge	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_1_GhostForest	DreamZone 1 Ghost Forest	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_1_Grapple	DreamZone 1 Grapple	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_1_PartyHouse	DreamZone 1 Party House	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_1_RaftDock	DreamZone 1 Raft Dock	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_1_SecretElevator	DreamZone 1 Secret Elevator	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_1_SecretTunnel	DreamZone 1 Secret Tunnel	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_2	DreamZone 2	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_2_BackRaft	DreamZone 2 Back Raft	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_2_Dock	DreamZone 2 Dock	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_2_LighthouseUpstairs	DreamZone 2 Lighthouse Upstairs	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_2_Projector	DreamZone 2 Projector	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_2_UnderCity	DreamZone 2 Under City	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3	DreamZone 3	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3_Dock	DreamZone 3 Dock	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3_Elevator	DreamZone 3 Elevator	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3_HotelDepths	DreamZone 3 Hotel Depths	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3_HotelEntrance	DreamZone 3 Hotel Entrance	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3_Projector	DreamZone 3 Projector	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3_SecretCave	DreamZone 3 Secret Cave	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_3_SecretGallery	DreamZone 3 Secret Gallery	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_4_Bridge	DreamZone 4 Bridge	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_4_Dock	DreamZone 4 Dock	dream_zone	TRUE	FALSE	FALSE	FALSE	
-Spawn_DreamZone_4_Elevator	DreamZone 4 Elevator	dream_zone	TRUE	FALSE	FALSE	FALSE	
-SPAWN_EscapePod	Escape Pod 1 (Brittle Hollow)	brittle_hollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_EscapePod_Exterior	Escape Pod 2 (Ember Twin) Exterior	ember_twin	FALSE	TRUE	TRUE	FALSE	
-Spawn_EscapePod_Interior	Escape Pod 2 (Ember Twin) Interior	ember_twin	FALSE	TRUE	TRUE	FALSE	
-Spawn_FossilOverlook	Fossil Overlook	ember_twin	FALSE	TRUE	TRUE	FALSE	
-Spawn_FossilSite	Fossil Site	ember_twin	FALSE	TRUE	TRUE	FALSE	
-Spawn_GabbroIsland	Gabbro's Island	giants_deep	FALSE	TRUE	TRUE	FALSE	
-Spawn_GravityCannon	Ember Twin Gravity Cannon	ember_twin	FALSE	TRUE	TRUE	FALSE	
-SPAWN_GravityCannon	Brittle Hollow Gravity Cannon	brittle_hollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_IP_DockingBay_Dark	Stranger Docking Bay Dark	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_DockingBay_Light	Stranger Docking Bay Light	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_ObservationDeck	Stranger Observation Deck	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Outside	Stranger Outside	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_OutsideCloak	Stranger Outside Cloak	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Prison	Stranger Prison	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Ship	Stranger Ship	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Ship_OutsideCloak	Stranger Ship Outside Cloak	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1	Stranger River Lowlands	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1_BeachedRaft	Stranger River Lowlands Beached Raft	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1_Rapids	Stranger River Lowlands Rapids	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1_SecretPool	Stranger River Lowlands Secret Pool	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2	Stranger Cinder Isles	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2_CoveBottom	Stranger Cinder Isles Cove Bottom	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2_CoveTop	Stranger Cinder Isles Cove Top	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2_LighthouseTop	Stranger Cinder Isles Lighthouse Top	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_Bridge	Stranger Hidden Gorge Bridge	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_BrokenBridge	Stranger Hidden Gorge Broken Bridge	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_CodeDoor	Stranger Hidden Gorge Code Door	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_DreamFire	Stranger Hidden Gorge Dream Fire	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_DreamLabOverlook	Stranger Hidden Gorge DreamLab Overlook	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_Raft	Stranger Hidden Gorge Raft	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_SecretEntrance	Stranger Hidden Gorge Secret Entrance	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_Temple	Stranger Hidden Gorge Temple	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_4	Stranger Reservoir	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_4_LeftShore	Stranger Reservoir Left Shore	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_4_RightShore	Stranger Reservoir Right Shore	stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_JellyDomain	Giant's Deep Jelly Domain	giants_deep	FALSE	TRUE	TRUE	FALSE	
-Spawn_LakebedCave	Lakebed Cave	ember_twin	FALSE	TRUE	TRUE	FALSE	
+Spawn	Sun Station	SunStation	FALSE	TRUE	TRUE	FALSE	
+SPAWN_BlackholeForge	Blackhole Forge	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+Spawn_BrambleIsland	Bramble Island	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_ChertsCamp	Chert's Camp	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_City	Sunless City	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+SPAWN_City	Hanging City Bridge	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+Spawn_CO	Interloper	Interloper	FALSE	TRUE	TRUE	FALSE	
+Spawn_CO_Core	Interloper Core	Interloper	FALSE	TRUE	TRUE	FALSE	
+Spawn_CO_Interior	Interloper Interior	Interloper	FALSE	TRUE	TRUE	FALSE	
+Spawn_ConstructionYard	Construction Yard	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Core	Giant's Deep Core	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+SPAWN_Crossroad	Brittle Hollow Crossroads	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+Spawn_DeepSpace	Space Above Giant's Deep	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_DreamZone_1	DreamZone 1	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_1_Bridge	DreamZone 1 Bridge	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_1_GhostForest	DreamZone 1 Ghost Forest	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_1_Grapple	DreamZone 1 Grapple	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_1_PartyHouse	DreamZone 1 Party House	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_1_RaftDock	DreamZone 1 Raft Dock	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_1_SecretElevator	DreamZone 1 Secret Elevator	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_1_SecretTunnel	DreamZone 1 Secret Tunnel	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_2	DreamZone 2	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_2_BackRaft	DreamZone 2 Back Raft	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_2_Dock	DreamZone 2 Dock	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_2_LighthouseUpstairs	DreamZone 2 Lighthouse Upstairs	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_2_Projector	DreamZone 2 Projector	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_2_UnderCity	DreamZone 2 Under City	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3	DreamZone 3	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3_Dock	DreamZone 3 Dock	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3_Elevator	DreamZone 3 Elevator	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3_HotelDepths	DreamZone 3 Hotel Depths	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3_HotelEntrance	DreamZone 3 Hotel Entrance	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3_Projector	DreamZone 3 Projector	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3_SecretCave	DreamZone 3 Secret Cave	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_3_SecretGallery	DreamZone 3 Secret Gallery	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_4_Bridge	DreamZone 4 Bridge	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_4_Dock	DreamZone 4 Dock	DreamZone	TRUE	FALSE	FALSE	FALSE	
+Spawn_DreamZone_4_Elevator	DreamZone 4 Elevator	DreamZone	TRUE	FALSE	FALSE	FALSE	
+SPAWN_EscapePod	Escape Pod 1 (Brittle Hollow)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+Spawn_EscapePod_Exterior	Escape Pod 2 (Ember Twin) Exterior	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_EscapePod_Interior	Escape Pod 2 (Ember Twin) Interior	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_FossilOverlook	Fossil Overlook	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_FossilSite	Fossil Site	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_GabbroIsland	Gabbro's Island	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_GravityCannon	Ember Twin Gravity Cannon	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+SPAWN_GravityCannon	Brittle Hollow Gravity Cannon	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+Spawn_IP_DockingBay_Dark	Stranger Docking Bay Dark	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_DockingBay_Light	Stranger Docking Bay Light	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_ObservationDeck	Stranger Observation Deck	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Outside	Stranger Outside	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_OutsideCloak	Stranger Outside Cloak	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Prison	Stranger Prison	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Ship	Stranger Ship	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Ship_OutsideCloak	Stranger Ship Outside Cloak	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1	Stranger River Lowlands	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1_BeachedRaft	Stranger River Lowlands Beached Raft	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1_Rapids	Stranger River Lowlands Rapids	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1_SecretPool	Stranger River Lowlands Secret Pool	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_2	Stranger Cinder Isles	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_2_CoveBottom	Stranger Cinder Isles Cove Bottom	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_2_CoveTop	Stranger Cinder Isles Cove Top	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_2_LighthouseTop	Stranger Cinder Isles Lighthouse Top	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_Bridge	Stranger Hidden Gorge Bridge	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_BrokenBridge	Stranger Hidden Gorge Broken Bridge	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_CodeDoor	Stranger Hidden Gorge Code Door	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_DreamFire	Stranger Hidden Gorge Dream Fire	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_DreamLabOverlook	Stranger Hidden Gorge DreamLab Overlook	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_Raft	Stranger Hidden Gorge Raft	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_SecretEntrance	Stranger Hidden Gorge Secret Entrance	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_Temple	Stranger Hidden Gorge Temple	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_4	Stranger Reservoir	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_4_LeftShore	Stranger Reservoir Left Shore	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_4_RightShore	Stranger Reservoir Right Shore	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_JellyDomain	Giant's Deep Jelly Domain	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_LakebedCave	Lakebed Cave	EmberTwin	FALSE	TRUE	TRUE	FALSE	
 SPAWN_MigrationPath	Migration Path		FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Broken	Orbital Probe Cannon Broken Module	giants_deep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Intact	Orbital Probe Cannon Intact Module	giants_deep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Sunken	Orbital Probe Cannon Sunken Module	giants_deep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Module_Broken	Orbital Probe Cannon Broken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Module_Intact	Orbital Probe Cannon Intact Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Module_Sunken	Orbital Probe Cannon Sunken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
 Spawn_NorthPole	North Pole		FALSE	TRUE	TRUE	FALSE	
 SPAWN_NorthPole	North Pole		FALSE	TRUE	TRUE	FALSE	
 SPAWN_NorthPoleSecretEntrance	North Pole Secret Entrance		FALSE	TRUE	TRUE	FALSE	
