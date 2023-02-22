@@ -66,8 +66,11 @@ namespace OuterWildsRandomSpeedrun
 
             ModHelper.Menus.PauseMenu.OnInit += () =>
             {
-                _resetRunButton = ModHelper.Menus.PauseMenu.QuitButton.Duplicate(Constants.RESET_RUN_BUTTON_TEXT);
-                _resetRunButton.OnClick += ResetRunButton_OnClick;
+                if (SpeedrunState.ModEnabled)
+                {
+                    _resetRunButton = ModHelper.Menus.PauseMenu.QuitButton.Duplicate(Constants.RESET_RUN_BUTTON_TEXT);
+                    _resetRunButton.OnClick += ResetRunButton_OnClick;
+                }
             };
         }
 
