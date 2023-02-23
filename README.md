@@ -1,5 +1,5 @@
-# OWRandomSpeedrun
-random shipless speedrun generator for Outer Wilds
+# Nomai Grand Prix
+Random shipless speedrun generator for Outer Wilds
 
 ## IDE setup for VS Code in Windows
 1. Install [VS Code](https://code.visualstudio.com/download).
@@ -11,7 +11,7 @@ random shipless speedrun generator for Outer Wilds
 1. Open a Command Prompt **with administrator privileges** and execute `winget install Microsoft.NuGet` to install NuGet.
 1. Log out of Windows & log back in so that your PATH variables are correctly configured.
 1. Select Terminal > Run build task. The mod should correctly compile (possibly with some warnings).
-1. To verify that it compiled correctly, open an Explorer window and navigate to `%APPDATA%\OuterWildsModManager\OWML\Mods\ZacBauermeister.OuterWildsRandomSpeedrun`. If you see OuterWildsRandomSpeedrun.dll in the directory, it compiled successfully.
+1. To verify that it compiled correctly, open an Explorer window and navigate to `%APPDATA%\OuterWildsModManager\OWML\Mods\NomaiGrandPrix`. If you see NomaiGrandPrix.dll in the directory, it compiled successfully.
 
 ## IDE setup for Unity in Windows
 1. Install **Unity 2019.4.39** from the [Unity Download Archive](https://unity.com/releases/editor/archive). **You must install this specific version!** Select the Unity Hub from the "Downloads (Win)" dropdown.
@@ -44,7 +44,7 @@ random shipless speedrun generator for Outer Wilds
 1. To include the new assets in Outer Wilds, in the main project in VS Code, select Terminal > Run Build Task. This will copy the updated asset bundle to the mod folder under %APPDATA%.
 
 ### Making changes to scripts
-**NOTE:** These instructions apply only to making changes to scripts in the UnityProjects folder and its subfolders. You can build code in the OuterWildsRandomSpeedrun folder as you normally would.
+**NOTE:** These instructions apply only to making changes to scripts in the UnityProjects folder and its subfolders. You can build code in the NomaiGrandPrix folder as you normally would.
 1. If you are introducing a new script that needs to be used in Outer Wilds, create it in the Assets > Scripts folder.
 1. Edit the script by double-clicking it in the Unity Editor. This will open it in VS Code.
 1. Edit the script as you desire within VS Code and save it. **Don't attempt to compile the code within VS Code**.

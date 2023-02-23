@@ -1,6 +1,6 @@
 using HarmonyLib;
-using OuterWildsRandomSpeedrun;
 using OWML.Common;
+using NomaiGrandPrix;
 using UnityEngine;
 
 [HarmonyPatch]
@@ -70,6 +70,16 @@ public class SpeedrunHarmonyPatches {
     {
       modHelper.Console.WriteLine($"Allowing player to earn achievement {type} while Nomai Grand Prix is inactive.", MessageType.Info);
       return true;
+    }
+  }
+
+  [HarmonyPrefix]
+  [HarmonyPatch(typeof(PlayerSpawner), nameof(PlayerSpawner.OnStartOfTimeLoop))]
+  public static void PlayerSpawner_OnStartOfTimeLoop_Prefix()
+  {
+    if (SpeedrunState.ModEnabled) {
+      // Do not call SpawnPlayer() here
+      return;
     }
   }
 }
