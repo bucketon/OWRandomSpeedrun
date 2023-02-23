@@ -128,6 +128,11 @@ namespace OuterWildsRandomSpeedrun
 
         private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
         {
+            if (!SpeedrunState.SpawnPoint.HasValue || !SpeedrunState.GoalPoint.HasValue)
+            {
+                throw new InvalidOperationException("Spawn point or goal point was null when attempting to warp");
+            }
+
             _spawnPoint = GetSpawnPointByName(spawnPoints, SpeedrunState.SpawnPoint?.internalId);
             _goalPoint = GetSpawnPointByName(spawnPoints, SpeedrunState.GoalPoint?.internalId);
             ModHelper.Console.WriteLine($"Warp to {_spawnPoint.ToString()}!", MessageType.Success);
@@ -150,6 +155,10 @@ namespace OuterWildsRandomSpeedrun
                 ship.SetActive(false);
             }
 
+            if (!SpeedrunState.SpawnPoint.HasValue)
+            {
+                ModHelper.Console.WriteLine("Spawn point was null when attempting to determine if village music should be deactivated", MessageType.Warning);
+            }
             if (!(bool) SpeedrunState.SpawnPoint?.isThVillage) {
                 var villageMusicController = FindObjectOfType<VillageMusicVolume>();
                 villageMusicController.Deactivate();
@@ -203,6 +212,11 @@ namespace OuterWildsRandomSpeedrun
 
         private void InitMapMarker()
         {
+            if (!SpeedrunState.SpawnPoint.HasValue || !SpeedrunState.GoalPoint.HasValue)
+            {
+                ModHelper.Console.WriteLine("Goal point was null when attempting to create goal marker", MessageType.Warning);
+            }
+
             var labelText = $"GOAL: {SpeedrunState.GoalPoint?.displayName.ToUpper()}";
             var markerManager = Locator.GetMarkerManager();
             _canvasMarker = markerManager.InstantiateNewMarker();
