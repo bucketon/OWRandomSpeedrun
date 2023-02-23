@@ -157,12 +157,6 @@ namespace NomaiGrandPrix
       unselectedList.SetContentPosition(unselectedMenuSelectable.gameObject);
     }
 
-    private Selectable GetRandomSelectable(SpawnPointMenu menu)
-    {
-      var randomIndex = _random.Next(_fromMenu._menuOptions.Length);
-      return menu._menuOptions[randomIndex]._selectable;
-    }
-
     public void OnLeftRightPressed (AxisEventData eventData)
     {
       SwapMenus();
@@ -307,9 +301,22 @@ namespace NomaiGrandPrix
     }
 
     private void SetInitialSelection(SpawnPointMenu menu, SpawnPointList list){
-      var selectable = GetRandomSelectable(menu);
+      var currentSpawn = menu == _fromMenu ? SpeedrunState.SpawnPoint : SpeedrunState.GoalPoint;
+      var selectable = currentSpawn.HasValue ? FindSelectableForSpawn(menu, currentSpawn) : GetRandomSelectable(menu);
       list.SetContentPosition(selectable.gameObject);
       menu.SetSelectOnActivate(selectable);
+    }
+
+    private Selectable GetRandomSelectable(SpawnPointMenu menu)
+    {
+      var randomIndex = _random.Next(_fromMenu._menuOptions.Length);
+      return menu._menuOptions[randomIndex]._selectable;
+    }
+
+    private Selectable FindSelectableForSpawn(SpawnPointMenu menu, SpawnPointConfig? currentSpawn)
+    {
+      var foundMenuOption = Array.Find<MenuOption>(menu._menuOptions, menuOption => ((SpawnPointMenuOption)menuOption).SpawnPoint.internalId == currentSpawn?.internalId);
+      return foundMenuOption._selectable;
     }
 
     private void addMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)

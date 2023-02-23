@@ -42,10 +42,11 @@ namespace NomaiGrandPrix
 
         private List<SpawnPointConfig> _spawnPointConfigs;
 
-        public SpawnPointConfig RandomSpawnPointConfig(Random random)
+        public SpawnPointConfig RandomSpawnPointConfig(Random random, Func<SpawnPointConfig, bool> filter = null)
         {
-            var randomIndex = random.Next(_spawnPointConfigs.Count);
-            return _spawnPointConfigs[randomIndex];
+            var filtered = filter != null ? _spawnPointConfigs.Where(filter).ToList() : _spawnPointConfigs;
+            var randomIndex = random.Next(filtered.Count);
+            return filtered[randomIndex];
         }
 
         private SpawnPointPool(List<SpawnPointConfig> configs)
