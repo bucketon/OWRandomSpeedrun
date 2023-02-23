@@ -211,8 +211,14 @@ namespace OuterWildsRandomSpeedrun
 
       foreach (SpawnPointConfig spawnConfig in _spawnPointConfigs)
       {
-        addMenuItem(spawnConfig, _fromList, fromMenuOptions);
-        addMenuItem(spawnConfig, _toList, toMenuOptions);
+        if (spawnConfig.shouldSpawn)
+        {
+          addMenuItem(spawnConfig, _fromList, fromMenuOptions);
+        }
+        if (spawnConfig.shouldGoal)
+        {
+          addMenuItem(spawnConfig, _toList, toMenuOptions);
+        }
       }
 
       _fromMenu._menuOptions = fromMenuOptions.ToArray();
