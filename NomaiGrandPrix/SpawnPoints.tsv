@@ -4,9 +4,9 @@ ShipSpawn_CO	Ship CO		FALSE	TRUE	TRUE	FALSE
 ShipSpawn_GD	Ship Giant's Deep		FALSE	TRUE	TRUE	FALSE	
 ShipSpawn_HT	Ship HT		FALSE	TRUE	TRUE	FALSE	
 ShipSpawn_JellyDomain	Ship Jelly Domain		FALSE	TRUE	TRUE	FALSE	
-ShipSpawn_QM	Ship Quantum Moon		FALSE	TRUE	TRUE	FALSE	
-ShipSpawn_TH	Ship Timber Hearth		FALSE	TRUE	TRUE	TRUE	
-ShipSpawnPoint_WhiteHole(1)	Ship WhiteHole		FALSE	TRUE	TRUE	FALSE	
+ShipSpawn_QM	Ship Quantum Moon		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
+ShipSpawn_TH	Ship Timber Hearth		FALSE	FALSE	FALSE	TRUE	Spawn kills you from fall damage if you do not compensate
+ShipSpawnPoint_WhiteHole(1)	Ship WhiteHole		FALSE	FALSE	FALSE	FALSE	Causes an exception
 Spawn	Sun Station	SunStation	FALSE	TRUE	TRUE	FALSE	
 SPAWN_BlackholeForge	Blackhole Forge	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 Spawn_BrambleIsland	Bramble Island	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
@@ -85,8 +85,8 @@ Spawn_LakebedCave	Lakebed Cave	EmberTwin	FALSE	TRUE	TRUE	FALSE
 SPAWN_MigrationPath	Migration Path		FALSE	TRUE	TRUE	FALSE	
 Spawn_Module_Broken	Orbital Probe Cannon Broken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
 Spawn_Module_Intact	Orbital Probe Cannon Intact Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Sunken	Orbital Probe Cannon Sunken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_NorthPole	North Pole		FALSE	TRUE	TRUE	FALSE	
+Spawn_Module_Sunken	Orbital Probe Cannon Sunken Module	GiantsDeep	FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
+Spawn_NorthPole	North Pole		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
 SPAWN_NorthPole	North Pole		FALSE	TRUE	TRUE	FALSE	
 SPAWN_NorthPoleSecretEntrance	North Pole Secret Entrance		FALSE	TRUE	TRUE	FALSE	
 SPAWN_Observatory	Observatory		FALSE	TRUE	TRUE	FALSE	
@@ -94,7 +94,7 @@ SPAWN_Observatory_Below	Observatory Below		FALSE	TRUE	TRUE	FALSE
 SPAWN_OldCamp	Old Camp		FALSE	TRUE	TRUE	FALSE	
 SPAWN_OldSettlement	Old Settlement		FALSE	TRUE	TRUE	FALSE	
 Spawn_OPC	Orbital Probe Cannon		FALSE	TRUE	TRUE	FALSE	
-Spawn_Orbit	Orbit		FALSE	TRUE	TRUE	FALSE	
+Spawn_Orbit	Orbit		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
 Spawn_PodPath	Pod Path		FALSE	TRUE	TRUE	FALSE	
 Spawn_QuantumIsland_Bottom	Quantum Island Bottom		FALSE	TRUE	TRUE	FALSE	
 Spawn_QuantumIsland_PuzzleRoom4	Quantum Island Puzzle Room 4		FALSE	TRUE	TRUE	FALSE	
@@ -106,37 +106,37 @@ SPAWN_QuantumTower_Inside	Quantum Tower Inside		FALSE	TRUE	TRUE	FALSE
 SPAWN_QuantumTower_Path	Quantum Tower Path		FALSE	TRUE	TRUE	FALSE	
 SPAWN_QuantumTower_Top	Quantum Tower Top		FALSE	TRUE	TRUE	FALSE	
 Spawn_SandslideCave	Sandslide Cave		FALSE	TRUE	TRUE	FALSE	
-Spawn_SecretLibrary_1	Secret Library 1		FALSE	TRUE	TRUE	FALSE	
-Spawn_SecretLibrary_2	Secret Library 2		FALSE	TRUE	TRUE	FALSE	
-Spawn_SecretLibrary_3	Secret Library 3		FALSE	TRUE	TRUE	FALSE	
-Spawn_Ship	Ship		FALSE	TRUE	TRUE	TRUE	
-SPAWN_SHIP	Ship		FALSE	TRUE	TRUE	TRUE	
+Spawn_SecretLibrary_1	Secret Library 1		FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_SecretLibrary_2	Secret Library 2		FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_SecretLibrary_3	Secret Library 3		FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_Ship	Ship		FALSE	FALSE	TRUE	TRUE	Kills you the first time (probably being killed by the ship before it is deactivated)
+SPAWN_SHIP	Ship		FALSE	FALSE	FALSE	TRUE	Severely hurts you from fall damage
 SPAWN_SouthPole	South Pole		FALSE	TRUE	TRUE	FALSE	
 SPAWN_SouthPolePath	South Pole Path		FALSE	TRUE	TRUE	FALSE	
 Spawn_StatueIsland_Beach	Statue Island Beach		FALSE	TRUE	TRUE	FALSE	
 Spawn_StatueIsland_Inside	Statue Island Inside		FALSE	TRUE	TRUE	FALSE	
 Spawn_StatueIsland_Top	Statue Island Top		FALSE	TRUE	TRUE	FALSE	
 Spawn_SunTower	Sun Tower		FALSE	TRUE	TRUE	FALSE	
-Spawn_Surface	Surface		FALSE	TRUE	TRUE	FALSE	
+Spawn_Surface	Surface		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
 SPAWN_Teleporter	Teleporter		FALSE	TRUE	TRUE	FALSE	
 Spawn_TH	Timber Hearth		FALSE	TRUE	TRUE	TRUE	
-Spawn_TH_IMP	Timber Hearth IMP		FALSE	TRUE	TRUE	TRUE	fall thru planet
+Spawn_TH_IMP	Timber Hearth IMP		FALSE	FALSE	FALSE	TRUE	Falls through the planet
 Spawn_TH_NomaiMines	Timber Hearth Nomai Mines		FALSE	TRUE	TRUE	FALSE	
 Spawn_TH_Observatory	Timber Hearth Observatory		FALSE	TRUE	TRUE	TRUE	
 Spawn_TH_RadioTower	Timber Hearth Radio Tower		FALSE	TRUE	TRUE	FALSE	
 Spawn_TH_ZeroGCave	Timber Hearth Zero G Cave		FALSE	TRUE	TRUE	FALSE	
 Spawn_THM_NorthPole	Timber Hearth M North Pole		FALSE	TRUE	TRUE	FALSE	
 Spawn_THM_SignalDish	Timber Hearth M Signal Dish		FALSE	TRUE	TRUE	FALSE	
-Spawn_TimeLoopDevice	Time Loop Device		FALSE	TRUE	TRUE	FALSE	
+Spawn_TimeLoopDevice	Time Loop Device		FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
 Spawn_TLE_Below	TLE Below		FALSE	TRUE	TRUE	FALSE	
 Spawn_TLE_Interior	TLE Interior		FALSE	TRUE	TRUE	FALSE	
 Spawn_TLE_Outside	TLE Outside		FALSE	TRUE	TRUE	FALSE	
 Spawn_TLEPath	TLE Path		FALSE	TRUE	TRUE	FALSE	
 Spawn_TowerTwin	Tower Twin		FALSE	TRUE	TRUE	FALSE	
-Spawn_Underground_CodeTotems	Underground Code Totems		FALSE	TRUE	TRUE	FALSE	
-Spawn_Underground_OOB	Underground OOB		FALSE	TRUE	TRUE	FALSE	
-Spawn_Underground_PrisonCell	Underground Prison Cell		FALSE	TRUE	TRUE	FALSE	
-Spawn_Underground_PrisonCell_Lower	Underground Prison Cell Lower		FALSE	TRUE	TRUE	FALSE	
+Spawn_Underground_CodeTotems	Underground Code Totems		FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_Underground_OOB	Underground OOB		FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_Underground_PrisonCell	Underground Prison Cell		FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_Underground_PrisonCell_Lower	Underground Prison Cell Lower		FALSE	FALSE	FALSE	FALSE	Stranger
 SPAWN_UpdownWarp	Updown Warp		FALSE	TRUE	TRUE	FALSE	
 Spawn_Vessel	Vessel		FALSE	TRUE	TRUE	FALSE	
 Spawn_WarpReceiver	Warp Receiver		FALSE	TRUE	TRUE	FALSE	
