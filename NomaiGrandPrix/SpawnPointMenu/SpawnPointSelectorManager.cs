@@ -172,10 +172,12 @@ namespace NomaiGrandPrix
 
       var from = _fromMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
       var to = _toMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
-      SpeedrunState.SpawnPoint = from;
-      SpeedrunState.GoalPoint = to;
-      SpeedrunState.ModEnabled = true;
-      SpeedrunState.JustEnteredGame = true;
+
+      var speedrunState = NomaiGrandPrix.Instance.SpeedrunState;
+      speedrunState.SpawnPoint = from;
+      speedrunState.GoalPoint = to;
+      speedrunState.ModEnabled = true;
+      speedrunState.JustEnteredGame = true;
       ModHelper.Console.WriteLine($"Starting game with spawn points: {from.displayName} -> {to.displayName}");
       _submitAction.Submit();
     }
@@ -301,7 +303,8 @@ namespace NomaiGrandPrix
     }
 
     private void SetInitialSelection(SpawnPointMenu menu, SpawnPointList list){
-      var currentSpawn = menu == _fromMenu ? SpeedrunState.SpawnPoint : SpeedrunState.GoalPoint;
+      var speedrunState = NomaiGrandPrix.Instance.SpeedrunState;
+      var currentSpawn = menu == _fromMenu ? speedrunState.SpawnPoint : speedrunState.GoalPoint;
       var selectable = currentSpawn.HasValue ? FindSelectableForSpawn(menu, currentSpawn) : GetRandomSelectable(menu);
       list.SetContentPosition(selectable.gameObject);
       menu.SetSelectOnActivate(selectable);

@@ -33,6 +33,8 @@ namespace NomaiGrandPrix
         // Allows method matches to access the ModHelper
         public static OuterWildsRandomSpeedrun Instance;
 
+        public SpeedrunState SpeedrunState { get; set; }
+
         private void Awake()
         {
             // You won't be able to access OWML's mod helper in Awake.
