@@ -56,7 +56,7 @@ public class SpeedrunHarmonyPatches {
 
   // Disable achievements while the mod is running, since many warps can accidentally
   // trigger ones like Hotshot.
-  [HarmonyPostfix]
+  [HarmonyPrefix]
   [HarmonyPatch(typeof(Achievements), nameof(Achievements.Earn))]
   public static bool Achievements_Earn_Prefix(Achievements.Type type)
   {
