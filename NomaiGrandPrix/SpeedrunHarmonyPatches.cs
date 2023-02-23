@@ -60,7 +60,7 @@ public class SpeedrunHarmonyPatches {
   [HarmonyPatch(typeof(Achievements), nameof(Achievements.Earn))]
   public static bool Achievements_Earn_Prefix(Achievements.Type type)
   {
-    var modHelper = OuterWildsRandomSpeedrun.OuterWildsRandomSpeedrun.Instance.ModHelper;
+    var modHelper = NomaiGrandPrix.Instance.ModHelper;
     if (SpeedrunState.ModEnabled)
     {
       modHelper.Console.WriteLine($"Skipping achievement {type} during Nomai Grand Prix run.", MessageType.Info);
