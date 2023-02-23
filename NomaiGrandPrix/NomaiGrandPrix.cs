@@ -31,7 +31,7 @@ namespace NomaiGrandPrix
         private SpawnPointPool _spawnPointPool;
 
         // Allows method matches to access the ModHelper
-        public static OuterWildsRandomSpeedrun Instance;
+        public static NomaiGrandPrix Instance;
 
         public SpeedrunState SpeedrunState { get; set; }
 
