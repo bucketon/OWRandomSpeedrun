@@ -14,7 +14,6 @@ namespace NomaiGrandPrix
     /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
     /// </summary>
     public bool JustEnteredGame { get; set; } = false;
-    private bool _justEnteredGame = false;
 
     /// <summary>
     /// Set to true when we have just begun a time loop and have pending operations to complete, false otherwise.
