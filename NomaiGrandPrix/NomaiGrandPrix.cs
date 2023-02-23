@@ -9,9 +9,9 @@ using System;
 using HarmonyLib;
 using System.Collections.Generic;
 
-namespace OuterWildsRandomSpeedrun
+namespace NomaiGrandPrix
 {
-    public class OuterWildsRandomSpeedrun : ModBehaviour
+    public class NomaiGrandPrix : ModBehaviour
     {
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
 
@@ -42,7 +42,7 @@ namespace OuterWildsRandomSpeedrun
         private void Start()
         {
             // Starting here, you'll have access to OWML's mod helper.
-            ModHelper.Console.WriteLine($"Mod {nameof(OuterWildsRandomSpeedrun)} is loaded!", MessageType.Success);
+            ModHelper.Console.WriteLine($"Mod {nameof(NomaiGrandPrix)} is loaded!", MessageType.Success);
 
             // Initialize spawn points from TSV
             var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

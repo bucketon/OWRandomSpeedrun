@@ -1,5 +1,5 @@
 using HarmonyLib;
-using OuterWildsRandomSpeedrun;
+using NomaiGrandPrix;
 using UnityEngine;
 
 [HarmonyPatch]

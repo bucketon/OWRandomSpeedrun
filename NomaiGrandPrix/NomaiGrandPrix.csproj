@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Copyright>Copyright © 2023 Zac Bauermeister</Copyright>
+    <Copyright>Copyright © 2023 Zac Bauermeister, David Damschen, Ben Kirzhner, Chris Maines</Copyright>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
@@ -34,7 +34,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="OuterWildsRandomSpeedrun.csproj.user" />
+    <Content Include="NomaiGrandPrix.csproj.user" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SpawnPointSelector">
