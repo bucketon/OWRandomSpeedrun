@@ -7,17 +7,17 @@ namespace NomaiGrandPrix
 {
     public enum Area
     {
-        None,
-        SunStation,
-        AshTwin,
-        EmberTwin,
-        TimberHearth,
-        BrittleHollow,
-        GiantsDeep,
-        DarkBramble,
-        Interloper,
-        Stranger,
-        DreamZone,
+        None = 1,
+        SunStation = 1 << 1,
+        AshTwin = 1 << 2,
+        EmberTwin = 1 << 3,
+        TimberHearth = 1 << 4,
+        BrittleHollow = 1 << 5,
+        GiantsDeep = 1 << 6,
+        DarkBramble = 1 << 7,
+        Interloper = 1 << 8,
+        Stranger = 1 << 9,
+        DreamZone = 1 << 10,
     }
     public struct SpawnPointConfig
     {
@@ -42,7 +42,7 @@ namespace NomaiGrandPrix
 
         private List<SpawnPointConfig> _spawnPointConfigs;
 
-        public SpawnPointConfig RandomSpawnPointConfig(Random random, Func<SpawnPointConfig, bool> filter = null)
+        public SpawnPointConfig RandomSpawnPointConfig(Random random, Func<SpawnPointConfig, bool> filter)
         {
             var filtered = filter != null ? _spawnPointConfigs.Where(filter).ToList() : _spawnPointConfigs;
             var randomIndex = random.Next(filtered.Count);
@@ -54,9 +54,12 @@ namespace NomaiGrandPrix
             this._spawnPointConfigs = configs;
         }
 
-        public static SpawnPointPool FromTsv(string pathToTsv)
+        public static SpawnPointPool FromTsv(string pathToTsv, Func<SpawnPointConfig, bool> filter)
         {
-            var configs = ParseTsv(pathToTsv).Select(line => BuildSpawnPointConfig(line)).ToList();
+            var configs = ParseTsv(pathToTsv)
+                .Select(line => BuildSpawnPointConfig(line))
+                .Where(filter)
+                .ToList();
             return new SpawnPointPool(configs);
         }
 

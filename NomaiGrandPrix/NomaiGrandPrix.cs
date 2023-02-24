@@ -43,11 +43,12 @@ namespace NomaiGrandPrix
         {
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"Mod {nameof(NomaiGrandPrix)} is loaded!", MessageType.Success);
+            var hasDlc = EntitlementsManager.IsDlcOwned() == EntitlementsManager.AsyncOwnershipStatus.Owned;
 
             // Initialize spawn points from TSV
             var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var pathToTsv = Path.Combine(parentDir, "SpawnPoints.tsv");
-            _spawnPointPool = SpawnPointPool.FromTsv(pathToTsv);
+            _spawnPointPool = SpawnPointPool.FromTsv(pathToTsv, spawnPoint => (spawnPoint.area & (Area.Stranger | Area.DreamZone)) == 0 || hasDlc);
             ModHelper.Console.WriteLine($"Loaded {_spawnPointPool.SpawnPointConfigs.Count} spawn points", MessageType.Debug);
 
             _random = new System.Random((int)DateTime.Now.Ticks);
