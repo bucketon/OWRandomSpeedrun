@@ -8,9 +8,9 @@ namespace NomaiGrandPrix
         private static SpawnActionFactory Instance = new SpawnActionFactory();
         private static Dictionary<string, Action[]> actionsMap = new Dictionary<string, Action[]>
         {
-            {"Spawn_Module_Sunken", new Action[] { OpenSunkenModuleAirlock }}
+            { "Spawn_Module_Sunken", new Action[] { OpenSunkenModuleAirlock } }
         };
-        
+
         private SpawnActionFactory()
         {
             // Private constructor
@@ -22,7 +22,7 @@ namespace NomaiGrandPrix
             {
                 throw new InvalidOperationException("Spawn ID for getting actions cannot be null");
             }
-            
+
             return actionsMap.GetValueOrDefault(spawnId, new Action[0]);
         }
 
