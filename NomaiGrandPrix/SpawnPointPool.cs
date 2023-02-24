@@ -42,7 +42,7 @@ namespace NomaiGrandPrix
 
         private List<SpawnPointConfig> _spawnPointConfigs;
 
-        public SpawnPointConfig RandomSpawnPointConfig(Random random, Func<SpawnPointConfig, bool> filter)
+        public SpawnPointConfig RandomSpawnPointConfig(Random random, Func<SpawnPointConfig, bool> filter = null)
         {
             var filtered = filter != null ? _spawnPointConfigs.Where(filter).ToList() : _spawnPointConfigs;
             var randomIndex = random.Next(filtered.Count);
@@ -54,8 +54,11 @@ namespace NomaiGrandPrix
             this._spawnPointConfigs = configs;
         }
 
-        public static SpawnPointPool FromTsv(string pathToTsv, Func<SpawnPointConfig, bool> filter)
+        public static SpawnPointPool FromTsv(string pathToTsv, Func<SpawnPointConfig, bool> filter = null)
         {
+            if (filter == null) {
+                filter = spawnConfig => true;
+            }
             var configs = ParseTsv(pathToTsv)
                 .Select(line => BuildSpawnPointConfig(line))
                 .Where(filter)
