@@ -7,6 +7,145 @@
           "yes": "Enabled",
           "no": "Disabled",
           "title": "Ship spawns"
-        }
+        },
+        "Spawn Points": {
+            "type": "separator"
+        },
+        "SpawnSunStation": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Sun Station"
+        },
+        "SpawnTwins": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Hourglass Twins"
+        },
+        "SpawnTimberHearth": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Timber Hearth"
+        },
+        "SpawnBrittleHollow": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Brittle Hollow"
+        },
+        "SpawnGiantsDeep": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Giant's Deep"
+        },
+        "SpawnDarkBramble": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Dark Bramble"
+        },
+        "SpawnWhiteHole": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "White Hole"
+        },
+        "SpawnInterloper": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Interloper"
+        },
+        "SpawnQuantumMoon": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Quantum Moon"
+        },
+        "Goal Points": {
+            "type": "separator"
+        },
+        "GoalSunStation": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Sun Station"
+        },
+        "GoalTwins": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Hourglass Twins"
+        },
+        "GoalTimberHearth": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Timber Hearth"
+        },
+        "GoalBrittleHollow": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Brittle Hollow"
+        },
+        "GoalGiantsDeep": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Giant's Deep"
+        },
+        "GoalDarkBramble": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Dark Bramble"
+        },
+        "GoalWhiteHole": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "White Hole"
+        },
+        "GoalInterloper": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Interloper"
+        },
+        "GoalQuantumMoon": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Quantum Moon"
+        },
+        "GoalStranger": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Stranger"
+        },
     }
 }

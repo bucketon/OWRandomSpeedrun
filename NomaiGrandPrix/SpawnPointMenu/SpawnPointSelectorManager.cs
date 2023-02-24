@@ -205,12 +205,13 @@ namespace NomaiGrandPrix
 
       foreach (SpawnPointConfig spawnConfig in _spawnPointConfigs)
       {
-        if (spawnConfig.shouldSpawn)
+        //TODO: get the menus to refresh when settings are changed.
+        if (spawnConfig.shouldSpawn && (spawnConfig.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Spawn{NomaiGrandPrix.areaNameMap[spawnConfig.area]}")))
         {
           addMenuItem(spawnConfig, _fromList, fromMenuOptions);
         }
-        if (spawnConfig.shouldGoal)
-        {
+        if (spawnConfig.shouldGoal && (spawnConfig.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Goal{NomaiGrandPrix.areaNameMap[spawnConfig.area]}")))
+                {
           addMenuItem(spawnConfig, _toList, toMenuOptions);
         }
       }

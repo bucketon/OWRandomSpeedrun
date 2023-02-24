@@ -14,6 +14,23 @@ namespace NomaiGrandPrix
     public class NomaiGrandPrix : ModBehaviour
     {
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
+        //TODO: this is kind of gross. Maybe we just match up the settings name to the string from the spreadsheet
+        //and don't parse it to an enum? Since this is the only place we're planning to use that column currently.
+        //TODO: figure out a better place to put this Dict.
+        public static Dictionary<Area, string> areaNameMap = new Dictionary<Area, string>
+        {
+            { Area.SunStation, "SunStation" },
+            { Area.AshTwin, "Twins" },
+            { Area.EmberTwin, "Twins" },
+            { Area.TimberHearth, "TimberHearth" },
+            { Area.BrittleHollow, "BrittleHollow" },
+            { Area.GiantsDeep, "GiantsDeep" },
+            { Area.DarkBramble, "DarkBramble" },
+            { Area.Interloper, "Interloper" },
+            { Area.Stranger, "Stranger" },
+            //TODO: add label for white hole
+            //TODO: add label for quantum moon
+        };
 
         private SpawnPoint _spawnPoint;
         private SpawnPoint _goalPoint;
@@ -191,8 +208,13 @@ namespace NomaiGrandPrix
 
         private void ResetRunButton_OnClick()
         {
-            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(config => { return config.shouldSpawn; });
-            SpeedrunState.GoalPoint = GetRandomSpawnConfig(config => { return config.shouldGoal; });
+            //TODO: figure out a good place to consolidate this logic since it's duplicated 4 times.
+            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(config => { 
+              return config.shouldSpawn && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Spawn{areaNameMap[config.area]}"));
+            });
+            SpeedrunState.GoalPoint = GetRandomSpawnConfig(config => { 
+              return config.shouldGoal && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Goal{areaNameMap[config.area]}"));
+            });
 
             SpeedrunState.JustEnteredGame = true;
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
