@@ -7,18 +7,19 @@ namespace NomaiGrandPrix
 {
     public enum Area
     {
-        None,
-        SunStation,
-        AshTwin,
-        EmberTwin,
-        TimberHearth,
-        BrittleHollow,
-        GiantsDeep,
-        DarkBramble,
-        Interloper,
-        Stranger,
-        DreamZone,
+        None = 1,
+        SunStation = 1 << 1,
+        AshTwin = 1 << 2,
+        EmberTwin = 1 << 3,
+        TimberHearth = 1 << 4,
+        BrittleHollow = 1 << 5,
+        GiantsDeep = 1 << 6,
+        DarkBramble = 1 << 7,
+        Interloper = 1 << 8,
+        Stranger = 1 << 9,
+        DreamZone = 1 << 10,
     }
+
     public struct SpawnPointConfig
     {
         public string internalId;
@@ -54,23 +55,27 @@ namespace NomaiGrandPrix
             this._spawnPointConfigs = configs;
         }
 
-        public static SpawnPointPool FromTsv(string pathToTsv)
+        public static SpawnPointPool FromTsv(string pathToTsv, Func<SpawnPointConfig, bool> filter = null)
         {
-            var configs = ParseTsv(pathToTsv).Select(line => BuildSpawnPointConfig(line)).ToList();
+            if (filter == null)
+            {
+                filter = spawnConfig => true;
+            }
+            var configs = ParseTsv(pathToTsv).Select(line => BuildSpawnPointConfig(line)).Where(filter).ToList();
             return new SpawnPointPool(configs);
         }
 
         private static SpawnPointConfig BuildSpawnPointConfig(string[] line) =>
-            new SpawnPointConfig { 
-                internalId = line[0], 
-                displayName = line[1], 
+            new SpawnPointConfig
+            {
+                internalId = line[0],
+                displayName = line[1],
                 area = line[2].Equals("") ? Area.None : (Area)Enum.Parse(typeof(Area), line[2]),
                 isDreamZone = bool.Parse(line[3]),
                 shouldSpawn = bool.Parse(line[4]),
                 shouldGoal = bool.Parse(line[5]),
                 isThVillage = bool.Parse(line[6]),
             };
-
 
         private static string[][] ParseTsv(string pathToTsv)
         {
