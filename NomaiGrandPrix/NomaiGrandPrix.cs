@@ -29,7 +29,7 @@ namespace NomaiGrandPrix
         private System.Random _random;
 
         private SpawnPointPool _spawnPointPool;
-    
+
         private void Awake()
         {
             // You won't be able to access OWML's mod helper in Awake.
@@ -48,7 +48,10 @@ namespace NomaiGrandPrix
             // Initialize spawn points from TSV
             var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var pathToTsv = Path.Combine(parentDir, "SpawnPoints.tsv");
-            _spawnPointPool = SpawnPointPool.FromTsv(pathToTsv, spawnPoint => (spawnPoint.area & (Area.Stranger | Area.DreamZone)) == 0 || hasDlc);
+            _spawnPointPool = SpawnPointPool.FromTsv(
+                pathToTsv,
+                spawnPoint => (spawnPoint.area & (Area.Stranger | Area.DreamZone)) == 0 || hasDlc
+            );
             ModHelper.Console.WriteLine($"Loaded {_spawnPointPool.SpawnPointConfigs.Count} spawn points", MessageType.Debug);
 
             _random = new System.Random((int)DateTime.Now.Ticks);
@@ -57,7 +60,6 @@ namespace NomaiGrandPrix
 
             // The mod breaks without this for reasons unknown
             ModHelper.HarmonyHelper.EmptyMethod<DebugInputManager>("Awake");
-
 
             ModHelper.Menus.MainMenu.OnInit += () =>
             {
@@ -99,10 +101,12 @@ namespace NomaiGrandPrix
                 }
             }
 
-            var elapsed = SpeedrunState.EndTime == DateTime.MinValue ? DateTime.Now - SpeedrunState.StartTime : SpeedrunState.EndTime - SpeedrunState.StartTime;
+            var elapsed =
+                SpeedrunState.EndTime == DateTime.MinValue
+                    ? DateTime.Now - SpeedrunState.StartTime
+                    : SpeedrunState.EndTime - SpeedrunState.StartTime;
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
-            
         }
 
         private void OnStartOfTimeLoop(int loopCount)
@@ -124,7 +128,13 @@ namespace NomaiGrandPrix
 
             _timerPrompt = new ScreenPrompt("");
             var font = GetFontByName(Constants.OW_MENU_FONT_NAME);
-            var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(_timerPrompt, 20, font, screenPromptListObj.transform, TextAnchor.LowerLeft);
+            var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(
+                _timerPrompt,
+                20,
+                font,
+                screenPromptListObj.transform,
+                TextAnchor.LowerLeft
+            );
             var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
             screenPromptList.AddScreenPrompt(screenPromptElement);
         }
@@ -160,9 +170,13 @@ namespace NomaiGrandPrix
 
             if (!SpeedrunState.SpawnPoint.HasValue)
             {
-                ModHelper.Console.WriteLine("Spawn point was null when attempting to determine if village music should be deactivated", MessageType.Warning);
+                ModHelper.Console.WriteLine(
+                    "Spawn point was null when attempting to determine if village music should be deactivated",
+                    MessageType.Warning
+                );
             }
-            if (!(bool) SpeedrunState.SpawnPoint?.isThVillage) {
+            if (!(bool)SpeedrunState.SpawnPoint?.isThVillage)
+            {
                 var villageMusicController = FindObjectOfType<VillageMusicVolume>();
                 villageMusicController.Deactivate();
             }
@@ -185,15 +199,17 @@ namespace NomaiGrandPrix
             _manager = SpawnPointSelectorManager.Instance;
             _manager.SpawnPointConfigs = _spawnPointPool.SpawnPointConfigs as List<SpawnPointConfig>;
             _manager.ModHelper = ModHelper;
-            var titleStreaming = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Button.GetComponent<SubmitActionLoadScene>()._titleScreenStreaming;
+            var titleStreaming = ModHelper.Menus.MainMenu.ResumeExpeditionButton.Button
+                .GetComponent<SubmitActionLoadScene>()
+                ._titleScreenStreaming;
             _manager.TitleStreaming = titleStreaming;
             _manager.DisplayMenu();
         }
 
         private void ResetRunButton_OnClick()
         {
-            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(config => { return config.shouldSpawn; });
-            SpeedrunState.GoalPoint = GetRandomSpawnConfig(config => { return config.shouldGoal; });
+            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(config => config.shouldSpawn);
+            SpeedrunState.GoalPoint = GetRandomSpawnConfig(config => config.shouldGoal);
 
             SpeedrunState.JustEnteredGame = true;
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
@@ -203,8 +219,7 @@ namespace NomaiGrandPrix
         private SpawnPoint[] GetSpawnPoints(PlayerSpawner spawner)
         {
             spawner.FindPlanetSpawns();
-            var spawnPointsField = typeof(PlayerSpawner)
-                .GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
+            var spawnPointsField = typeof(PlayerSpawner).GetField("_spawnList", BindingFlags.NonPublic | BindingFlags.Instance);
             var spawnPoints = spawnPointsField?.GetValue(spawner) as SpawnPoint[];
             spawnPoints = spawnPoints.OrderBy(x => x.name).ToArray();
 
@@ -252,7 +267,12 @@ namespace NomaiGrandPrix
 
         private SpawnPoint GetSpawnPointByName(SpawnPoint[] spawnPoints, string name)
         {
-            return spawnPoints.Where(point => { return point.name.Equals(name); }).First();
+            return spawnPoints
+                .Where(point =>
+                {
+                    return point.name.Equals(name);
+                })
+                .First();
         }
 
         private void SpawnGoal(Transform parent)
@@ -267,11 +287,17 @@ namespace NomaiGrandPrix
             collider.isTrigger = true;
 
             var mesh = new GameObject("CollectibleMarshmellow_Mesh");
-            var marshmallowGameObject = GameObject.Find("Player_Body/RoastingSystem/Stick_Root/Stick_Pivot/Stick_Tip/Mallow_Root/Props_HEA_Marshmallow");
+            var marshmallowGameObject = GameObject.Find(
+                "Player_Body/RoastingSystem/Stick_Root/Stick_Pivot/Stick_Tip/Mallow_Root/Props_HEA_Marshmallow"
+            );
             if (_marshmallowMesh == null)
+            {
                 _marshmallowMesh = marshmallowGameObject.GetComponent<MeshFilter>().mesh;
+            }
             if (_marshmallowMaterial == null)
+            {
                 _marshmallowMaterial = marshmallowGameObject.GetComponent<MeshRenderer>().material;
+            }
 
             mesh.AddComponent<MeshFilter>().mesh = _marshmallowMesh;
             mesh.AddComponent<MeshRenderer>().material = _marshmallowMaterial;

@@ -19,6 +19,7 @@ namespace NomaiGrandPrix
         Stranger = 1 << 9,
         DreamZone = 1 << 10,
     }
+
     public struct SpawnPointConfig
     {
         public string internalId;
@@ -56,27 +57,25 @@ namespace NomaiGrandPrix
 
         public static SpawnPointPool FromTsv(string pathToTsv, Func<SpawnPointConfig, bool> filter = null)
         {
-            if (filter == null) {
+            if (filter == null)
+            {
                 filter = spawnConfig => true;
             }
-            var configs = ParseTsv(pathToTsv)
-                .Select(line => BuildSpawnPointConfig(line))
-                .Where(filter)
-                .ToList();
+            var configs = ParseTsv(pathToTsv).Select(line => BuildSpawnPointConfig(line)).Where(filter).ToList();
             return new SpawnPointPool(configs);
         }
 
         private static SpawnPointConfig BuildSpawnPointConfig(string[] line) =>
-            new SpawnPointConfig { 
-                internalId = line[0], 
-                displayName = line[1], 
+            new SpawnPointConfig
+            {
+                internalId = line[0],
+                displayName = line[1],
                 area = line[2].Equals("") ? Area.None : (Area)Enum.Parse(typeof(Area), line[2]),
                 isDreamZone = bool.Parse(line[3]),
                 shouldSpawn = bool.Parse(line[4]),
                 shouldGoal = bool.Parse(line[5]),
                 isThVillage = bool.Parse(line[6]),
             };
-
 
         private static string[][] ParseTsv(string pathToTsv)
         {

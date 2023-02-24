@@ -25,6 +25,7 @@ namespace NomaiGrandPrix
         {
             OnCollected?.Invoke();
         }
+
         public void Start()
         {
             var random = new System.Random((int)DateTime.Now.Ticks);
