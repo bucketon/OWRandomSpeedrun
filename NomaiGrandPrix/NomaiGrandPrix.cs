@@ -87,6 +87,8 @@ namespace NomaiGrandPrix
                 HandleNewLoopSetup();
                 InitMapMarker();
                 SpawnGoal(_goalPoint.transform);
+                var spawnActions = SpawnActionFactory.GetActionsForSpawn(SpeedrunState.SpawnPoint?.internalId);
+                spawnActions.Do(action => action.Invoke());
 
                 if (SpeedrunState.JustEnteredGame)
                 {

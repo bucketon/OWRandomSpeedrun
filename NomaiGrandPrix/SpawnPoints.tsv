@@ -85,7 +85,7 @@ Spawn_LakebedCave	Lakebed Cave	EmberTwin	FALSE	TRUE	TRUE	FALSE
 SPAWN_MigrationPath	Migration Path		FALSE	TRUE	TRUE	FALSE	
 Spawn_Module_Broken	Orbital Probe Cannon Broken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
 Spawn_Module_Intact	Orbital Probe Cannon Intact Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Sunken	Orbital Probe Cannon Sunken Module	GiantsDeep	FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
+Spawn_Module_Sunken	Orbital Probe Cannon Sunken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
 Spawn_NorthPole	North Pole		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
 SPAWN_NorthPole	North Pole		FALSE	TRUE	TRUE	FALSE	
 SPAWN_NorthPoleSecretEntrance	North Pole Secret Entrance		FALSE	TRUE	TRUE	FALSE	
