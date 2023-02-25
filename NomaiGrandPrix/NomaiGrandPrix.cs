@@ -43,6 +43,7 @@ namespace NomaiGrandPrix
             // Use Start() instead.
 
             Instance = this;
+            SpeedrunState = new SpeedrunState();
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
         }
 
