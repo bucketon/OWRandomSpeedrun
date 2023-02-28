@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,6 +41,12 @@ namespace SpawnPointSelector
         [SerializeField]
         private CanvasGroup _listCanvasGroup;
 
+        [SerializeField]
+        private List<Sprite> _planetSprites;
+
+        [SerializeField]
+        private List<int> _planetPreferredWidthHeight;
+
         private float _initialHeight;
 
         private float _effectDuration = 0.1f;
@@ -59,11 +66,23 @@ namespace SpawnPointSelector
             );
         }
 
-        public SpawnPointListItem AddItem(string text)
+        public SpawnPointListItem AddItem(string text, SpawnPointPlanet planet)
         {
             var listItemGO = Instantiate(SpawnPointListItemPrefab, this.ContentTransform);
             var listItem = listItemGO.GetComponent<SpawnPointListItem>();
             listItem.Text.text = text;
+            var planetIndex = (int) planet;
+            listItem.LeftArrowImage.sprite = _planetSprites[planetIndex];
+            listItem.RightArrowImage.sprite = _planetSprites[planetIndex];
+
+            var preferredWidthHeight = _planetPreferredWidthHeight[planetIndex];
+            if (preferredWidthHeight != 0)
+            {
+                listItem.LeftArrowLayout.preferredWidth = preferredWidthHeight;
+                listItem.LeftArrowLayout.preferredHeight = preferredWidthHeight;
+                listItem.RightArrowLayout.preferredWidth = preferredWidthHeight;
+                listItem.RightArrowLayout.preferredHeight = preferredWidthHeight;
+            }
             return listItem;
         }
 

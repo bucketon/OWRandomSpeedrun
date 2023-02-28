@@ -17,6 +17,30 @@ namespace SpawnPointSelector
             set => _rightArrow = value;
         }
 
+        public Image LeftArrowImage
+        {
+            get => _leftArrowImage;
+            set => _leftArrowImage = value;
+        }
+
+        public Image RightArrowImage
+        {
+            get => _rightArrowImage;
+            set => _rightArrowImage = value;
+        }
+
+        public LayoutElement LeftArrowLayout
+        {
+            get => _leftArrowLayout;
+            set => _leftArrowLayout = value;
+        }
+
+        public LayoutElement RightArrowLayout
+        {
+            get => _rightArrowLayout;
+            set => _rightArrowLayout = value;
+        }
+
         public Text Text
         {
             get => _text;
@@ -28,6 +52,18 @@ namespace SpawnPointSelector
 
         [SerializeField]
         private GameObject _rightArrow;
+
+        [SerializeField]
+        private Image _leftArrowImage;
+
+        [SerializeField]
+        private Image _rightArrowImage;
+
+        [SerializeField]
+        private LayoutElement _leftArrowLayout;
+
+        [SerializeField]
+        private LayoutElement _rightArrowLayout;
 
         [SerializeField]
         private Text _text;

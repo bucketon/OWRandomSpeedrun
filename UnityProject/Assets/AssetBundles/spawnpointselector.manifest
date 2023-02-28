@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4198946634
+CRC: 1591086897
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: faa9b918b6ae02490574c93829540a1b
+    Hash: e3b0a5dc39eac7077c2f44ce150bf9b7
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 59c43adbed86ced230138a3e41779099
+    Hash: 44504fd34a2913787058d17d5c739483
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -59,9 +59,19 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/PlanetIcons/Interloper.png
+- Assets/PlanetIcons/DarkBramble.png
+- Assets/PlanetIcons/QuantumMoon.png
+- Assets/PlanetIcons/Stranger.png
 - Assets/SpawnPointSelector.prefab
+- Assets/PlanetIcons/TimberHearth.png
 - Assets/UI_Menu_Selector.png
+- Assets/PlanetIcons/TowerTwin.png
 - Assets/Fonts/SerifGothicStd-ExtraBold.otf
+- Assets/PlanetIcons/CaveTwin.png
+- Assets/PlanetIcons/BrittleHollow.png
+- Assets/PlanetIcons/WhiteHole.png
+- Assets/PlanetIcons/GiantsDeep.png
 - Assets/SpawnPointList.prefab
 - Assets/SpawnPointListItem.prefab
 - Assets/Fonts/Adobe - SerifGothicStd_Dynamic.otf
