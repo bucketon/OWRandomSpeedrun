@@ -1,4 +1,5 @@
 using HarmonyLib;
+using OWML.Common;
 using NomaiGrandPrix;
 using UnityEngine;
 
@@ -44,22 +45,41 @@ public class SpeedrunHarmonyPatches
     [HarmonyPatch(typeof(TitleScreenManager), nameof(TitleScreenManager.Start))]
     public static void TitleScreenManager_Start_Postfix()
     {
-        SpeedrunState.IsGameStarted = false;
-        SpeedrunState.ModEnabled = false;
+        NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.IsGameStarted = false;
+        NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled = false;
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(DebugInputManager), nameof(DebugInputManager.Start))]
     public static void DebugInputManager_Start_Postfix()
     {
-        SpeedrunState.IsGameStarted = true;
+        NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.IsGameStarted = true;
+    }
+
+    // Disable achievements while the mod is running, since many warps can accidentally
+    // trigger ones like Hotshot.
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(Achievements), nameof(Achievements.Earn))]
+    public static bool Achievements_Earn_Prefix(Achievements.Type type)
+    {
+        var modHelper = NomaiGrandPrix.NomaiGrandPrix.Instance.ModHelper;
+        if (NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled)
+        {
+            modHelper.Console.WriteLine($"Skipping achievement {type} during Nomai Grand Prix run.", MessageType.Info);
+            return false;
+        }
+        else
+        {
+            modHelper.Console.WriteLine($"Allowing player to earn achievement {type} while Nomai Grand Prix is inactive.", MessageType.Info);
+            return true;
+        }
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(PlayerSpawner), nameof(PlayerSpawner.OnStartOfTimeLoop))]
     public static void PlayerSpawner_OnStartOfTimeLoop_Prefix()
     {
-        if (SpeedrunState.ModEnabled)
+        if (NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled)
         {
             // Do not call SpawnPlayer() here
             return;
