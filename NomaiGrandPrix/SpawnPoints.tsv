@@ -1,25 +1,39 @@
 Full Name	Display Name	Area	Dream Zone	Enable Spawn	Enable Goal	TH Village	Note
-ShipSpawn	Ship Spawn		FALSE	TRUE	TRUE	TRUE	
-ShipSpawn_CO	Ship CO		FALSE	TRUE	TRUE	FALSE	
-ShipSpawn_GD	Ship Giant's Deep		FALSE	TRUE	TRUE	FALSE	
-ShipSpawn_HT	Ship HT		FALSE	TRUE	TRUE	FALSE	
-ShipSpawn_JellyDomain	Ship Jelly Domain		FALSE	TRUE	TRUE	FALSE	
-ShipSpawn_QM	Ship Quantum Moon		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
-ShipSpawn_TH	Ship Timber Hearth		FALSE	FALSE	FALSE	TRUE	Spawn kills you from fall damage if you do not compensate
-ShipSpawnPoint_WhiteHole(1)	Ship WhiteHole		FALSE	FALSE	FALSE	FALSE	Causes an exception
-Spawn	Sun Station	SunStation	FALSE	TRUE	TRUE	FALSE	
+Spawn_TimeLoopDevice	Ash Twin Project	AshTwin	FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
+Spawn_SunTower	Warp Tower (Sun Station)	AshTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_TowerTwin	Warp Tower (Twins)	AshTwin	FALSE	TRUE	TRUE	FALSE	
+SPAWN_UpdownWarp	Black Hole Forge District	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_BlackholeForge	Blackhole Forge	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_BrambleIsland	Bramble Island	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_ChertsCamp	Chert's Camp	EmberTwin	FALSE	TRUE	TRUE	FALSE	
-Spawn_City	Sunless City	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+SPAWN_SHIP	Brittle Hollow (Orbit)	BrittleHollow	FALSE	FALSE	FALSE	TRUE	Severely hurts you from fall damage
+SPAWN_Crossroad	Crossroads	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_EscapePod	Escape Pod 1 	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_GravityCannon	Gravity Cannon	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_City	Hanging City Bridge	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_CO	Interloper	Interloper	FALSE	TRUE	TRUE	FALSE	
-Spawn_CO_Core	Interloper Core	Interloper	FALSE	TRUE	TRUE	FALSE	
-Spawn_CO_Interior	Interloper Interior	Interloper	FALSE	TRUE	TRUE	FALSE	
-Spawn_ConstructionYard	Construction Yard	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Core	Giant's Deep Core	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-SPAWN_Crossroad	Brittle Hollow Crossroads	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_DeepSpace	Space Above Giant's Deep	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+SPAWN_MigrationPath	Migration Path Trailhead	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_OldCamp	Nomai Camp (Above Ground)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_OldSettlement	Nomai Settlement (Below Ground)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_NorthPoleSecretEntrance	North Pole Secret Entrance	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_NorthPole	North Pole Surface	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_Observatory	Southern Observatory	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_Observatory_Below	Southern Observatory (Below)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_SouthPole	Southern Observatory (Below)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_SouthPolePath	Southern Observatory Path	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_QuantumTower_Bottom	Tower of Quantum Know Bottom	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_QuantumTower_Inside	Tower of Quantum Know Inside	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_QuantumTower_Path	Tower of Quantum Know Path	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_QuantumTower_Top	Tower of Quantum Know Top	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_Teleporter	Warp Receiver (Surface)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_Ship_DB	Dark Bramble (orbit)	DarkBramble	FALSE	FALSE	FALSE	FALSE	
+SpawnPoint_DB	Dark Bramble Orbit	DarkBramble	FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_ElsinoreSeed	Elsinore Seed	DarkBramble	FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_EscapePod	Escape Pod 3	DarkBramble	FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_Ship_EscapePod	Escape Pod 3	DarkBramble	FALSE	FALSE	FALSE	FALSE	
+SpawnPoint_PioneerCamp	Feldspar's Camp	DarkBramble	FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_Ship_Pioneer	Feldspar's Camp	DarkBramble	FALSE	FALSE	FALSE	FALSE	
+SpawnPoint_Jellyfish	Jellyfish	DarkBramble	FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_NomaiGrave	Nomai Grave	DarkBramble	FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_Ship_HubDimension	Ship Hub Dimension	DarkBramble	FALSE	FALSE	FALSE	FALSE	
+Spawn_Vessel	Vessel	DarkBramble	FALSE	TRUE	TRUE	FALSE	
 Spawn_DreamZone_1	DreamZone 1	DreamZone	TRUE	FALSE	FALSE	FALSE	
 Spawn_DreamZone_1_Bridge	DreamZone 1 Bridge	DreamZone	TRUE	FALSE	FALSE	FALSE	
 Spawn_DreamZone_1_GhostForest	DreamZone 1 Ghost Forest	DreamZone	TRUE	FALSE	FALSE	FALSE	
@@ -45,109 +59,95 @@ Spawn_DreamZone_3_SecretGallery	DreamZone 3 Secret Gallery	DreamZone	TRUE	FALSE	
 Spawn_DreamZone_4_Bridge	DreamZone 4 Bridge	DreamZone	TRUE	FALSE	FALSE	FALSE	
 Spawn_DreamZone_4_Dock	DreamZone 4 Dock	DreamZone	TRUE	FALSE	FALSE	FALSE	
 Spawn_DreamZone_4_Elevator	DreamZone 4 Elevator	DreamZone	TRUE	FALSE	FALSE	FALSE	
-SPAWN_EscapePod	Escape Pod 1 (Brittle Hollow)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_EscapePod_Exterior	Escape Pod 2 (Ember Twin) Exterior	EmberTwin	FALSE	TRUE	TRUE	FALSE	
-Spawn_EscapePod_Interior	Escape Pod 2 (Ember Twin) Interior	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_SecretLibrary_1	Secret Library 1	DreamZone	FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_SecretLibrary_2	Secret Library 2	DreamZone	FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_SecretLibrary_3	Secret Library 3	DreamZone	FALSE	FALSE	FALSE	FALSE	Stranger
+Spawn_Underground_CodeTotems	Underground Code Totems	DreamZone	TRUE	FALSE	FALSE	FALSE	Stranger (Is this dreamzone? It has to be right?)
+Spawn_Underground_OOB	Underground OOB	DreamZone	TRUE	FALSE	FALSE	FALSE	Stranger
+Spawn_Underground_PrisonCell	Underground Prison Cell	DreamZone	TRUE	FALSE	FALSE	FALSE	Stranger
+Spawn_Underground_PrisonCell_Lower	Underground Prison Cell Lower	DreamZone	TRUE	FALSE	FALSE	FALSE	Stranger
+Spawn_ChertsCamp	Chert's Camp	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_EscapePod_Exterior	Escape Pod 2 Exterior	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_EscapePod_Interior	Escape Pod 2 Interior	EmberTwin	FALSE	FALSE	FALSE	FALSE	
 Spawn_FossilOverlook	Fossil Overlook	EmberTwin	FALSE	TRUE	TRUE	FALSE	
 Spawn_FossilSite	Fossil Site	EmberTwin	FALSE	TRUE	TRUE	FALSE	
-Spawn_GabbroIsland	Gabbro's Island	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_GravityCannon	Ember Twin Gravity Cannon	EmberTwin	FALSE	TRUE	TRUE	FALSE	
-SPAWN_GravityCannon	Brittle Hollow Gravity Cannon	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
-Spawn_IP_DockingBay_Dark	Stranger Docking Bay Dark	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_DockingBay_Light	Stranger Docking Bay Light	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_ObservationDeck	Stranger Observation Deck	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Outside	Stranger Outside	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_OutsideCloak	Stranger Outside Cloak	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Prison	Stranger Prison	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Ship	Stranger Ship	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Ship_OutsideCloak	Stranger Ship Outside Cloak	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1	Stranger River Lowlands	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1_BeachedRaft	Stranger River Lowlands Beached Raft	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1_Rapids	Stranger River Lowlands Rapids	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_1_SecretPool	Stranger River Lowlands Secret Pool	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2	Stranger Cinder Isles	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2_CoveBottom	Stranger Cinder Isles Cove Bottom	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2_CoveTop	Stranger Cinder Isles Cove Top	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_2_LighthouseTop	Stranger Cinder Isles Lighthouse Top	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_Bridge	Stranger Hidden Gorge Bridge	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_BrokenBridge	Stranger Hidden Gorge Broken Bridge	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_CodeDoor	Stranger Hidden Gorge Code Door	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_DreamFire	Stranger Hidden Gorge Dream Fire	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_DreamLabOverlook	Stranger Hidden Gorge DreamLab Overlook	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_Raft	Stranger Hidden Gorge Raft	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_SecretEntrance	Stranger Hidden Gorge Secret Entrance	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_3_Temple	Stranger Hidden Gorge Temple	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_4	Stranger Reservoir	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_4_LeftShore	Stranger Reservoir Left Shore	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_IP_Zone_4_RightShore	Stranger Reservoir Right Shore	Stranger	FALSE	FALSE	TRUE	FALSE	
-Spawn_JellyDomain	Giant's Deep Jelly Domain	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_GravityCannon	Gravity Cannon	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_TLE_Below	High Energy Lab Below	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_TLE_Interior	High Energy Lab Interior	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_TLE_Outside	High Energy Lab Outside	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_TLEPath	High Energy Lab Path	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+ShipSpawn_HT	Hourglass Twins (Orbit)	EmberTwin	FALSE	FALSE	FALSE	FALSE	
 Spawn_LakebedCave	Lakebed Cave	EmberTwin	FALSE	TRUE	TRUE	FALSE	
-SPAWN_MigrationPath	Migration Path		FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Broken	Orbital Probe Cannon Broken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Intact	Orbital Probe Cannon Intact Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_Module_Sunken	Orbital Probe Cannon Sunken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
-Spawn_NorthPole	North Pole		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
-SPAWN_NorthPole	North Pole		FALSE	TRUE	TRUE	FALSE	
-SPAWN_NorthPoleSecretEntrance	North Pole Secret Entrance		FALSE	TRUE	TRUE	FALSE	
-SPAWN_Observatory	Observatory		FALSE	TRUE	TRUE	FALSE	
-SPAWN_Observatory_Below	Observatory Below		FALSE	TRUE	TRUE	FALSE	
-SPAWN_OldCamp	Old Camp		FALSE	TRUE	TRUE	FALSE	
-SPAWN_OldSettlement	Old Settlement		FALSE	TRUE	TRUE	FALSE	
-Spawn_OPC	Orbital Probe Cannon		FALSE	TRUE	TRUE	FALSE	
-Spawn_Orbit	Orbit		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
-Spawn_PodPath	Pod Path		FALSE	TRUE	TRUE	FALSE	
-Spawn_QuantumIsland_Bottom	Quantum Island Bottom		FALSE	TRUE	TRUE	FALSE	
-Spawn_QuantumIsland_PuzzleRoom4	Quantum Island Puzzle Room 4		FALSE	TRUE	TRUE	FALSE	
-Spawn_QuantumIsland_Top	Quantum Island Top		FALSE	TRUE	TRUE	FALSE	
-Spawn_QuantumMaze	Quantum Maze		FALSE	TRUE	TRUE	FALSE	
-Spawn_QuantumMoonLocator	Quantum Moon Locator		FALSE	TRUE	TRUE	FALSE	
-SPAWN_QuantumTower_Bottom	Quantum Tower Bottom		FALSE	TRUE	TRUE	FALSE	
-SPAWN_QuantumTower_Inside	Quantum Tower Inside		FALSE	TRUE	TRUE	FALSE	
-SPAWN_QuantumTower_Path	Quantum Tower Path		FALSE	TRUE	TRUE	FALSE	
-SPAWN_QuantumTower_Top	Quantum Tower Top		FALSE	TRUE	TRUE	FALSE	
-Spawn_SandslideCave	Sandslide Cave		FALSE	TRUE	TRUE	FALSE	
-Spawn_SecretLibrary_1	Secret Library 1		FALSE	FALSE	FALSE	FALSE	Stranger
-Spawn_SecretLibrary_2	Secret Library 2		FALSE	FALSE	FALSE	FALSE	Stranger
-Spawn_SecretLibrary_3	Secret Library 3		FALSE	FALSE	FALSE	FALSE	Stranger
-Spawn_Ship	Ship		FALSE	FALSE	TRUE	TRUE	Kills you the first time (probably being killed by the ship before it is deactivated)
-SPAWN_SHIP	Ship		FALSE	FALSE	FALSE	TRUE	Severely hurts you from fall damage
-SPAWN_SouthPole	South Pole		FALSE	TRUE	TRUE	FALSE	
-SPAWN_SouthPolePath	South Pole Path		FALSE	TRUE	TRUE	FALSE	
-Spawn_StatueIsland_Beach	Statue Island Beach		FALSE	TRUE	TRUE	FALSE	
-Spawn_StatueIsland_Inside	Statue Island Inside		FALSE	TRUE	TRUE	FALSE	
-Spawn_StatueIsland_Top	Statue Island Top		FALSE	TRUE	TRUE	FALSE	
-Spawn_SunTower	Sun Tower		FALSE	TRUE	TRUE	FALSE	
-Spawn_Surface	Surface		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
-SPAWN_Teleporter	Teleporter		FALSE	TRUE	TRUE	FALSE	
-Spawn_TH	Timber Hearth	TimberHearth	FALSE	TRUE	TRUE	TRUE	
-Spawn_TH_IMP	Timber Hearth IMP		FALSE	FALSE	FALSE	TRUE	Falls through the planet
-Spawn_TH_NomaiMines	Timber Hearth Nomai Mines		FALSE	TRUE	TRUE	FALSE	
-Spawn_TH_Observatory	Timber Hearth Observatory	TimberHearth	FALSE	TRUE	TRUE	TRUE	
-Spawn_TH_RadioTower	Timber Hearth Radio Tower	TimberHearth	FALSE	TRUE	TRUE	FALSE	
-Spawn_TH_ZeroGCave	Timber Hearth Zero G Cave	TimberHearth	FALSE	TRUE	TRUE	FALSE	
-Spawn_THM_NorthPole	Timber Hearth M North Pole	TimberHearth	FALSE	TRUE	TRUE	FALSE	
-Spawn_THM_SignalDish	Timber Hearth M Signal Dish	TimberHearth	FALSE	TRUE	TRUE	FALSE	
-Spawn_TimeLoopDevice	Time Loop Device	AshTwin	FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
-Spawn_TLE_Below	TLE Below		FALSE	TRUE	TRUE	FALSE	
-Spawn_TLE_Interior	TLE Interior		FALSE	TRUE	TRUE	FALSE	
-Spawn_TLE_Outside	TLE Outside		FALSE	TRUE	TRUE	FALSE	
-Spawn_TLEPath	TLE Path		FALSE	TRUE	TRUE	FALSE	
-Spawn_TowerTwin	Tower Twin	AshTwin	FALSE	TRUE	TRUE	FALSE	
-Spawn_Underground_CodeTotems	Underground Code Totems		FALSE	FALSE	FALSE	FALSE	Stranger
-Spawn_Underground_OOB	Underground OOB		FALSE	FALSE	FALSE	FALSE	Stranger
-Spawn_Underground_PrisonCell	Underground Prison Cell		FALSE	FALSE	FALSE	FALSE	Stranger
-Spawn_Underground_PrisonCell_Lower	Underground Prison Cell Lower		FALSE	FALSE	FALSE	FALSE	Stranger
-SPAWN_UpdownWarp	Updown Warp		FALSE	TRUE	TRUE	FALSE	
-Spawn_Vessel	Vessel		FALSE	TRUE	TRUE	FALSE	
-Spawn_WarpReceiver	Warp Receiver		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_DB	DB		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_ElsinoreSeed	Elsinore Seed		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_EscapePod	Escape Pod		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_Jellyfish	Jellyfish		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_NomaiGrave	Nomai Grave		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_PioneerCamp	Pioneer Camp		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_Ship_DB	Ship DB		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_Ship_EscapePod	Ship Escape Pod		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_Ship_HubDimension	Ship Hub Dimension		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_Ship_Pioneer	Ship Pioneer		FALSE	TRUE	TRUE	FALSE	
+Spawn_QuantumMaze	Quantum Maze (Wandering Rock)	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_QuantumMoonLocator	Quantum Moon Locator	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_SandslideCave	Sandslide Cave	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_City	Sunless City	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_PodPath	Sunless City Trail	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_WarpReceiver	Warp Receiver	EmberTwin	FALSE	TRUE	TRUE	FALSE	
+Spawn_BrambleIsland	Bramble Island	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_ConstructionYard	Construction Yard	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Core	Core	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_GabbroIsland	Gabbro's Island	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+ShipSpawn_GD	Giant's Deep (Orbit)	GiantsDeep	FALSE	FALSE	FALSE	FALSE	
+Spawn_DeepSpace	Giant's Deep (Orbit)	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+ShipSpawn_JellyDomain	Jelly Domain	GiantsDeep	FALSE	FALSE	FALSE	FALSE	Duplicate
+Spawn_JellyDomain	Jelly Domain	GiantsDeep	FALSE	TRUE	TRUE	FALSE	Northern Half of GD
+Spawn_OPC	Probe Cannon	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Module_Broken	Probe Cannon Broken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Module_Intact	Probe Cannon Intact Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_Module_Sunken	Probe Cannon Sunken Module	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_StatueIsland_Beach	Statue Island Beach	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_StatueIsland_Inside	Statue Island Inside	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_StatueIsland_Top	Statue Island Top	GiantsDeep	FALSE	TRUE	TRUE	FALSE	
+Spawn_QuantumIsland_Bottom	Tower of Quantum Trials	GiantsDeep	FALSE	TRUE	TRUE	FALSE	Outside by elevator
+Spawn_QuantumIsland_PuzzleRoom4	Tower of Quantum Trials Bottom	GiantsDeep	FALSE	TRUE	TRUE	FALSE	End of last solved puzzle
+Spawn_QuantumIsland_Top	Tower of Quantum Trials Top	GiantsDeep	FALSE	TRUE	TRUE	FALSE	Before entering first puzzle
+Spawn_CO	Interloper	Interloper	FALSE	TRUE	TRUE	FALSE	
+ShipSpawn_CO	Interloper (Orbit)	Interloper	FALSE	FALSE	FALSE	FALSE	
+Spawn_CO_Core	Interloper Core	Interloper	FALSE	TRUE	TRUE	FALSE	
+Spawn_CO_Interior	Interloper Interior	Interloper	FALSE	TRUE	TRUE	FALSE	
+Spawn_IP_Zone_2	Cinder Isles	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_2_CoveBottom	Cinder Isles Cove Bottom	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_2_CoveTop	Cinder Isles Cove Top	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_2_LighthouseTop	Cinder Isles Lighthouse Top	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_DockingBay_Dark	Docking Bay Dark	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_DockingBay_Light	Docking Bay Light	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_Bridge	Hidden Gorge Bridge	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_BrokenBridge	Hidden Gorge Broken Bridge	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_CodeDoor	Hidden Gorge Code Door	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_DreamFire	Hidden Gorge Dream Fire	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_DreamLabOverlook	Hidden Gorge DreamLab Overlook	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_Raft	Hidden Gorge Raft	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_SecretEntrance	Hidden Gorge Secret Entrance	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_3_Temple	Hidden Gorge Temple	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_ObservationDeck	Observation Deck	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Outside	Outside	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_OutsideCloak	Outside Cloak	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Prison	Prison	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_4	Reservoir	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_4_LeftShore	Reservoir Left Shore	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_4_RightShore	Reservoir Right Shore	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1	River Lowlands	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1_BeachedRaft	River Lowlands Beached Raft	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1_Rapids	River Lowlands Rapids	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Zone_1_SecretPool	River Lowlands Secret Pool	Stranger	FALSE	FALSE	TRUE	FALSE	
+Spawn_IP_Ship	Stranger (Orbit)	Stranger	FALSE	FALSE	FALSE	FALSE	
+Spawn_IP_Ship_OutsideCloak	Stranger (Orbit) Outside Cloak	Stranger	FALSE	FALSE	FALSE	FALSE	
+Spawn	Sun Station Inside	SunStation	FALSE	TRUE	TRUE	FALSE	
+ShipSpawn	Sun Station Outside	SunStation	FALSE	FALSE	FALSE	TRUE	
+Spawn_THM_SignalDish	Attlerock Eye Signal Locator	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+Spawn_THM_NorthPole	Attlerock North Pole	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+Spawn_TH_IMP	IMP	TimberHearth	FALSE	FALSE	FALSE	TRUE	Falls through the planet
+Spawn_TH	Launch Tower	TimberHearth	FALSE	TRUE	TRUE	TRUE	
+Spawn_TH_NomaiMines	Nomai Mines	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+Spawn_TH_Observatory	Observatory	TimberHearth	FALSE	TRUE	TRUE	TRUE	
+Spawn_TH_RadioTower	Radio Tower	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+ShipSpawn_TH	Ship Timber Hearth	TimberHearth	FALSE	FALSE	FALSE	TRUE	Spawn kills you from fall damage if you do not compensate
+Spawn_Ship	Timber Hearth (Orbit)	TimberHearth	FALSE	FALSE	FALSE	TRUE	Kills you the first time (probably being killed by the ship before it is deactivated)
+Spawn_TH_ZeroGCave	Zero G Cave	TimberHearth	FALSE	TRUE	TRUE	FALSE	
 SpawnPoint_WhiteHole	White Hole	WhiteHole	FALSE	TRUE	TRUE	FALSE	
+ShipSpawnPoint_WhiteHole(1)	White Hole (Orbit)	WhiteHole	FALSE	FALSE	FALSE	FALSE	Causes an exception
+Spawn_NorthPole	North Pole		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
+Spawn_Orbit	Orbit		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
+ShipSpawn_QM	Quantum Moon (Orbit)		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
+Spawn_Surface	Surface		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
