@@ -119,20 +119,20 @@ Spawn_StatueIsland_Top	Statue Island Top		FALSE	TRUE	TRUE	FALSE
 Spawn_SunTower	Sun Tower		FALSE	TRUE	TRUE	FALSE	
 Spawn_Surface	Surface		FALSE	FALSE	FALSE	FALSE	Spawns you in the middle of space
 SPAWN_Teleporter	Teleporter		FALSE	TRUE	TRUE	FALSE	
-Spawn_TH	Timber Hearth		FALSE	TRUE	TRUE	TRUE	
+Spawn_TH	Timber Hearth	TimberHearth	FALSE	TRUE	TRUE	TRUE	
 Spawn_TH_IMP	Timber Hearth IMP		FALSE	FALSE	FALSE	TRUE	Falls through the planet
 Spawn_TH_NomaiMines	Timber Hearth Nomai Mines		FALSE	TRUE	TRUE	FALSE	
-Spawn_TH_Observatory	Timber Hearth Observatory		FALSE	TRUE	TRUE	TRUE	
-Spawn_TH_RadioTower	Timber Hearth Radio Tower		FALSE	TRUE	TRUE	FALSE	
-Spawn_TH_ZeroGCave	Timber Hearth Zero G Cave		FALSE	TRUE	TRUE	FALSE	
-Spawn_THM_NorthPole	Timber Hearth M North Pole		FALSE	TRUE	TRUE	FALSE	
-Spawn_THM_SignalDish	Timber Hearth M Signal Dish		FALSE	TRUE	TRUE	FALSE	
-Spawn_TimeLoopDevice	Time Loop Device		FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
+Spawn_TH_Observatory	Timber Hearth Observatory	TimberHearth	FALSE	TRUE	TRUE	TRUE	
+Spawn_TH_RadioTower	Timber Hearth Radio Tower	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+Spawn_TH_ZeroGCave	Timber Hearth Zero G Cave	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+Spawn_THM_NorthPole	Timber Hearth M North Pole	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+Spawn_THM_SignalDish	Timber Hearth M Signal Dish	TimberHearth	FALSE	TRUE	TRUE	FALSE	
+Spawn_TimeLoopDevice	Time Loop Device	AshTwin	FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
 Spawn_TLE_Below	TLE Below		FALSE	TRUE	TRUE	FALSE	
 Spawn_TLE_Interior	TLE Interior		FALSE	TRUE	TRUE	FALSE	
 Spawn_TLE_Outside	TLE Outside		FALSE	TRUE	TRUE	FALSE	
 Spawn_TLEPath	TLE Path		FALSE	TRUE	TRUE	FALSE	
-Spawn_TowerTwin	Tower Twin		FALSE	TRUE	TRUE	FALSE	
+Spawn_TowerTwin	Tower Twin	AshTwin	FALSE	TRUE	TRUE	FALSE	
 Spawn_Underground_CodeTotems	Underground Code Totems		FALSE	FALSE	FALSE	FALSE	Stranger
 Spawn_Underground_OOB	Underground OOB		FALSE	FALSE	FALSE	FALSE	Stranger
 Spawn_Underground_PrisonCell	Underground Prison Cell		FALSE	FALSE	FALSE	FALSE	Stranger
@@ -150,4 +150,4 @@ SpawnPoint_Ship_DB	Ship DB		FALSE	TRUE	TRUE	FALSE
 SpawnPoint_Ship_EscapePod	Ship Escape Pod		FALSE	TRUE	TRUE	FALSE	
 SpawnPoint_Ship_HubDimension	Ship Hub Dimension		FALSE	TRUE	TRUE	FALSE	
 SpawnPoint_Ship_Pioneer	Ship Pioneer		FALSE	TRUE	TRUE	FALSE	
-SpawnPoint_WhiteHole	White Hole		FALSE	TRUE	TRUE	FALSE	
+SpawnPoint_WhiteHole	White Hole	WhiteHole	FALSE	TRUE	TRUE	FALSE	

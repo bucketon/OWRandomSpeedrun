@@ -35,7 +35,6 @@ namespace NomaiGrandPrix
                 }
 
                 _spawnPointConfigs = value;
-                _spawnPointConfigs.Sort((spawn1, spawn2) => spawn1.displayName.CompareTo(spawn2.displayName));
             }
         }
 
@@ -86,6 +85,21 @@ namespace NomaiGrandPrix
         private SubmitActionLoadScene _submitAction;
 
         private System.Random _random = new System.Random((int)DateTime.Now.Ticks);
+
+        private Dictionary<Area, SpawnPointPlanet> _areaToPlanetDict = new Dictionary<Area, SpawnPointPlanet>() {
+            { Area.None, SpawnPointPlanet.None },
+            { Area.SunStation, SpawnPointPlanet.SunStation },
+            { Area.AshTwin, SpawnPointPlanet.AshTwin },
+            { Area.EmberTwin, SpawnPointPlanet.EmberTwin },
+            { Area.TimberHearth, SpawnPointPlanet.TimberHearth },
+            { Area.BrittleHollow, SpawnPointPlanet.BrittleHollow },
+            { Area.GiantsDeep, SpawnPointPlanet.GiantsDeep },
+            { Area.DarkBramble, SpawnPointPlanet.DarkBramble },
+            { Area.Interloper, SpawnPointPlanet.Interloper },
+            { Area.WhiteHole, SpawnPointPlanet.WhiteHole },
+            { Area.Stranger, SpawnPointPlanet.Stranger },
+            { Area.DreamZone, SpawnPointPlanet.DreamZone }
+        };
 
         public void Update()
         {
@@ -212,11 +226,11 @@ namespace NomaiGrandPrix
             {
                 if (spawnConfig.shouldSpawn)
                 {
-                    addMenuItem(spawnConfig, _fromList, fromMenuOptions);
+                    AddMenuItem(spawnConfig, _fromList, fromMenuOptions);
                 }
                 if (spawnConfig.shouldGoal)
                 {
-                    addMenuItem(spawnConfig, _toList, toMenuOptions);
+                    AddMenuItem(spawnConfig, _toList, toMenuOptions);
                 }
             }
 
@@ -336,9 +350,9 @@ namespace NomaiGrandPrix
             return foundMenuOption._selectable;
         }
 
-        private void addMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)
+        private void AddMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)
         {
-            var listItem = list.AddItem(spawnConfig.displayName);
+            var listItem = list.AddItem(spawnConfig.displayName, _areaToPlanetDict[spawnConfig.area]);
             listItem.gameObject.AddComponent<SelectableAudioPlayer>();
 
             var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();
