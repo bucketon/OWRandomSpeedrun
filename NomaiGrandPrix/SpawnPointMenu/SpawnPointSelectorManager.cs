@@ -97,6 +97,7 @@ namespace NomaiGrandPrix
             { Area.DarkBramble, SpawnPointPlanet.DarkBramble },
             { Area.Interloper, SpawnPointPlanet.Interloper },
             { Area.WhiteHole, SpawnPointPlanet.WhiteHole },
+            { Area.QuantumMoon, SpawnPointPlanet.QuantumMoon },
             { Area.Stranger, SpawnPointPlanet.Stranger },
             { Area.DreamZone, SpawnPointPlanet.DreamZone }
         };

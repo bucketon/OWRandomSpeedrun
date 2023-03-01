@@ -17,8 +17,9 @@ namespace NomaiGrandPrix
         DarkBramble = 1 << 7,
         Interloper = 1 << 8,
         WhiteHole = 1 << 9,
-        Stranger = 1 << 10,
-        DreamZone = 1 << 11,
+        QuantumMoon = 1 << 10,
+        Stranger = 1 << 11,
+        DreamZone = 1 << 12,
     }
 
     public struct SpawnPointConfig
