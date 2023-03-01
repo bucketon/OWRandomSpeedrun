@@ -8,7 +8,8 @@ namespace NomaiGrandPrix
         private static SpawnActionFactory Instance = new SpawnActionFactory();
         private static Dictionary<string, Action[]> actionsMap = new Dictionary<string, Action[]>
         {
-            { "Spawn_Module_Sunken", new Action[] { OpenSunkenModuleAirlock } }
+            { "Spawn_Module_Sunken", new Action[] { OpenSunkenModuleAirlock } },
+            { "Spawn_Module_Intact", new Action[] { OpenProbeCannonAirlocks } }
         };
 
         private SpawnActionFactory()
@@ -28,10 +29,22 @@ namespace NomaiGrandPrix
 
         private static void OpenSunkenModuleAirlock()
         {
-            var giantsDeep = Locator._giantsDeep;
-            var airlock = giantsDeep.GetComponentInChildren<NomaiAirlock>();
-            var position = airlock._closeSwitches[0].transform.position;
-            airlock._listInterfaceOrb[0].SetOrbPosition(position);
+            OpenAirlocks(Locator._giantsDeep);
+        }
+
+        private static void OpenProbeCannonAirlocks()
+        {
+            OpenAirlocks(Locator._orbitalProbeCannon);
+        }
+
+        private static void OpenAirlocks(AstroObject astroObject)
+        {
+            var airlocks = astroObject.GetComponentsInChildren<NomaiAirlock>();
+            foreach (NomaiAirlock airlock in airlocks)
+            {
+                var position = airlock._closeSwitches[0].transform.position;
+                airlock._listInterfaceOrb[0].SetOrbPosition(position);
+            }
         }
     }
 }
