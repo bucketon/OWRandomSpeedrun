@@ -40,10 +40,10 @@ SPAWN_EscapePod	Escape Pod 1 	BrittleHollow	FALSE	TRUE	TRUE	FALSE
 SPAWN_GravityCannon	Gravity Cannon	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_City	Hanging City Bridge	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_MigrationPath	Migration Path Trailhead	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
-SPAWN_OldCamp	Old Camp	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
-SPAWN_OldSettlement	Old Settlement	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_NorthPoleSecretEntrance	North Pole Secret Entrance	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_NorthPole	North Pole Surface	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_OldCamp	Old Camp	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
+SPAWN_OldSettlement	Old Settlement	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_Observatory	Southern Observatory	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_Observatory_Below	Southern Observatory (Below)	BrittleHollow	FALSE	TRUE	TRUE	FALSE	
 SPAWN_SouthPole	Southern Observatory (Below)	BrittleHollow	FALSE	FALSE	FALSE	FALSE	
