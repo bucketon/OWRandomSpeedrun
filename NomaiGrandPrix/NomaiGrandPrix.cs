@@ -28,8 +28,8 @@ namespace NomaiGrandPrix
             { Area.DarkBramble, "DarkBramble" },
             { Area.Interloper, "Interloper" },
             { Area.Stranger, "Stranger" },
-            //TODO: add label for white hole
-            //TODO: add label for quantum moon
+            { Area.WhiteHole, "WhiteHole" },
+            { Area.QuantumMoon, "QuantumMoon" },
         };
 
         private SpawnPoint _spawnPoint;

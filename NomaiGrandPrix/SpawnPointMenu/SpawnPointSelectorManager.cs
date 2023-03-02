@@ -249,11 +249,11 @@ namespace NomaiGrandPrix
                 //TODO: get the menus to refresh when settings are changed.
                 if (spawnConfig.shouldSpawn && (spawnConfig.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Spawn{NomaiGrandPrix.areaNameMap[spawnConfig.area]}")))
                 {
-                    addMenuItem(spawnConfig, _fromList, fromMenuOptions);
+                    AddMenuItem(spawnConfig, _fromList, fromMenuOptions);
                 }
                 if (spawnConfig.shouldGoal && (spawnConfig.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Goal{NomaiGrandPrix.areaNameMap[spawnConfig.area]}")))
                 {
-                    addMenuItem(spawnConfig, _toList, toMenuOptions);
+                    AddMenuItem(spawnConfig, _toList, toMenuOptions);
                 }
             }
 
@@ -382,7 +382,6 @@ namespace NomaiGrandPrix
             var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();
             menuOption.SpawnPoint = spawnConfig;
             menuOption.Initialize();
-            menuOption.ModHelper = ModHelper;
             options.Add(menuOption);
         }
     }
