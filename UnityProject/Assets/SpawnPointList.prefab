@@ -63,6 +63,21 @@ MonoBehaviour:
   _viewportTransform: {fileID: 4742386956309816108}
   _listTransform: {fileID: 4742386955625043213}
   _listCanvasGroup: {fileID: 8268739438256847222}
+  _planetSprites:
+  - {fileID: 21300000, guid: 7d8360e2b7f1af249a68d4f52b224f8d, type: 3}
+  - {fileID: 21300000, guid: 95f64c3c57ce03f4a9510630da813da8, type: 3}
+  - {fileID: 21300000, guid: 20862cd8a4040684182415265acbdcc8, type: 3}
+  - {fileID: 21300000, guid: c03c6f6962ffc4c4395141bcc7be51a7, type: 3}
+  - {fileID: 21300000, guid: 00ff7938f7f3d5d4292b21621e8fd7be, type: 3}
+  - {fileID: 21300000, guid: 1e899d899da8c4347b875e01bdb11def, type: 3}
+  - {fileID: 21300000, guid: 60df4c1a22050ff45a71b3a423c820df, type: 3}
+  - {fileID: 21300000, guid: b2243fe1425761e4e8ad58cd7b81b9b4, type: 3}
+  - {fileID: 21300000, guid: a21550403c95ae44c81d67d931654e6d, type: 3}
+  - {fileID: 21300000, guid: dbd268a9c4ad9a845accfd0ac6594c6f, type: 3}
+  - {fileID: 21300000, guid: 7d8360e2b7f1af249a68d4f52b224f8d, type: 3}
+  - {fileID: 21300000, guid: bd074183f396cb146a5d98645d900c8a, type: 3}
+  - {fileID: 21300000, guid: bd074183f396cb146a5d98645d900c8a, type: 3}
+  _planetPreferredWidthHeight: 46000000000000004600000000000000000000000000000000000000000000000000000046000000460000000000000000000000
 --- !u!225 &8268739438256847222
 CanvasGroup:
   m_ObjectHideFlags: 0

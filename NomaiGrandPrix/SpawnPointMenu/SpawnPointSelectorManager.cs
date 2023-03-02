@@ -87,6 +87,23 @@ namespace NomaiGrandPrix
 
         private System.Random _random = new System.Random((int)DateTime.Now.Ticks);
 
+        private Dictionary<Area, SpawnPointPlanet> _areaToPlanetDict = new Dictionary<Area, SpawnPointPlanet>()
+        {
+            { Area.None, SpawnPointPlanet.None },
+            { Area.SunStation, SpawnPointPlanet.SunStation },
+            { Area.AshTwin, SpawnPointPlanet.AshTwin },
+            { Area.EmberTwin, SpawnPointPlanet.EmberTwin },
+            { Area.TimberHearth, SpawnPointPlanet.TimberHearth },
+            { Area.BrittleHollow, SpawnPointPlanet.BrittleHollow },
+            { Area.GiantsDeep, SpawnPointPlanet.GiantsDeep },
+            { Area.DarkBramble, SpawnPointPlanet.DarkBramble },
+            { Area.Interloper, SpawnPointPlanet.Interloper },
+            { Area.WhiteHole, SpawnPointPlanet.WhiteHole },
+            { Area.QuantumMoon, SpawnPointPlanet.QuantumMoon },
+            { Area.Stranger, SpawnPointPlanet.Stranger },
+            { Area.DreamZone, SpawnPointPlanet.DreamZone }
+        };
+
         public void Update()
         {
             if (_selector.gameObject.activeSelf && OWInput.IsNewlyPressed(InputLibrary.setDefaults, InputMode.All))
@@ -135,7 +152,10 @@ namespace NomaiGrandPrix
             }
             if (_selector == null)
             {
-                ModHelper.Console.WriteLine("SpawnPointSelector needs to be initialized before calling InitializeSubmitAction!", MessageType.Error);
+                ModHelper.Console.WriteLine(
+                    "SpawnPointSelector needs to be initialized before calling InitializeSubmitAction!",
+                    MessageType.Error
+                );
                 return;
             }
 
@@ -174,10 +194,13 @@ namespace NomaiGrandPrix
 
             var from = _fromMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
             var to = _toMenu._lastSelected.GetComponent<SpawnPointMenuOption>().SpawnPoint;
-            SpeedrunState.SpawnPoint = from;
-            SpeedrunState.GoalPoint = to;
-            SpeedrunState.ModEnabled = true;
-            SpeedrunState.JustEnteredGame = true;
+
+            var speedrunState = NomaiGrandPrix.Instance.SpeedrunState;
+            speedrunState.SpawnPoint = from;
+            speedrunState.GoalPoint = to;
+            speedrunState.ModEnabled = true;
+            speedrunState.JustEnteredGame = true;
+
             ModHelper.Console.WriteLine($"Starting game with spawn points: {from.displayName} -> {to.displayName}");
             _submitAction.Submit();
         }
@@ -187,9 +210,25 @@ namespace NomaiGrandPrix
             DisableMenu();
         }
 
+        public void OnItemClicked(PointerEventData eventData, SpawnPointMenuOption option)
+        {
+            var eventMenu = GetMenuForMenuOption(option);
+
+            if (!eventMenu.IsMenuEnabled())
+            {
+                SwapMenus();
+            }
+        }
+
         private void OnUpdateInputDevice()
         {
             UpdateTooltipIcons();
+        }
+
+        private SpawnPointMenu GetMenuForMenuOption(SpawnPointMenuOption option)
+        {
+            var menu = option.transform.parent.parent.parent == _fromList.transform ? _fromMenu : _toMenu;
+            return menu;
         }
 
         private void InitializeMenus()
@@ -282,7 +321,6 @@ namespace NomaiGrandPrix
                 _selector.Tooltip.LeftImage.sprite = leftSprite;
                 _selector.Tooltip.SeparatorText.enabled = true;
             }
-
         }
 
         private void UpdateTooltipText()
@@ -314,7 +352,8 @@ namespace NomaiGrandPrix
 
         private void SetInitialSelection(SpawnPointMenu menu, SpawnPointList list)
         {
-            var currentSpawn = menu == _fromMenu ? SpeedrunState.SpawnPoint : SpeedrunState.GoalPoint;
+            var speedrunState = NomaiGrandPrix.Instance.SpeedrunState;
+            var currentSpawn = menu == _fromMenu ? speedrunState.SpawnPoint : speedrunState.GoalPoint;
             var selectable = currentSpawn.HasValue ? FindSelectableForSpawn(menu, currentSpawn) : GetRandomSelectable(menu);
             list.SetContentPosition(selectable.gameObject);
             menu.SetSelectOnActivate(selectable);
@@ -328,13 +367,16 @@ namespace NomaiGrandPrix
 
         private Selectable FindSelectableForSpawn(SpawnPointMenu menu, SpawnPointConfig? currentSpawn)
         {
-            var foundMenuOption = Array.Find<MenuOption>(menu._menuOptions, menuOption => ((SpawnPointMenuOption)menuOption).SpawnPoint.internalId == currentSpawn?.internalId);
+            var foundMenuOption = Array.Find<MenuOption>(
+                menu._menuOptions,
+                menuOption => ((SpawnPointMenuOption)menuOption).SpawnPoint.internalId == currentSpawn?.internalId
+            );
             return foundMenuOption._selectable;
         }
 
-        private void addMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)
+        private void AddMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)
         {
-            var listItem = list.AddItem(spawnConfig.displayName);
+            var listItem = list.AddItem($"{options.Count + 1}. {spawnConfig.displayName}", _areaToPlanetDict[spawnConfig.area]);
             listItem.gameObject.AddComponent<SelectableAudioPlayer>();
 
             var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();

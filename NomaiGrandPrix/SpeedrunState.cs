@@ -2,78 +2,32 @@ using System;
 
 namespace NomaiGrandPrix
 {
-  public class SpeedrunState
-  {
-    private static SpeedrunState Instance = new SpeedrunState();
-
-    public static SpawnPointConfig? SpawnPoint
+    public class SpeedrunState
     {
-      get => Instance._spawnPoint;
-      set => Instance._spawnPoint = value;
-    }
-    private SpawnPointConfig? _spawnPoint;
+        public SpawnPointConfig? SpawnPoint { get; set; }
+        public SpawnPointConfig? GoalPoint { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; } = DateTime.MinValue;
+        public bool ModEnabled { get; set; } = false;
 
-    public static SpawnPointConfig? GoalPoint
-    {
-      get => Instance._goalPoint;
-      set => Instance._goalPoint = value;
-    }
-    private SpawnPointConfig? _goalPoint;
+        /// <summary>
+        /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
+        /// </summary>
+        public bool JustEnteredGame { get; set; } = false;
 
-    public static DateTime StartTime
-    {
-      get => Instance._startTime;
-      set => Instance._startTime = value;
-    }
-    private DateTime _startTime;
+        /// <summary>
+        /// Set to true when we have just begun a time loop and have pending operations to complete, false otherwise.
+        /// </summary>
+        public bool JustStartedTimeLoop { get; set; }
 
-    public static DateTime EndTime
-    {
-      get => Instance._endTime;
-      set => Instance._endTime = value;
-    }
-    private DateTime _endTime = DateTime.MinValue;
+        /// <summary>
+        /// Set to true when we are in the game (including death/meditation), and false if we are elsewhere (the title screen).
+        /// </summary>
+        public bool IsGameStarted { get; set; }
 
-    public static bool ModEnabled
-    {
-      get => Instance._modEnabled;
-      set => Instance._modEnabled = value;
+        public SpeedrunState()
+        {
+            // Default constructor required when using field initializers
+        }
     }
-    private bool _modEnabled = false;
-
-    /// <summary>
-    /// Set to true when we have just entered the game (from the title screen) and have pending operations to complete, false otherwise.
-    /// </summary>
-    public static bool JustEnteredGame
-    {
-      get => Instance._justEnteredGame;
-      set => Instance._justEnteredGame = value;
-    }
-    private bool _justEnteredGame = false;
-
-    /// <summary>
-    /// Set to true when we have just begun a time loop and have pending operations to complete, false otherwise.
-    /// </summary>
-    public static bool JustStartedTimeLoop
-    {
-      get => Instance._justStartedTimeLoop;
-      set => Instance._justStartedTimeLoop = value;
-    }
-    private bool _justStartedTimeLoop;
-
-    /// <summary>
-    /// Set to true when we are in the game (including death/meditation), and false if we are elsewhere (the title screen).
-    /// </summary>
-    public static bool IsGameStarted
-    {
-      get => Instance._isGameStarted;
-      set => Instance._isGameStarted = value;
-    }
-    private bool _isGameStarted;
-
-    public SpeedrunState()
-    {
-      // Default constructor required when using field initializers
-    }
-  }
 }
