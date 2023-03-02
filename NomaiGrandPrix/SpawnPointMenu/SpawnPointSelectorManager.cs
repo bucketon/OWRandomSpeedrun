@@ -374,7 +374,7 @@ namespace NomaiGrandPrix
 
         private void AddMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)
         {
-            var listItem = list.AddItem(spawnConfig.displayName, _areaToPlanetDict[spawnConfig.area]);
+            var listItem = list.AddItem($"{options.Count + 1}. {spawnConfig.displayName}", _areaToPlanetDict[spawnConfig.area]);
             listItem.gameObject.AddComponent<SelectableAudioPlayer>();
 
             var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();
