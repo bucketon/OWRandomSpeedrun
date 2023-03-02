@@ -2,14 +2,11 @@ using SpawnPointSelector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using OWML.Common;
 
 namespace NomaiGrandPrix
 {
-    public class SpawnPointMenuOption : MenuOption, ISubmitHandler, ICancelHandler, IMoveHandler
+    public class SpawnPointMenuOption : MenuOption, ISubmitHandler, ICancelHandler, IMoveHandler, IPointerClickHandler
     {
-        public IModHelper ModHelper;
-
         public SpawnPointConfig SpawnPoint { get; set; }
 
         private Coroutine _selectionCoroutine;
@@ -32,17 +29,6 @@ namespace NomaiGrandPrix
 
             var menu = listItem.transform.parent.parent.GetComponentInParent<SpawnPointMenu>();
             menu.SetSelectOnActivate(GetComponent<Selectable>());
-        }
-
-        private void SetListPosition(SpawnPointList list, GameObject selectedObj)
-        {
-            var listTransform = list.GetComponent<RectTransform>();
-            var listSpacing = list.ContentTransform.GetComponent<VerticalLayoutGroup>().spacing;
-            var selectedObjHeight = selectedObj.GetComponent<RectTransform>().sizeDelta.y;
-            var selectedObjIndex = selectedObj.transform.GetSiblingIndex();
-            var listContentTransform = list.ContentTransform.GetComponent<RectTransform>();
-            var newPosition = selectedObjHeight / 2 + selectedObjIndex * (selectedObjHeight + listSpacing);
-            listContentTransform.anchoredPosition = new Vector2(listContentTransform.anchoredPosition.x, newPosition);
         }
 
         public override void OnDeselect(BaseEventData eventData)
@@ -69,6 +55,11 @@ namespace NomaiGrandPrix
             {
                 SpawnPointSelectorManager.Instance.OnLeftRightPressed(eventData);
             }
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            SpawnPointSelectorManager.Instance.OnItemClicked(eventData, this);
         }
     }
 }

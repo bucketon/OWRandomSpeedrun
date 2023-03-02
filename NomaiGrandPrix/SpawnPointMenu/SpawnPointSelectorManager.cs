@@ -86,7 +86,8 @@ namespace NomaiGrandPrix
 
         private System.Random _random = new System.Random((int)DateTime.Now.Ticks);
 
-        private Dictionary<Area, SpawnPointPlanet> _areaToPlanetDict = new Dictionary<Area, SpawnPointPlanet>() {
+        private Dictionary<Area, SpawnPointPlanet> _areaToPlanetDict = new Dictionary<Area, SpawnPointPlanet>()
+        {
             { Area.None, SpawnPointPlanet.None },
             { Area.SunStation, SpawnPointPlanet.SunStation },
             { Area.AshTwin, SpawnPointPlanet.AshTwin },
@@ -208,9 +209,25 @@ namespace NomaiGrandPrix
             DisableMenu();
         }
 
+        public void OnItemClicked(PointerEventData eventData, SpawnPointMenuOption option)
+        {
+            var eventMenu = GetMenuForMenuOption(option);
+
+            if (!eventMenu.IsMenuEnabled())
+            {
+                SwapMenus();
+            }
+        }
+
         private void OnUpdateInputDevice()
         {
             UpdateTooltipIcons();
+        }
+
+        private SpawnPointMenu GetMenuForMenuOption(SpawnPointMenuOption option)
+        {
+            var menu = option.transform.parent.parent.parent == _fromList.transform ? _fromMenu : _toMenu;
+            return menu;
         }
 
         private void InitializeMenus()
@@ -363,7 +380,6 @@ namespace NomaiGrandPrix
             var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();
             menuOption.SpawnPoint = spawnConfig;
             menuOption.Initialize();
-            menuOption.ModHelper = ModHelper;
             options.Add(menuOption);
         }
     }
