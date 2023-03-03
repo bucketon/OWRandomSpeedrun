@@ -323,11 +323,7 @@ namespace NomaiGrandPrix
 
         private void UpdateTooltipText()
         {
-            var text = "Next";
-            if (_toMenu.IsMenuEnabled())
-            {
-                text = "Start";
-            }
+            var text = _toMenu.IsMenuEnabled() ? "Start" : "Next";
             _selector.Tooltip.NextText.text = text;
         }
 

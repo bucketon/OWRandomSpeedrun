@@ -9,7 +9,8 @@ namespace NomaiGrandPrix
         private static Dictionary<string, Action[]> actionsMap = new Dictionary<string, Action[]>
         {
             { "Spawn_Module_Sunken", new Action[] { OpenSunkenModuleAirlock } },
-            { "Spawn_Module_Intact", new Action[] { OpenProbeCannonAirlocks } }
+            { "Spawn_Module_Intact", new Action[] { OpenProbeCannonAirlocks } },
+            { "Spawn_TH_ZeroGCave", new Action[] { LowerZeroGElevator } }
         };
 
         private SpawnActionFactory()
@@ -45,6 +46,16 @@ namespace NomaiGrandPrix
                 var position = airlock._closeSwitches[0].transform.position;
                 airlock._listInterfaceOrb[0].SetOrbPosition(position);
             }
+        }
+
+        private static void LowerZeroGElevator()
+        {
+            var elevatorObj = Locator._timberHearth._rootSector.transform.Find("Interactables_TH/MineShaft/MineElevator");
+            var elevator = elevatorObj.GetComponent<Elevator>();
+            elevator._interactVolume.transform.Rotate(0f, 180f, 0f);
+            elevator._goingToTheEnd = true;
+            elevator._targetLocalPos = elevator._endLocalPos;
+            elevator.StartLift();
         }
     }
 }
