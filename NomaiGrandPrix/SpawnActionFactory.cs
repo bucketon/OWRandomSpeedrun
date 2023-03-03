@@ -10,7 +10,7 @@ namespace NomaiGrandPrix
         {
             { "Spawn_Module_Sunken", new Action[] { OpenSunkenModuleAirlock } },
             { "Spawn_Module_Intact", new Action[] { OpenProbeCannonAirlocks } },
-            { "Spawn_TH_ZeroGCave", new Action[] { LowerZeroGElevator } }
+            { "Spawn_TH_ZeroGCave", new Action[] { LowerZeroGElevator } },
         };
 
         private SpawnActionFactory()
