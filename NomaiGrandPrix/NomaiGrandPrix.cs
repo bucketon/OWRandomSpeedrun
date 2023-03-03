@@ -130,15 +130,7 @@ namespace NomaiGrandPrix
                 }
             }
 
-            var elapsed =
-                SpeedrunState.EndTime == DateTime.MinValue
-                    ? DateTime.Now - SpeedrunState.StartTime
-                    : SpeedrunState.EndTime - SpeedrunState.StartTime;
-
-            var color = SpeedrunState.IsComplete() ? Constants.OW_SELECTED_COLOR : Constants.OW_ORANGE_COLOR;
-            var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
-
-            _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{elapsedStr}</color>");
+            UpdateTimer();
         }
 
         public override void Configure(IModConfig config)
@@ -174,6 +166,19 @@ namespace NomaiGrandPrix
             );
             var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
             screenPromptList.AddScreenPrompt(screenPromptElement);
+        }
+
+        private void UpdateTimer()
+        {
+            var elapsed =
+                SpeedrunState.EndTime == DateTime.MinValue
+                    ? DateTime.Now - SpeedrunState.StartTime
+                    : SpeedrunState.EndTime - SpeedrunState.StartTime;
+
+            var color = SpeedrunState.IsComplete() ? Constants.OW_SELECTED_COLOR : Constants.OW_ORANGE_COLOR;
+            var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
+
+            _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{elapsedStr}</color>");
         }
 
         private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
