@@ -117,6 +117,11 @@ namespace NomaiGrandPrix
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
         }
 
+        public override void Configure(IModConfig config)
+        {
+            SpawnPointSelectorManager.Instance.Refresh();
+        }
+
         private void OnStartOfTimeLoop(int loopCount)
         {
             if (SpeedrunState.ModEnabled)

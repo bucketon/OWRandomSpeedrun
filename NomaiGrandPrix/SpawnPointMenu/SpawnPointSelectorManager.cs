@@ -220,6 +220,11 @@ namespace NomaiGrandPrix
             }
         }
 
+        public void Refresh()
+        {
+            Destroy(gameObject);
+        }
+
         private void OnUpdateInputDevice()
         {
             UpdateTooltipIcons();
