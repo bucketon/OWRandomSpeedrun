@@ -30,11 +30,26 @@ namespace NomaiGrandPrix
 
         private SpawnPointPool _spawnPointPool;
 
+        private Func<SpawnPointConfig, bool> _spawnFilter;
+        private Func<SpawnPointConfig, bool> _goalFilter;
+
         // Allows method matches to access the ModHelper
         public static NomaiGrandPrix Instance;
 
         public SpeedrunState SpeedrunState { get; set; }
 
+        public Func<SpawnPointConfig, bool> SpawnFilter {
+            get
+            {
+                return _spawnFilter;
+            }
+        }
+        public Func<SpawnPointConfig, bool> GoalFilter {
+            get 
+            {
+                return _goalFilter;
+            }
+        }
 
         private void Awake()
         {
@@ -52,6 +67,16 @@ namespace NomaiGrandPrix
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"Mod {nameof(NomaiGrandPrix)} is loaded!", MessageType.Success);
             var hasDlc = EntitlementsManager.IsDlcOwned() == EntitlementsManager.AsyncOwnershipStatus.Owned;
+
+            //unfortunately we need to initialize these in Start since we don't have access to ModHelper earlier.
+            _spawnFilter = config =>
+            {
+                return config.shouldSpawn && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Spawn{config.area}"));
+            };
+            _goalFilter = config =>
+            {
+                return config.shouldGoal && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Goal{config.area}"));
+            };
 
             // Initialize spawn points from TSV
             var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -221,13 +246,8 @@ namespace NomaiGrandPrix
 
         private void ResetRunButton_OnClick()
         {
-            //TODO: figure out a good place to consolidate this logic since it's duplicated 4 times.
-            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(config => { 
-              return config.shouldSpawn && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Spawn{config.area}"));
-            });
-            SpeedrunState.GoalPoint = GetRandomSpawnConfig(config => { 
-              return config.shouldGoal && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Goal{config.area}"));
-            });
+            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(SpawnFilter);
+            SpeedrunState.GoalPoint = GetRandomSpawnConfig(GoalFilter);
 
             SpeedrunState.JustEnteredGame = true;
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);

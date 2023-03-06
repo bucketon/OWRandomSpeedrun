@@ -251,12 +251,11 @@ namespace NomaiGrandPrix
 
             foreach (SpawnPointConfig spawnConfig in _spawnPointConfigs)
             {
-                //TODO: get the menus to refresh when settings are changed.
-                if (spawnConfig.shouldSpawn && (spawnConfig.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Spawn{spawnConfig.area}")))
+                if (NomaiGrandPrix.Instance.SpawnFilter(spawnConfig))
                 {
                     AddMenuItem(spawnConfig, _fromList, fromMenuOptions);
                 }
-                if (spawnConfig.shouldGoal && (spawnConfig.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Goal{spawnConfig.area}")))
+                if (NomaiGrandPrix.Instance.GoalFilter(spawnConfig))
                 {
                     AddMenuItem(spawnConfig, _toList, toMenuOptions);
                 }
@@ -362,7 +361,7 @@ namespace NomaiGrandPrix
 
         private Selectable GetRandomSelectable(SpawnPointMenu menu)
         {
-            var randomIndex = _random.Next(_fromMenu._menuOptions.Length);
+            var randomIndex = _random.Next(menu._menuOptions.Length);
             return menu._menuOptions[randomIndex]._selectable;
         }
 
