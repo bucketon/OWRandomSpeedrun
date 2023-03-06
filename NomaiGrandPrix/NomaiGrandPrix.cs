@@ -15,7 +15,7 @@ namespace NomaiGrandPrix
     {
         private const string RESUME_BUTTON_NAME = "Button-ResumeGame";
 
-        public SpawnPoint _spawnPoint;
+        private SpawnPoint _spawnPoint;
         private SpawnPoint _goalPoint;
         private IModButton _speedrunButton;
         private IModButton _resetRunButton;
