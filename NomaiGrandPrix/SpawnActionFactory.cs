@@ -8,6 +8,8 @@ namespace NomaiGrandPrix
     {
         private static SpawnActionFactory Instance = new SpawnActionFactory();
         private const int SAND_CRUSH_THRESHOLD_SECS = 415;
+        private static Vector3 CAMPFIRE_SPAWN_POSITION = new Vector3(18f, 0.18f, -21f);
+        private static Vector3 CAMPFIRE_ROTATION = new Vector3(95f, 0f, 38f);
 
         private static Dictionary<string, Action[]> actionsMap = new Dictionary<string, Action[]>
         {
@@ -70,8 +72,8 @@ namespace NomaiGrandPrix
             );
             var campfire = GameObject.Instantiate(campfirePrefab.gameObject, timeLoopRing.transform);
 
-            campfire.transform.localPosition = new Vector3(18, 0.18f, -21);
-            campfire.transform.Rotate(new Vector3(95, 0, 38), Space.Self);
+            campfire.transform.localPosition = CAMPFIRE_SPAWN_POSITION;
+            campfire.transform.Rotate(CAMPFIRE_ROTATION, Space.Self);
 
             var interactReceiver = campfire.GetComponentInChildren<InteractReceiver>();
             interactReceiver.Start();
