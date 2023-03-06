@@ -18,12 +18,19 @@
           "no": "Disabled",
           "title": "Sun Station"
         },
-        "SpawnTwins": {
+        "SpawnEmberTwin": {
           "type": "toggle",
           "value": true,
           "yes": "Enabled",
           "no": "Disabled",
-          "title": "Hourglass Twins"
+          "title": "Ember Twin"
+        },
+        "SpawnAshTwin": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Ash Twin"
         },
         "SpawnTimberHearth": {
           "type": "toggle",
@@ -84,12 +91,19 @@
           "no": "Disabled",
           "title": "Sun Station"
         },
-        "GoalTwins": {
+        "GoalEmberTwin": {
           "type": "toggle",
           "value": true,
           "yes": "Enabled",
           "no": "Disabled",
-          "title": "Hourglass Twins"
+          "title": "Ember Twin"
+        },
+        "GoalAshTwin": {
+          "type": "toggle",
+          "value": true,
+          "yes": "Enabled",
+          "no": "Disabled",
+          "title": "Ash Twin"
         },
         "GoalTimberHearth": {
           "type": "toggle",
