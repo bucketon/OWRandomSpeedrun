@@ -35,6 +35,7 @@ namespace NomaiGrandPrix
                 }
 
                 _spawnPointConfigs = value;
+                _spawnPointConfigs.Sort((spawn1, spawn2) => spawn1.displayName.CompareTo(spawn2.displayName));
             }
         }
 
@@ -219,6 +220,11 @@ namespace NomaiGrandPrix
             }
         }
 
+        public void Refresh()
+        {
+            Destroy(gameObject);
+        }
+
         private void OnUpdateInputDevice()
         {
             UpdateTooltipIcons();
@@ -245,11 +251,11 @@ namespace NomaiGrandPrix
 
             foreach (SpawnPointConfig spawnConfig in _spawnPointConfigs)
             {
-                if (spawnConfig.shouldSpawn)
+                if (NomaiGrandPrix.Instance.SpawnFilter(spawnConfig))
                 {
                     AddMenuItem(spawnConfig, _fromList, fromMenuOptions);
                 }
-                if (spawnConfig.shouldGoal)
+                if (NomaiGrandPrix.Instance.GoalFilter(spawnConfig))
                 {
                     AddMenuItem(spawnConfig, _toList, toMenuOptions);
                 }
@@ -355,7 +361,7 @@ namespace NomaiGrandPrix
 
         private Selectable GetRandomSelectable(SpawnPointMenu menu)
         {
-            var randomIndex = _random.Next(_fromMenu._menuOptions.Length);
+            var randomIndex = _random.Next(menu._menuOptions.Length);
             return menu._menuOptions[randomIndex]._selectable;
         }
 
