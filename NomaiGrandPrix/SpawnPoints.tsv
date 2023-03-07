@@ -1,7 +1,7 @@
 Full Name	Display Name	Area	Dream Zone	Enable Spawn	Enable Goal	TH Village	Note
 Spawn	Sun Station Inside	SunStation	FALSE	TRUE	TRUE	FALSE	
 ShipSpawn	Sun Station Outside	SunStation	FALSE	FALSE	FALSE	TRUE	
-Spawn_TimeLoopDevice	Ash Twin Project	AshTwin	FALSE	FALSE	TRUE	FALSE	Trapped if used as spawn
+Spawn_TimeLoopDevice	Ash Twin Project	AshTwin	FALSE	TRUE	TRUE	FALSE	
 Spawn_SunTower	Ash Twin Surface	AshTwin	FALSE	TRUE	TRUE	FALSE	
 Spawn_TowerTwin	Ash Twin Surface	AshTwin	FALSE	FALSE	FALSE	FALSE	
 Spawn_FossilSite	Anglerfish Fossil	EmberTwin	FALSE	TRUE	TRUE	FALSE	

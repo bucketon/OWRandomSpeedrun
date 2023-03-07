@@ -30,11 +30,26 @@ namespace NomaiGrandPrix
 
         private SpawnPointPool _spawnPointPool;
 
+        private Func<SpawnPointConfig, bool> _spawnFilter;
+        private Func<SpawnPointConfig, bool> _goalFilter;
+
         // Allows method matches to access the ModHelper
         public static NomaiGrandPrix Instance;
 
         public SpeedrunState SpeedrunState { get; set; }
 
+        public Func<SpawnPointConfig, bool> SpawnFilter {
+            get
+            {
+                return _spawnFilter;
+            }
+        }
+        public Func<SpawnPointConfig, bool> GoalFilter {
+            get 
+            {
+                return _goalFilter;
+            }
+        }
 
         private void Awake()
         {
@@ -52,6 +67,16 @@ namespace NomaiGrandPrix
             // Starting here, you'll have access to OWML's mod helper.
             ModHelper.Console.WriteLine($"Mod {nameof(NomaiGrandPrix)} is loaded!", MessageType.Success);
             var hasDlc = EntitlementsManager.IsDlcOwned() == EntitlementsManager.AsyncOwnershipStatus.Owned;
+
+            //unfortunately we need to initialize these in Start since we don't have access to ModHelper earlier.
+            _spawnFilter = config =>
+            {
+                return config.shouldSpawn && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Spawn{config.area}"));
+            };
+            _goalFilter = config =>
+            {
+                return config.shouldGoal && (config.area == Area.None || ModHelper.Config.GetSettingsValue<bool>($"Goal{config.area}"));
+            };
 
             // Initialize spawn points from TSV
             var parentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -115,6 +140,11 @@ namespace NomaiGrandPrix
                     : SpeedrunState.EndTime - SpeedrunState.StartTime;
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(Constants.OW_ORANGE_COLOR)}>{elapsedStr}</color>");
+        }
+
+        public override void Configure(IModConfig config)
+        {
+            SpawnPointSelectorManager.Instance.Refresh();
         }
 
         private void OnStartOfTimeLoop(int loopCount)
@@ -216,8 +246,8 @@ namespace NomaiGrandPrix
 
         private void ResetRunButton_OnClick()
         {
-            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(config => config.shouldSpawn);
-            SpeedrunState.GoalPoint = GetRandomSpawnConfig(config => config.shouldGoal);
+            SpeedrunState.SpawnPoint = GetRandomSpawnConfig(SpawnFilter);
+            SpeedrunState.GoalPoint = GetRandomSpawnConfig(GoalFilter);
 
             SpeedrunState.JustEnteredGame = true;
             Locator.GetDeathManager().KillPlayer(DeathType.Meditation);
