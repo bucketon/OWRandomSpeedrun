@@ -315,11 +315,6 @@ namespace NomaiGrandPrix
 
         private void SpawnGoal(Transform parent)
         {
-            if (SpeedrunState.EndTime != DateTime.MinValue)
-            {
-                return;
-            }
-
             var go = new GameObject("GoalPoint");
             var collider = go.AddComponent<SphereCollider>();
             collider.isTrigger = true;
