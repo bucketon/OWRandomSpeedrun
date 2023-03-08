@@ -249,15 +249,27 @@ namespace NomaiGrandPrix
             var fromMenuOptions = new List<MenuOption>();
             var toMenuOptions = new List<MenuOption>();
 
+            var spawnId = 0;
+            var goalId = 0;
+
             foreach (SpawnPointConfig spawnConfig in _spawnPointConfigs)
             {
+                if (spawnConfig.shouldSpawn)
+                {
+                    ++spawnId;
+                }
+                if (spawnConfig.shouldGoal)
+                {
+                    ++goalId;
+                }
+
                 if (NomaiGrandPrix.Instance.SpawnFilter(spawnConfig))
                 {
-                    AddMenuItem(spawnConfig, _fromList, fromMenuOptions);
+                    AddMenuItem(spawnConfig, _fromList, fromMenuOptions, spawnId);
                 }
                 if (NomaiGrandPrix.Instance.GoalFilter(spawnConfig))
                 {
-                    AddMenuItem(spawnConfig, _toList, toMenuOptions);
+                    AddMenuItem(spawnConfig, _toList, toMenuOptions, goalId);
                 }
             }
 
@@ -374,9 +386,9 @@ namespace NomaiGrandPrix
             return foundMenuOption._selectable;
         }
 
-        private void AddMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options)
+        private void AddMenuItem(SpawnPointConfig spawnConfig, SpawnPointList list, List<MenuOption> options, int idNumber = 0)
         {
-            var listItem = list.AddItem($"{options.Count + 1}. {spawnConfig.displayName}", _areaToPlanetDict[spawnConfig.area]);
+            var listItem = list.AddItem($"{idNumber}. {spawnConfig.displayName}", _areaToPlanetDict[spawnConfig.area]);
             listItem.gameObject.AddComponent<SelectableAudioPlayer>();
 
             var menuOption = listItem.gameObject.AddComponent<SpawnPointMenuOption>();
