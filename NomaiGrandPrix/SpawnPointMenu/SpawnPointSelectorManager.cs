@@ -35,7 +35,6 @@ namespace NomaiGrandPrix
                 }
 
                 _spawnPointConfigs = value;
-                _spawnPointConfigs.Sort((spawn1, spawn2) => spawn1.displayName.CompareTo(spawn2.displayName));
             }
         }
 
