@@ -38,17 +38,13 @@ namespace NomaiGrandPrix
 
         public SpeedrunState SpeedrunState { get; set; }
 
-        public Func<SpawnPointConfig, bool> SpawnFilter {
-            get
-            {
-                return _spawnFilter;
-            }
+        public Func<SpawnPointConfig, bool> SpawnFilter
+        {
+            get { return _spawnFilter; }
         }
-        public Func<SpawnPointConfig, bool> GoalFilter {
-            get 
-            {
-                return _goalFilter;
-            }
+        public Func<SpawnPointConfig, bool> GoalFilter
+        {
+            get { return _goalFilter; }
         }
 
         private void Awake()
@@ -346,6 +342,10 @@ namespace NomaiGrandPrix
                 marshmallow.gameObject.SetActive(false);
                 _canvasMarker.gameObject.SetActive(false);
                 Locator.GetPlayerAudioController().PlayMarshmallowEat();
+
+                var confettiBundle = ModHelper.Assets.LoadBundle("assets/confetti");
+                var confettiPrefab = confettiBundle.LoadAsset<GameObject>("assets/confetticontainer.prefab");
+                Instantiate(confettiPrefab, Locator.GetPlayerCamera()._mainCamera.transform);
             };
 
             go.transform.parent = parent;

@@ -6259,6 +6259,120 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 885386de4776d9b42bbf147554159e42, type: 3}
+--- !u!1001 &732352327708620254
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.x.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.y.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.z.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.x.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.y.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.z.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.y.maxCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025312, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: VelocityModule.y.maxCurve.m_Curve.Array.data[1].value
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025314, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 732352326323025317, guid: 94532b0d7895b614191ee96231f3c945,
+        type: 3}
+      propertyPath: m_Name
+      value: Confetti
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 94532b0d7895b614191ee96231f3c945, type: 3}
 --- !u!1001 &8127350397413878339
 PrefabInstance:
   m_ObjectHideFlags: 0
