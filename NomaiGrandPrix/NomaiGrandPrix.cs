@@ -20,6 +20,7 @@ namespace NomaiGrandPrix
         private IModButton _speedrunButton;
         private IModButton _resetRunButton;
         private ScreenPrompt _timerPrompt;
+        private ScreenPrompt _spawnGoalPrompt;
         private Mesh _marshmallowMesh;
         private Material _marshmallowMaterial;
         private CanvasMarker _canvasMarker;
@@ -155,17 +156,31 @@ namespace NomaiGrandPrix
             var screenPromptListObj = GameObject.Find("ScreenPromptListBottomLeft");
             var screenPromptList = screenPromptListObj.GetComponent<ScreenPromptList>();
 
-            _timerPrompt = new ScreenPrompt("");
             var font = GetFontByName(Constants.OW_MENU_FONT_NAME);
-            var screenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(
+
+            _timerPrompt = new ScreenPrompt("");
+            var timerScreenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(
                 _timerPrompt,
                 20,
                 font,
                 screenPromptListObj.transform,
                 TextAnchor.LowerLeft
             );
-            var screenPromptElement = screenPromptElementObj.GetComponent<ScreenPromptElement>();
-            screenPromptList.AddScreenPrompt(screenPromptElement);
+
+            _spawnGoalPrompt = new ScreenPrompt("");
+            var spawnGoalScreenPromptElementObj = ScreenPromptElement.CreateNewScreenPrompt(
+                _spawnGoalPrompt,
+                12,
+                font,
+                screenPromptListObj.transform,
+                TextAnchor.LowerLeft
+            );
+
+            var spawnGoalScreenPromptElement = spawnGoalScreenPromptElementObj.GetComponent<ScreenPromptElement>();
+            var timerScreenPromptElement = timerScreenPromptElementObj.GetComponent<ScreenPromptElement>();
+
+            screenPromptList.AddScreenPrompt(spawnGoalScreenPromptElement);
+            screenPromptList.AddScreenPrompt(timerScreenPromptElement);
         }
 
         private void UpdateTimer()
@@ -176,8 +191,11 @@ namespace NomaiGrandPrix
                     : SpeedrunState.EndTime - SpeedrunState.StartTime;
 
             var color = SpeedrunState.IsComplete() ? Constants.OW_SELECTED_COLOR : Constants.OW_ORANGE_COLOR;
-            var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
 
+            var pathDescription = $"{SpeedrunState.SpawnPoint?.displayName} - {SpeedrunState.GoalPoint?.displayName}";
+            _spawnGoalPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{pathDescription}</color>");
+
+            var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{elapsedStr}</color>");
         }
 
