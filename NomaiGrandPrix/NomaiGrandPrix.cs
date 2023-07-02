@@ -271,13 +271,46 @@ namespace NomaiGrandPrix
 
             var labelText = $"GOAL: {SpeedrunState.GoalPoint?.displayName.ToUpper()}";
             var markerManager = Locator.GetMarkerManager();
+
+            OuterFogWarpVolume outerWarp = null;
+            if (SpeedrunState.GoalPoint.Value.internalId.Equals("SpawnPoint_ElsinoreSeed"))
+            {
+                outerWarp = GameObject.Find("DB_Elsinore_Body/Sector_ElsinoreDimension/Interactables_ElsinoreDimension/OuterWarp_Elsinore")
+                    .GetComponent<OuterFogWarpVolume>();
+            }
+            else if (SpeedrunState.GoalPoint.Value.internalId.Equals("SpawnPoint_EscapePod"))
+            {
+                outerWarp = GameObject.Find("DB_EscapePodDimension_Body/Sector_EscapePodDimension/Interactables_EscapePodDimension/OuterWarp_EscapePod")
+                    .GetComponent<OuterFogWarpVolume>();
+            }
+            else if (SpeedrunState.GoalPoint.Value.internalId.Equals("SpawnPoint_PioneerCamp"))
+            {
+                outerWarp = GameObject.Find("DB_PioneerDimension_Body/Sector_PioneerDimension/Interactables_PioneerDimension/OuterWarp_Pioneer")
+                    .GetComponent<OuterFogWarpVolume>();
+            }
+            else if (SpeedrunState.GoalPoint.Value.internalId.Equals("SpawnPoint_NomaiGrave"))
+            {
+                outerWarp = GameObject.Find("DB_EscapePodDimension_Body/Sector_EscapePodDimension/Interactables_EscapePodDimension/OuterWarp_EscapePod")
+                    .GetComponent<OuterFogWarpVolume>();
+            }
+            else if (SpeedrunState.GoalPoint.Value.internalId.Equals("Spawn_Vessel"))
+            {
+                outerWarp = GameObject.Find("DB_VesselDimension_Body/Sector_VesselDimension/Interactables_VesselDimension/OuterWarp_Vessel")
+                    .GetComponent<OuterFogWarpVolume>();
+            }
+
             _canvasMarker = markerManager.InstantiateNewMarker();
             markerManager.RegisterMarker(_canvasMarker, _goalPoint.transform, labelText);
             _canvasMarker._mainTextField.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._marker.material.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._offScreenIndicator._textField.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = Constants.OW_ORANGE_COLOR;
+            if (outerWarp != null)
+            {
+                _canvasMarker.SetOuterFogWarpVolume(outerWarp);
+            }
             _canvasMarker.SetVisibility(true);
+            
 
             var mapMarkerManager = Locator.GetMapController().GetMarkerManager();
             var mapMarker = mapMarkerManager.InstantiateNewMarker(true);
@@ -287,6 +320,10 @@ namespace NomaiGrandPrix
             materialInstance.color = Constants.OW_ORANGE_COLOR;
             mapMarker._textField.material = materialInstance;
             mapMarker.SetColor(Constants.OW_ORANGE_COLOR);
+            if (outerWarp != null)
+            {
+                mapMarker.SetOuterFogWarpVolume(outerWarp);
+            }
             mapMarker.SetVisibility(true);
         }
 
