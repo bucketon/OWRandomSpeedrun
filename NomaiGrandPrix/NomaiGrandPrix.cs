@@ -185,18 +185,18 @@ namespace NomaiGrandPrix
 
         private void UpdateTimer()
         {
-            var elapsed =
-                SpeedrunState.EndTime == DateTime.MinValue
-                    ? DateTime.Now - SpeedrunState.StartTime
-                    : SpeedrunState.EndTime - SpeedrunState.StartTime;
+            (var elapsed, var color) =
+                SpeedrunState.IsComplete()
+                    ? (SpeedrunState.EndTime - SpeedrunState.StartTime, Constants.OW_SELECTED_COLOR)
+                    : (DateTime.Now - SpeedrunState.StartTime, Constants.OW_ORANGE_COLOR);
 
-            var color = SpeedrunState.IsComplete() ? Constants.OW_SELECTED_COLOR : Constants.OW_ORANGE_COLOR;
+            var colorStr = ColorUtility.ToHtmlStringRGB(color);
 
             var pathDescription = $"{SpeedrunState.SpawnPoint?.displayName} - {SpeedrunState.GoalPoint?.displayName}";
-            _spawnGoalPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{pathDescription}</color>");
+            _spawnGoalPrompt.SetText($"<color=#{colorStr}>{pathDescription}</color>");
 
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
-            _timerPrompt.SetText($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{elapsedStr}</color>");
+            _timerPrompt.SetText($"<color=#{colorStr}>{elapsedStr}</color>");
         }
 
         private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
