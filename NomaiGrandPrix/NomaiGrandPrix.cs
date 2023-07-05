@@ -33,6 +33,15 @@ namespace NomaiGrandPrix
         private Func<SpawnPointConfig, bool> _spawnFilter;
         private Func<SpawnPointConfig, bool> _goalFilter;
 
+        private static Dictionary<string, string> OuterWarpPathsBySpawnPointID = new Dictionary<string, string>
+        {
+            ["SpawnPoint_ElsinoreSeed"] = "DB_Elsinore_Body/Sector_ElsinoreDimension/Interactables_ElsinoreDimension/OuterWarp_Elsinore",
+            ["SpawnPoint_EscapePod"] = "DB_EscapePodDimension_Body/Sector_EscapePodDimension/Interactables_EscapePodDimension/OuterWarp_EscapePod",
+            ["SpawnPoint_PioneerCamp"] = "DB_PioneerDimension_Body/Sector_PioneerDimension/Interactables_PioneerDimension/OuterWarp_Pioneer",
+            ["SpawnPoint_NomaiGrave"] = "DB_EscapePodDimension_Body/Sector_EscapePodDimension/Interactables_EscapePodDimension/OuterWarp_EscapePod",
+            ["Spawn_Vessel"] = "DB_VesselDimension_Body/Sector_VesselDimension/Interactables_VesselDimension/OuterWarp_Vessel"
+        };
+
         // Allows method matches to access the ModHelper
         public static NomaiGrandPrix Instance;
 
@@ -271,13 +280,22 @@ namespace NomaiGrandPrix
 
             var labelText = $"GOAL: {SpeedrunState.GoalPoint?.displayName.ToUpper()}";
             var markerManager = Locator.GetMarkerManager();
+
+            OuterFogWarpVolume outerWarp = GameObject.Find(OuterWarpPathsBySpawnPointID.GetValueOrDefault(SpeedrunState.GoalPoint.Value.internalId, ""))?
+                .GetComponent<OuterFogWarpVolume>();
+
             _canvasMarker = markerManager.InstantiateNewMarker();
             markerManager.RegisterMarker(_canvasMarker, _goalPoint.transform, labelText);
             _canvasMarker._mainTextField.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._marker.material.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._offScreenIndicator._textField.color = Constants.OW_ORANGE_COLOR;
             _canvasMarker._offScreenIndicator._arrow.GetComponentInChildren<MeshRenderer>().material.color = Constants.OW_ORANGE_COLOR;
+            if (outerWarp != null)
+            {
+                _canvasMarker.SetOuterFogWarpVolume(outerWarp);
+            }
             _canvasMarker.SetVisibility(true);
+            
 
             var mapMarkerManager = Locator.GetMapController().GetMarkerManager();
             var mapMarker = mapMarkerManager.InstantiateNewMarker(true);
@@ -287,6 +305,10 @@ namespace NomaiGrandPrix
             materialInstance.color = Constants.OW_ORANGE_COLOR;
             mapMarker._textField.material = materialInstance;
             mapMarker.SetColor(Constants.OW_ORANGE_COLOR);
+            if (outerWarp != null)
+            {
+                mapMarker.SetOuterFogWarpVolume(outerWarp);
+            }
             mapMarker.SetVisibility(true);
         }
 
