@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     public class SpawnActionFactory
     {

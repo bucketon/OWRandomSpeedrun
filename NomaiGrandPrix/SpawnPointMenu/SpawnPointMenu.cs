@@ -1,6 +1,6 @@
 using SpawnPointSelector;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     /// <summary>
     /// An extension of Menu. In addition to handling some special logic for enabling/disabling

@@ -9,7 +9,7 @@ using System;
 using HarmonyLib;
 using System.Collections.Generic;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     public class NomaiGrandPrix : ModBehaviour
     {
