@@ -367,7 +367,7 @@ namespace NomaiGrandPrix
                 _canvasMarker.gameObject.SetActive(false);
                 Locator.GetPlayerAudioController().PlayMarshmallowEat();
 
-                _confettiBundle = _confettiBundle != null ? _confettiBundle : ModHelper.Assets.LoadBundle("assets/confetti");
+                _confettiBundle = _confettiBundle == null ? ModHelper.Assets.LoadBundle("assets/confetti") : _confettiBundle;
                 var confettiPrefab = _confettiBundle.LoadAsset<GameObject>("assets/confetticontainer.prefab");
                 Instantiate(confettiPrefab, Locator.GetPlayerCamera()._mainCamera.transform);
             };
