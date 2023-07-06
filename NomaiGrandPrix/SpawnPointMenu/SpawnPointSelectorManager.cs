@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     public class SpawnPointSelectorManager : MonoBehaviour
     {

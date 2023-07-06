@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     public class SpawnPointMenuOption : MenuOption, ISubmitHandler, ICancelHandler, IMoveHandler, IPointerClickHandler
     {

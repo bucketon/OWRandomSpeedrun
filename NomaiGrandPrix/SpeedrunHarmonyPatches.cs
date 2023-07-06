@@ -1,6 +1,6 @@
 using HarmonyLib;
 using OWML.Common;
-using NomaiGrandPrix;
+using TeamOptimism;
 using UnityEngine;
 
 [HarmonyPatch]
@@ -45,15 +45,15 @@ public class SpeedrunHarmonyPatches
     [HarmonyPatch(typeof(TitleScreenManager), nameof(TitleScreenManager.Start))]
     public static void TitleScreenManager_Start_Postfix()
     {
-        NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.IsGameStarted = false;
-        NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled = false;
+        TeamOptimism.NomaiGrandPrix.Instance.SpeedrunState.IsGameStarted = false;
+        TeamOptimism.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled = false;
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(DebugInputManager), nameof(DebugInputManager.Start))]
     public static void DebugInputManager_Start_Postfix()
     {
-        NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.IsGameStarted = true;
+        TeamOptimism.NomaiGrandPrix.Instance.SpeedrunState.IsGameStarted = true;
     }
 
     // Disable achievements while the mod is running, since many warps can accidentally
@@ -62,8 +62,8 @@ public class SpeedrunHarmonyPatches
     [HarmonyPatch(typeof(Achievements), nameof(Achievements.Earn))]
     public static bool Achievements_Earn_Prefix(Achievements.Type type)
     {
-        var modHelper = NomaiGrandPrix.NomaiGrandPrix.Instance.ModHelper;
-        if (NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled)
+        var modHelper = TeamOptimism.NomaiGrandPrix.Instance.ModHelper;
+        if (TeamOptimism.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled)
         {
             modHelper.Console.WriteLine($"Skipping achievement {type} during Nomai Grand Prix run.", MessageType.Info);
             return false;
@@ -79,7 +79,7 @@ public class SpeedrunHarmonyPatches
     [HarmonyPatch(typeof(PlayerSpawner), nameof(PlayerSpawner.OnStartOfTimeLoop))]
     public static void PlayerSpawner_OnStartOfTimeLoop_Prefix()
     {
-        if (NomaiGrandPrix.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled)
+        if (TeamOptimism.NomaiGrandPrix.Instance.SpeedrunState.ModEnabled)
         {
             // Do not call SpawnPlayer() here
             return;

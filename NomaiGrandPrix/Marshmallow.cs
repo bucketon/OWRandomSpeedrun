@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     public class Marshmallow : MonoBehaviour
     {

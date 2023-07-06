@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     public struct Constants
     {

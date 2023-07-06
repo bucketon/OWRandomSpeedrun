@@ -1,6 +1,6 @@
 using System;
 
-namespace NomaiGrandPrix
+namespace TeamOptimism
 {
     public class SpeedrunState
     {
