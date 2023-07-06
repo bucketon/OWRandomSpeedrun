@@ -31,6 +31,8 @@ namespace TeamOptimism
 
         private SpawnPointPool _spawnPointPool;
 
+        private AssetBundle _confettiBundle;
+
         private Func<SpawnPointConfig, bool> _spawnFilter;
         private Func<SpawnPointConfig, bool> _goalFilter;
 
@@ -391,8 +393,8 @@ namespace TeamOptimism
                 _canvasMarker.gameObject.SetActive(false);
                 Locator.GetPlayerAudioController().PlayMarshmallowEat();
 
-                var confettiBundle = ModHelper.Assets.LoadBundle("assets/confetti");
-                var confettiPrefab = confettiBundle.LoadAsset<GameObject>("assets/confetticontainer.prefab");
+                _confettiBundle = _confettiBundle == null ? ModHelper.Assets.LoadBundle("assets/confetti") : _confettiBundle;
+                var confettiPrefab = _confettiBundle.LoadAsset<GameObject>("assets/confetticontainer.prefab");
                 Instantiate(confettiPrefab, Locator.GetPlayerCamera()._mainCamera.transform);
             };
 
