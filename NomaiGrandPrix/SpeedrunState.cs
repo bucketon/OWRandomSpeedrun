@@ -29,5 +29,7 @@ namespace NomaiGrandPrix
         {
             // Default constructor required when using field initializers
         }
+
+        public bool IsComplete() => EndTime > DateTime.MinValue;
     }
 }
