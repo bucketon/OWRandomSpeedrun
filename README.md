@@ -1,4 +1,5 @@
 # Nomai Grand Prix
+![banner](https://raw.githubusercontent.com/bucketon/OWRandomSpeedrun/main/ngplogo.png)
 Random shipless speedrun generator for Outer Wilds
 
 ## IDE setup for VS Code in Windows
