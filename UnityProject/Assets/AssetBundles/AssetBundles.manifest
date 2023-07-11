@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 2707821810
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: spawnpointselector
+      Dependencies: {}
+    Info_1:
+      Name: confetti
+      Dependencies: {}
