@@ -52,3 +52,6 @@ Random shipless speedrun generator for Outer Wilds
 1. Open the main project in VS Code (like you would for a change not related to the Unity project).
 1. If you need to make changes to the main project that depends on your Unity script pages, you need to restart VS Code for your main workspace. Press **Ctrl-Shift-P**, then type and select **Reload Window**.
 1. Select Terminal > Run Build Task. This will copy the updated DLL file to the mod folder under %APPDATA%.
+
+### Attributions
+<a href="https://www.textstudio.com/">Text effect</a>
