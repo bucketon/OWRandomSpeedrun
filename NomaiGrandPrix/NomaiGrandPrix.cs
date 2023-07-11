@@ -342,7 +342,6 @@ namespace TeamOptimism
 
         private PlayerSpawner GetSpawner()
         {
-            ModHelper.Console.WriteLine($"initialize spawner.", MessageType.Info);
             return GameObject.FindGameObjectWithTag("Player").GetRequiredComponent<PlayerSpawner>();
         }
 
@@ -387,7 +386,6 @@ namespace TeamOptimism
             Marshmallow marshmallow = go.AddComponent<Marshmallow>();
             marshmallow.OnCollected += () =>
             {
-                ModHelper.Console.WriteLine($"VICTORY!!!!", MessageType.Info);
                 SpeedrunState.EndTime = DateTime.Now;
                 marshmallow.gameObject.SetActive(false);
                 _canvasMarker.gameObject.SetActive(false);
