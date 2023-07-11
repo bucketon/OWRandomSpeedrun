@@ -214,6 +214,8 @@ namespace TeamOptimism
 
        private void ClearPrompts()
         {
+            //needed to fix https://github.com/bucketon/OWRandomSpeedrun/issues/135
+            //Kind of a hack but subscribing to specific events didn't work.
             _spawnGoalPrompt.SetText($"");
             _timerPrompt.SetText($"");
         }
