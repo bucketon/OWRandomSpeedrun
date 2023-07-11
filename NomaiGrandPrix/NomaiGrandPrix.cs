@@ -212,7 +212,7 @@ namespace TeamOptimism
             _timerPrompt.SetText($"<color=#{colorStr}>{elapsedStr}</color>");
         }
 
-       private void ClearPrompts()
+        private void ClearPrompts()
         {
             //needed to fix https://github.com/bucketon/OWRandomSpeedrun/issues/135
             //Kind of a hack but subscribing to specific events didn't work.
