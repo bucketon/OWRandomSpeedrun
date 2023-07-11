@@ -203,11 +203,19 @@ namespace TeamOptimism
 
             var colorStr = ColorUtility.ToHtmlStringRGB(color);
 
+            ClearPrompts();
+
             var pathDescription = $"{SpeedrunState.SpawnPoint?.displayName} - {SpeedrunState.GoalPoint?.displayName}";
             _spawnGoalPrompt.SetText($"<color=#{colorStr}>{pathDescription}</color>");
 
             var elapsedStr = string.Format("{0:D2}:{1:D2}.{2:D3}", elapsed.Minutes, elapsed.Seconds, elapsed.Milliseconds);
             _timerPrompt.SetText($"<color=#{colorStr}>{elapsedStr}</color>");
+        }
+
+       private void ClearPrompts()
+        {
+            _spawnGoalPrompt.SetText($"");
+            _timerPrompt.SetText($"");
         }
 
         private void HandleBasicWarp(PlayerSpawner spawner, SpawnPoint[] spawnPoints)
