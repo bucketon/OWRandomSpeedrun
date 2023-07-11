@@ -2,6 +2,8 @@
 ![banner](https://raw.githubusercontent.com/bucketon/OWRandomSpeedrun/main/ngplogo.png)
 Random shipless speedrun generator for Outer Wilds
 
+[Tips for shipless navigation](https://github.com/bucketon/OWRandomSpeedrun/wiki/New-player-guide)
+
 ## IDE setup for VS Code in Windows
 1. Install [VS Code](https://code.visualstudio.com/download).
 1. Open VS Code, and open the folder where you cloned the repository. You will probably get some build errors; don't worry about them yet.
