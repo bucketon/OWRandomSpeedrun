@@ -4,7 +4,7 @@
   "author": "Zac Bauermeister, David Damschen, Ben Kirzhner, Chris Maines",
   "name": "Nomai Grand Prix",
   "uniqueName": "NomaiGrandPrix",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "owmlVersion": "2.9.0",
   "dependencies": []
 }
